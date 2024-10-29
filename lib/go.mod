@@ -1,4 +1,4 @@
-module github.com/peterszarvas94/goat
+module project
 
 go 1.22.5
 

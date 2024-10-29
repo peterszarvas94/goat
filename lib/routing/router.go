@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/peterszarvas94/goat/templates/pages"
 )
 
 type router struct {
@@ -16,13 +15,9 @@ type router struct {
 func NewRouter() *router {
 	mux := http.NewServeMux()
 
-	router := &router{
+	return &router{
 		mux: mux,
 	}
-
-	router.GetTempl("/", pages.NotFound())
-
-	return router
 }
 
 func (r *router) addRoute(method string, path string, handler http.Handler) {

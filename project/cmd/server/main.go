@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"project/handlers"
+	"project/templates/pages"
 	"strings"
 
-	"github.com/peterszarvas94/goat/config"
-	"github.com/peterszarvas94/goat/modules/handlers"
-	"github.com/peterszarvas94/goat/modules/routing"
-	"github.com/peterszarvas94/goat/templates/pages"
+	c "github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/routing"
 )
 
 func main() {
@@ -17,7 +17,9 @@ func main() {
 	router.GetTempl("/test/{$}", pages.Test())
 	router.Get("/hello/{$}", handlers.MyHandlerFunc)
 
-	url := strings.Join([]string{"localhost", config.PORT}, ":")
+	config := c.NewConfig()
+
+	url := strings.Join([]string{"localhost", config.Port}, ":")
 
 	err := router.Serve(url)
 	if err != nil {
