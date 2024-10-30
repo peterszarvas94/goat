@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
+	"os"
 	"project/config"
 	"project/handlers"
 	"project/templates/pages"
@@ -12,8 +14,18 @@ import (
 )
 
 func main() {
-	logging.Logger.Debug("hello")
-	router := routing.NewRouter()
+	// set up logger
+	err := logging.Setup("logs", "server-logs", slog.LevelDebug)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	logger := logging.Logger
+	logger.Debug("Logger set up done")
+
+	// set up router
+	router := routing.Router
 
 	router.GetTempl("/{$}", pages.Index())
 	router.GetTempl("/test/{$}", pages.Test())
@@ -21,8 +33,11 @@ func main() {
 
 	url := strings.Join([]string{"localhost", config.Port}, ":")
 
-	err := router.Serve(url)
+	logger.Info("Starting server on http://localhost:8080")
+
+	err = router.Serve(url)
 	if err != nil {
-		fmt.Println("Error starting server:", err)
+		logger.Error(err.Error())
+		os.Exit(1)
 	}
 }

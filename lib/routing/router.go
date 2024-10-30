@@ -1,7 +1,6 @@
 package routing
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -19,6 +18,8 @@ func NewRouter() *router {
 		mux: mux,
 	}
 }
+
+var Router = NewRouter()
 
 func (r *router) addRoute(method string, path string, handler http.Handler) {
 	pattern := strings.Join([]string{method, path}, " ")
@@ -43,7 +44,6 @@ func (r *router) GetTempl(path string, component templ.Component) {
 }
 
 func (r *router) Serve(addr string) error {
-	fmt.Println("Starting server on http://localhost:8080")
 	if err := http.ListenAndServe(addr, r.mux); err != nil {
 		return err
 	}
