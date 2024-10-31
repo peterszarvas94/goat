@@ -2,42 +2,56 @@ package main
 
 import (
 	"fmt"
-	"log/slog"
 	"os"
+	"strings"
+
 	"project/config"
 	"project/handlers"
 	"project/templates/pages"
-	"strings"
 
-	"github.com/peterszarvas94/goat/logging"
-	"github.com/peterszarvas94/goat/routing"
+	_ "github.com/joho/godotenv/autoload"
+	"github.com/peterszarvas94/goat/database"
+	"github.com/peterszarvas94/goat/env"
+	"github.com/peterszarvas94/goat/logger"
+	"github.com/peterszarvas94/goat/router"
 )
 
 func main() {
 	// set up logger
-	err := logging.Setup("logs", "server-logs", slog.LevelDebug)
+	err := logger.Setup("logs", "server-logs", config.LogLevel)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Logger setup err: %v\n", err)
 		os.Exit(1)
 	}
 
-	logger := logging.Logger
 	logger.Debug("Logger set up done")
 
-	// set up router
-	router := routing.Router
+	// set up env vars
+	err = env.Load(&config.Config)
+	if err != nil {
+		logger.Error(fmt.Sprintf("Can not load env: %v", err))
+		os.Exit(1)
+	}
 
-	router.GetTempl("/{$}", pages.Index())
-	router.GetTempl("/test/{$}", pages.Test())
+	// set up db
+	_, err = database.OpenTurso(config.Config.DbUrl, config.Config.DbToken)
+	if err != nil {
+		logger.Error(fmt.Sprintf("Can not set up db connection: %v", err))
+		os.Exit(1)
+	}
+
+	// set up router
+	router.Templ("/{$}", pages.Index())
+	router.Templ("/test/{$}", pages.Test())
 	router.Get("/hello/{$}", handlers.MyHandlerFunc)
 
 	url := strings.Join([]string{"localhost", config.Port}, ":")
 
-	logger.Info("Starting server on http://localhost:8080")
+	logger.Info(fmt.Sprintf("Starting server on: %s", url))
 
 	err = router.Serve(url)
 	if err != nil {
-		logger.Error(err.Error())
+		logger.Error(fmt.Sprintf("Server start error: %v", err))
 		os.Exit(1)
 	}
 }

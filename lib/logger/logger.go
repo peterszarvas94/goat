@@ -1,4 +1,4 @@
-package logging
+package logger
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-func NewLogger(folder string, handler slog.Handler) *slog.Logger {
+func newLogger(handler slog.Handler) *slog.Logger {
 	return slog.New(handler)
 }
 
-var Logger slog.Logger
+var logger *slog.Logger
 
 func Setup(folderPath, filePrefix string, level slog.Level) error {
 	filename := fmt.Sprintf("%s-%s.txt", filePrefix, time.Now().Format("2006-01-02"))
@@ -36,7 +36,23 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 		AddSource: true,
 	})
 
-	Logger = *NewLogger(folderPath, handler)
+	logger = newLogger(handler)
 
 	return nil
+}
+
+func Debug(msg string, args ...any) {
+	logger.Debug(msg, args...)
+}
+
+func Info(msg string, args ...any) {
+	logger.Info(msg, args...)
+}
+
+func Warn(msg string, args ...any) {
+	logger.Warn(msg, args...)
+}
+
+func Error(msg string, args ...any) {
+	logger.Error(msg, args...)
 }

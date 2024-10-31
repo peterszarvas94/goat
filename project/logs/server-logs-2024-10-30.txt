@@ -1,4 +1,0 @@
-{"time":"2024-10-30T15:25:42.650631+01:00","level":"DEBUG","source":{"function":"main.main","file":"/Users/szarvaspeter/projects/goat/project/cmd/server/main.go","line":16},"msg":"hello"}
-{"time":"2024-10-30T15:29:30.208634+01:00","level":"DEBUG","source":{"function":"main.main","file":"/Users/szarvaspeter/projects/goat/project/cmd/server/main.go","line":19},"msg":"hello"}
-{"time":"2024-10-30T15:33:34.73108+01:00","level":"DEBUG","source":{"function":"main.main","file":"/Users/szarvaspeter/projects/goat/project/cmd/server/main.go","line":25},"msg":"hello"}
-{"time":"2024-10-30T15:33:34.731959+01:00","level":"INFO","source":{"function":"main.main","file":"/Users/szarvaspeter/projects/goat/project/cmd/server/main.go","line":36},"msg":"Starting server on http://localhost:8080"}

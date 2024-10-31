@@ -1,0 +1,4 @@
+.env
+templates/**/*.go
+templates/**/*.txt
+logs/
