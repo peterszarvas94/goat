@@ -33,7 +33,7 @@ func Delete(path string, handler http.HandlerFunc) {
 	addRoute("DELETE", path, handler)
 }
 
-func Templ(path string, component templ.Component) {
+func GetTempl(path string, component templ.Component) {
 	addRoute("GET", path, templ.Handler(component))
 }
 

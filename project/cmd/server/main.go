@@ -27,22 +27,22 @@ func main() {
 	log.Logger.Debug("Logger set up done")
 
 	// set up env vars
-	err = env.Load(&config.Config)
+	err = env.Load(&config.Env)
 	if err != nil {
 		log.Logger.Error(fmt.Sprintf("Can not load env: %v", err))
 		os.Exit(1)
 	}
 
 	// set up db
-	_, err = database.OpenTurso(config.Config.DbUrl, config.Config.DbToken)
+	_, err = database.OpenTurso(config.Env.DbUrl, config.Env.DbToken)
 	if err != nil {
 		log.Logger.Error(fmt.Sprintf("Can not set up db connection: %v", err))
 		os.Exit(1)
 	}
 
 	// set up router
-	router.Templ("/{$}", pages.Index())
-	router.Templ("/test/{$}", pages.Test())
+	router.GetTempl("/{$}", pages.Index())
+	router.GetTempl("/test/{$}", pages.Test())
 	router.Get("/hello/{$}", handlers.MyHandlerFunc)
 
 	url := strings.Join([]string{"localhost", config.Port}, ":")

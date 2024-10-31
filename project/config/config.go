@@ -9,9 +9,9 @@ var (
 	LogLevel = slog.LevelDebug
 )
 
-type ConfigT struct {
+type EnvT struct {
 	DbUrl   string
 	DbToken string
 }
 
-var Config ConfigT
+var Env EnvT
