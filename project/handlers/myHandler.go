@@ -11,9 +11,9 @@ import (
 )
 
 func MyHandlerFunc(w http.ResponseWriter, r *http.Request) {
-	_, err := database.Connect()
+	_, err := database.Get()
 	if err != nil {
-		log.Logger.Error("can not connect to DB")
+		log.Logger.Error(err.Error())
 		router.ShowTempl(pages.ServerError(), w, r, http.StatusInternalServerError)
 		return
 	}

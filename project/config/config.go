@@ -5,13 +5,13 @@ import (
 )
 
 var (
-	Port     = "8080"
+	Port     = "9999"
 	LogLevel = slog.LevelDebug
 )
 
-type EnvT struct {
-	DbUrl   string
-	DbToken string
+type envT struct {
+	DbPath string
+	Env    string
 }
 
-var Env EnvT
+var Vars envT

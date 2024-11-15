@@ -1,0 +1,13 @@
+package partial 
+
+templ Partial(partialName, componentName string) {
+	if partialName == "" || partialName  == componentName {
+		{ children... }
+	}
+}
+
+templ Full(partialName string) {
+	if partialName == "" {
+		{ children... }
+	}
+}
