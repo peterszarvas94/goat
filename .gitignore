@@ -1,7 +1,1 @@
-project/.env
-project/templates/**/*.go
-project/templates/**/*.txt
-project/logs/
-project/sqlite.db
-dump.sql
 
