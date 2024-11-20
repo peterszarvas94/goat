@@ -2,7 +2,6 @@ package log
 
 import (
 	"fmt"
-	"io"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -29,12 +28,17 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 		return err
 	}
 
-	writer := io.MultiWriter(os.Stdout, file)
-
-	handler := slog.NewJSONHandler(writer, &slog.HandlerOptions{
-		Level:     slog.LevelDebug,
+	jsonHandler := slog.NewJSONHandler(file, &slog.HandlerOptions{
+		Level:     level,
 		AddSource: true,
 	})
+
+	textHandler := NewPrettyHandler(os.Stdout, &slog.HandlerOptions{
+		Level:     level,
+		AddSource: true,
+	})
+
+	handler := NewMultiHandler(jsonHandler, textHandler)
 
 	Logger = newLogger(handler)
 
