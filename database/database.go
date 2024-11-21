@@ -3,30 +3,35 @@ package database
 import (
 	"errors"
 
+	l "github.com/peterszarvas94/goat/logger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-type connectionT struct {
+type Service struct {
 	DB *gorm.DB
 }
 
-var connection = &connectionT{}
+var service = &Service{}
 
 func StartSqliteConnection(path string) error {
 	conn, err := gorm.Open(sqlite.Open(path), &gorm.Config{})
 	if err != nil {
+		l.Logger.Error(err.Error())
 		return err
 	}
 
-	connection.DB = conn
+	service.DB = conn
 
+	l.Logger.Debug("DB setup is done")
 	return nil
 }
 
-func Get() (*connectionT, error) {
-	if connection == nil {
-		return nil, errors.New("Database is not yet set up")
+func Get() (*Service, error) {
+	if service == nil {
+		err := errors.New("Database is not yet set up")
+		l.Logger.Error(err.Error())
+		return nil, err
 	}
-	return connection, nil
+	return service, nil
 }

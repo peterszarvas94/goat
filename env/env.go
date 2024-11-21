@@ -5,12 +5,16 @@ import (
 	"os"
 	"reflect"
 	"strings"
+
+	l "github.com/peterszarvas94/goat/logger"
 )
 
 func Load(variables interface{}, keys ...string) error {
 	v := reflect.ValueOf(variables)
 	if v.Kind() != reflect.Ptr || v.Elem().Kind() != reflect.Struct {
-		return fmt.Errorf("Load expects a pointer to a struct, received %v", v.Kind())
+		err := fmt.Errorf("Load expects a pointer to a struct, received %v", v.Kind())
+		l.Logger.Error(err.Error())
+		return err
 	}
 
 	structValue := v.Elem()
@@ -20,18 +24,24 @@ func Load(variables interface{}, keys ...string) error {
 		fieldType := structValue.Type().Field(i)
 
 		if field.Kind() != reflect.String {
-			return fmt.Errorf("Field %s must be of type string", fieldType.Name)
+			err := fmt.Errorf("Field %s must be of type string", fieldType.Name)
+			l.Logger.Error(err.Error())
+			return err
 		}
 
 		envVarName := strings.ToUpper(fieldType.Name)
 		envVarValue, found := os.LookupEnv(envVarName)
 
 		if !found {
-			return fmt.Errorf("Environment variable %s not found", envVarName)
+			err := fmt.Errorf("Environment variable %s not found", envVarName)
+			l.Logger.Error(err.Error())
+			return err
 		}
 
 		field.SetString(envVarValue)
 	}
+
+	l.Logger.Debug("Envs are loaded")
 
 	return nil
 }

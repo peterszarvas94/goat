@@ -1,4 +1,4 @@
-package log
+package logger
 
 import (
 	"fmt"
@@ -19,12 +19,13 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 	filePath := filepath.Join(folderPath, filename)
 
 	if err := os.MkdirAll(folderPath, os.ModePerm); err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
 
 	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		return err
 	}
 
@@ -41,6 +42,8 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 	handler := NewMultiHandler(jsonHandler, textHandler)
 
 	Logger = newLogger(handler)
+
+	Logger.Debug("Logger set up done")
 
 	return nil
 }
