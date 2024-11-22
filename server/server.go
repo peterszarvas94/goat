@@ -27,13 +27,11 @@ func NewServer(m *Mux) *Server {
 }
 
 func (s *Server) Serve(url string, id string) {
-	// server := NewHttpServer(url)
-
 	// Create a done channel to signal when the shutdown is complete
-	// done := make(chan bool, 1)
+	done := make(chan bool, 1)
 
 	// Run graceful shutdown in a separate goroutine
-	// go gracefulShutdown(s.server, done)
+	go gracefulShutdown(s.server, done)
 
 	l.Logger.Info("Server is started: %s", slog.String("url", s.server.Addr), slog.String("id", id))
 
@@ -44,7 +42,7 @@ func (s *Server) Serve(url string, id string) {
 	}
 
 	// Wait for the graceful shutdown to complete
-	// <-done
+	<-done
 
 	l.Logger.Info("Graceful shutdown complete")
 }

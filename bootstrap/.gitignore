@@ -1,0 +1,4 @@
+templates/**/*.templ_go
+.env
+sqlite.db
+logs/

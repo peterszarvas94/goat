@@ -1,0 +1,31 @@
+package pages
+
+import (
+	p "bootstrap/templates/partial"
+)
+
+type indexT struct{}
+
+templ (i *indexT) Full(l []string) {
+	@index("", l)
+}
+
+templ (i *indexT) Partial(part string, l []string) {
+	@index(part, l)
+}
+
+templ index(part string, list []string) {
+	@p.Full(part) {
+		<div>top</div>
+	}
+	@p.Partial(part, "test") {
+		<div>partial test</div>
+	}
+	for _, elem := range list {
+		@p.Partial(part, elem) {
+			<div>{ elem }</div>
+		}
+	}
+}
+
+var Index indexT

@@ -12,8 +12,7 @@ var rootCmd = &cobra.Command{
 	Short: "GOAT bootstrap",
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Welcome to the goat bootstrap!")
-		fmt.Println("To get started, run \"goat new my-app\"")
+		fmt.Println("Welcome to the goat bootstrap!\nTo get started, run \"goat new my-app\"")
 	},
 }
 
