@@ -9,9 +9,3 @@ The all-in-one web framework for go (will be)
 `go install github.com/peterszarvas04/goat`
 
 `goat new [my-app]`
-
-2. todo
-
-Bootstrapp new application
-
-- [ ] copy project from bootstrap folder
