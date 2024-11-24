@@ -1,21 +1,20 @@
 package database
 
 import (
+	"database/sql"
 	"errors"
 
 	l "github.com/peterszarvas94/goat/logger"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 type Service struct {
-	DB *gorm.DB
+	DB *sql.DB
 }
 
 var service = &Service{}
 
 func StartSqliteConnection(path string) error {
-	conn, err := gorm.Open(sqlite.Open(path), &gorm.Config{})
+	conn, err := sql.Open("sqlite", path)
 	if err != nil {
 		l.Logger.Error(err.Error())
 		return err

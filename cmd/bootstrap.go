@@ -46,6 +46,11 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
+	err = makeEnv()
+	if err != nil {
+		return err
+	}
+
 	output, err = cmd("git", "remote", "remove", "origin")
 	fmt.Println(string(output))
 	if err != nil {
@@ -79,4 +84,16 @@ func renameBootstrap(path, name string) error {
 
 		return os.WriteFile(path, newContent, 0644)
 	})
+}
+
+func makeEnv() error {
+	_, err := os.Create(".env")
+	if err != nil {
+		return err
+	}
+
+	envContent := `DBURL=sqlite.db
+ENV=dev
+	`
+	return os.WriteFile(".env", []byte(envContent), 0655)
 }
