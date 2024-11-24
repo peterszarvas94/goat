@@ -11,7 +11,7 @@ import (
 var db *sql.DB
 
 func StartSqliteConnection(path string) error {
-	conn, err := sql.Open("sqlite", path)
+	conn, err := sql.Open("sqlite3", path)
 	if err != nil {
 		l.Logger.Error(err.Error())
 		return err
