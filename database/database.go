@@ -7,11 +7,7 @@ import (
 	l "github.com/peterszarvas94/goat/logger"
 )
 
-type Service struct {
-	DB *sql.DB
-}
-
-var service = &Service{}
+var db *sql.DB
 
 func StartSqliteConnection(path string) error {
 	conn, err := sql.Open("sqlite", path)
@@ -20,17 +16,17 @@ func StartSqliteConnection(path string) error {
 		return err
 	}
 
-	service.DB = conn
+	db = conn
 
 	l.Logger.Debug("DB setup is done")
 	return nil
 }
 
-func Get() (*Service, error) {
-	if service == nil {
+func Get() (*sql.DB, error) {
+	if db == nil {
 		err := errors.New("Database is not yet set up")
 		l.Logger.Error(err.Error())
 		return nil, err
 	}
-	return service, nil
+	return db, nil
 }
