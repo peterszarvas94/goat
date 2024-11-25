@@ -6,37 +6,70 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/peterszarvas94/goat/config"
 )
 
-func modelAdd(name string) error {
-	if name == "" {
+func modelAdd(modelname string) error {
+	// 0. check -> TODO imporve
+	if modelname == "" {
 		return fmt.Errorf("Name can not be empty")
 	}
 
-	schemaDirPath := filepath.Join("sql", "schema")
-	err := existOrCreateDir(schemaDirPath)
+	// 1. MIGRATIONS
+
+	err := existOrCreateDir(config.MigrationsPath)
 	if err != nil {
 		return err
 	}
 
-	queriesDirPath := filepath.Join("sql", "queries")
-	err = existOrCreateDir(queriesDirPath)
+	output, err := cmd("goose", "-dir", config.MigrationsPath, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
+	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	schemaFilePath := filepath.Join(schemaDirPath, fmt.Sprintf("%s.sql", name))
+	migrationFilepath, err := getFileNameFromGooseOutput(output)
+	if err != nil {
+		return err
+	}
+
+	migrationSQL := fmt.Sprintf(`-- +goose Up
+CREATE TABLE %s (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+-- +goose Down
+DROP TABLE %s;`, modelname, modelname)
+
+	err = os.WriteFile(migrationFilepath, []byte(migrationSQL), 0644)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Migration file created: %s\n", migrationFilepath)
+
+	// 2. SCHEMA
+
+	err = existOrCreateDir(config.SchemaDirPath)
+	if err != nil {
+		return err
+	}
+
+	schemaFilePath := filepath.Join(config.SchemaDirPath, fmt.Sprintf("%s.sql", modelname))
 	err = existsOrCreateFile(schemaFilePath)
 	if err != nil {
 		return err
 	}
 
 	modelSQL := fmt.Sprintf(`CREATE TABLE %s (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL
 );`,
-		name,
+		modelname,
 	)
+
 	err = os.WriteFile(schemaFilePath, []byte(modelSQL), 0644)
 	if err != nil {
 		return err
@@ -44,13 +77,20 @@ func modelAdd(name string) error {
 
 	fmt.Printf("Schema is created: %s\n", schemaFilePath)
 
-	queriesFilePath := filepath.Join(queriesDirPath, fmt.Sprintf("%s.sql", name))
+	// 3. QUERIES
+
+	err = existOrCreateDir(config.QueriesDirPath)
+	if err != nil {
+		return err
+	}
+
+	queriesFilePath := filepath.Join(config.QueriesDirPath, fmt.Sprintf("%s.sql", modelname))
 	err = existsOrCreateFile(queriesFilePath)
 	if err != nil {
 		return err
 	}
 
-	upperCaseName := fmt.Sprintf("%s%s", strings.ToUpper(string(name[0])), name[1:])
+	uppercasemodelName := fmt.Sprintf("%s%s", strings.ToUpper(string(modelname[0])), modelname[1:])
 
 	queriesSQL := fmt.Sprintf(`-- name: Get%sByID :one
 SELECT *
@@ -76,16 +116,16 @@ RETURNING *;
 -- name: Delete%s :exec
 DELETE FROM %s
 WHERE id = ?;`,
-		upperCaseName,
-		name,
-		upperCaseName,
-		name,
-		upperCaseName,
-		name,
-		upperCaseName,
-		name,
-		upperCaseName,
-		name,
+		uppercasemodelName,
+		modelname,
+		uppercasemodelName,
+		modelname,
+		uppercasemodelName,
+		modelname,
+		uppercasemodelName,
+		modelname,
+		uppercasemodelName,
+		modelname,
 	)
 
 	err = os.WriteFile(queriesFilePath, []byte(queriesSQL), 0644)
@@ -95,8 +135,18 @@ WHERE id = ?;`,
 
 	fmt.Printf("Queries are created: %s\n", queriesFilePath)
 
+	output, err = cmd("sqlc", "generate")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Run migration with \"goat migrate:up\"")
+
 	return nil
 }
+
+// helpers:
 
 func existOrCreateDir(path string) error {
 	_, err := os.Stat(path)
@@ -119,4 +169,19 @@ func existsOrCreateFile(path string) error {
 
 	// if existst, error
 	return fmt.Errorf("file %s already exists", path)
+}
+
+func getFileNameFromGooseOutput(output string) (string, error) {
+	arr := strings.Split(output, " ")
+	if len(arr) < 6 {
+		return "", fmt.Errorf("goose output is malformed")
+	}
+
+	filename := arr[5]
+
+	if !strings.HasPrefix(filename, config.MigrationsPath) {
+		return "", fmt.Errorf("goose output is malformed")
+	}
+
+	return strings.TrimSuffix(filename, "\n"), nil
 }

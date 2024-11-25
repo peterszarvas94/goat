@@ -1,15 +1,14 @@
 package cmd
 
 import (
+	"fmt"
 	"os/exec"
 )
 
 func cmd(name string, args ...string) (string, error) {
 	cmd := exec.Command(name, args...)
+	fmt.Println(cmd.String())
 	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return string(output), err
-	}
 
-	return string(output), nil
+	return string(output), err
 }

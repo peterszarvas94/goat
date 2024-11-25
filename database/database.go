@@ -10,17 +10,17 @@ import (
 
 var db *sql.DB
 
-func StartSqliteConnection(path string) error {
+func Connect(path string) (*sql.DB, error) {
 	conn, err := sql.Open("sqlite3", path)
 	if err != nil {
 		l.Logger.Error(err.Error())
-		return err
+		return nil, err
 	}
 
 	db = conn
 
 	l.Logger.Debug("DB setup is done")
-	return nil
+	return db, nil
 }
 
 func Get() (*sql.DB, error) {

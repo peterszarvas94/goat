@@ -57,6 +57,18 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
+	output, err = cmd("go", "install", "github.com/pressly/goose/v3/cmd/goose@latest")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	output, err = cmd("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

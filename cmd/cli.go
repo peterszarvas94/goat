@@ -35,12 +35,38 @@ var bootstrapCmd = &cobra.Command{
 }
 
 var addModelCmd = &cobra.Command{
-	Use:                   "model add [name]",
+	Use:                   "model:add [name]",
 	Short:                 "Add new model",
-	Args:                  cobra.ExactArgs(2),
+	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := modelAdd(args[1])
+		err := modelAdd(args[0])
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	},
+}
+
+var migrateUpCmd = &cobra.Command{
+	Use:                   "migrate:up",
+	Short:                 "Run up migrations",
+	Args:                  cobra.ExactArgs(0),
+	DisableFlagsInUseLine: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		err := migrateUpDown("up")
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	},
+}
+
+var migrateDownCmd = &cobra.Command{
+	Use:                   "migrate:down",
+	Short:                 "Run one migration down",
+	Args:                  cobra.ExactArgs(0),
+	DisableFlagsInUseLine: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		err := migrateUpDown("down")
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -57,4 +83,6 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(bootstrapCmd)
 	rootCmd.AddCommand(addModelCmd)
+	rootCmd.AddCommand(migrateUpCmd)
+	rootCmd.AddCommand(migrateDownCmd)
 }
