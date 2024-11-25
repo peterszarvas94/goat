@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func modelAdd(modelname string, showHelperText bool) error {
+func modelAdd(modelname string) error {
 	// 0. CHECK -> TODO imporve
 
 	if modelname == "" {
@@ -48,9 +48,7 @@ func modelAdd(modelname string, showHelperText bool) error {
 
 	fmt.Println("Go functions and types are generated")
 
-	if showHelperText {
-		fmt.Println("Run migration with \"goat migrate:up\"")
-	}
+	fmt.Println("Run migration with \"goat migrate:up\"")
 
 	return nil
 }

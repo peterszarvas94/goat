@@ -69,15 +69,18 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
-	err = modelAdd("user", false)
+	output, err = cmd("go", "install", "go install github.com/a-h/templ/cmd/templ@latest")
+	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	err = modelAdd("session", true)
+	err = migrateUpInitial()
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("Default db schema is migrated")
 
 	return nil
 }

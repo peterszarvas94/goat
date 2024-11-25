@@ -9,7 +9,9 @@ func getDefaultMigraionSql(modelname string) string {
 	return fmt.Sprintf(`-- +goose Up
 CREATE TABLE %s (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- +goose Down
@@ -19,7 +21,9 @@ DROP TABLE %s;`, modelname, modelname)
 func getDefaultSchemaSql(modelname string) string {
 	return fmt.Sprintf(`CREATE TABLE %s (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );`,
 		modelname,
 	)

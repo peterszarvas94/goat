@@ -40,7 +40,7 @@ var addModelCmd = &cobra.Command{
 	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := modelAdd(args[0], true)
+		err := modelAdd(args[0])
 		if err != nil {
 			fmt.Println(err.Error())
 		}

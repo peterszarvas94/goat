@@ -22,3 +22,13 @@ func migrateUpDown(direction string) error {
 
 	return nil
 }
+
+func migrateUpInitial() error {
+	output, err := cmd("goose", "-dir", config.MigrationsPath, "sqlite3", "sqlite.db", "up")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
