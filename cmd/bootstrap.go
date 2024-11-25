@@ -69,6 +69,16 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
+	err = modelAdd("user", false)
+	if err != nil {
+		return err
+	}
+
+	err = modelAdd("session", true)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -104,7 +114,7 @@ func makeEnv() error {
 		return err
 	}
 
-	envContent := `DBURL=sqlite.db
+	envContent := `DBPATH=sqlite.db
 ENV=dev
 	`
 	return os.WriteFile(".env", []byte(envContent), 0655)
