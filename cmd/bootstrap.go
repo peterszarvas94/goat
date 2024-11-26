@@ -75,6 +75,12 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
+	output, err = cmd("templ", "generate")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
 	err = migrateUpInitial()
 	if err != nil {
 		return err
