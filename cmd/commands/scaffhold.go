@@ -96,6 +96,12 @@ func Scaffhold(folderName string) error {
 
 	fmt.Println("Default db schema is migrated")
 
+	output, err = helpers.Cmd("go", "mod", "tidy")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
