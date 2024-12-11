@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/peterszarvas94/goat/cmd/commands"
+	"github.com/peterszarvas94/goat/config"
 	"github.com/spf13/cobra"
 )
 
@@ -14,6 +15,15 @@ var rootCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Welcome to goat!\nTo get started, run \"goat new my-app\", or \"goat --help\"")
+	},
+}
+
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "GOAT version",
+	Args:  cobra.ExactArgs(0),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(config.Version)
 	},
 }
 
@@ -96,6 +106,7 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(scaffholdCmd)
+	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(addModelCmd)
 	rootCmd.AddCommand(migrateUpCmd)
 	rootCmd.AddCommand(migrateDownCmd)
