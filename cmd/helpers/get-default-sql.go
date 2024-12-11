@@ -1,4 +1,4 @@
-package cmd
+package helpers
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ CREATE TABLE %s (
 DROP TABLE %s;`, modelname, modelname)
 }
 
-func getDefaultSchemaSql(modelname string) string {
+func GetDefaultSchemaSql(modelname string) string {
 	return fmt.Sprintf(`CREATE TABLE %s (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,

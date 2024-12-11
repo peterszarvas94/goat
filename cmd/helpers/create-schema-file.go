@@ -1,4 +1,4 @@
-package cmd
+package helpers
 
 import (
 	"fmt"
@@ -8,21 +8,21 @@ import (
 	"github.com/peterszarvas94/goat/config"
 )
 
-func createSchemaFile(modelname string, sql string) (string, error) {
-	err := existOrCreateDir(config.SchemaDirPath)
+func CreateSchemaFile(modelname string, sql string) (string, error) {
+	err := ExistsOrCreateDir(config.SchemaDirPath)
 	if err != nil {
 		return "", err
 	}
 
 	schemaFilePath := filepath.Join(config.SchemaDirPath, fmt.Sprintf("%s.sql", modelname))
-	err = existsOrCreateFile(schemaFilePath)
+	err = createFileIfNotExists(schemaFilePath)
 	if err != nil {
 		return "", err
 	}
 
 	modelSQL := sql
 	if modelSQL == "" {
-		modelSQL = getDefaultSchemaSql(modelname)
+		modelSQL = GetDefaultSchemaSql(modelname)
 	}
 
 	err = os.WriteFile(schemaFilePath, []byte(modelSQL), 0644)

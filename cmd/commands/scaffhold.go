@@ -1,13 +1,15 @@
-package cmd
+package commands
 
 import (
 	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/peterszarvas94/goat/cmd/helpers"
 )
 
-func bootstrap(folderName string) error {
+func Scaffhold(folderName string) error {
 	path := folderName
 	if path == "" {
 		path = "."
@@ -20,7 +22,7 @@ func bootstrap(folderName string) error {
 		}
 	}
 
-	output, err := cmd("git", "clone", "https://github.com/peterszarvas94/goat-bootstrap.git", path)
+	output, err := helpers.Cmd("git", "clone", "https://github.com/peterszarvas94/goat-scaffhold.git", path)
 	fmt.Println(string(output))
 	if err != nil {
 		return err
@@ -36,7 +38,7 @@ func bootstrap(folderName string) error {
 		name = current
 	}
 
-	err = renameBootstrap(path, name)
+	err = renameScaffhold(path, name)
 	if err != nil {
 		return err
 	}
@@ -46,36 +48,58 @@ func bootstrap(folderName string) error {
 		return err
 	}
 
+	_, err = os.Create("sqlite.db")
+	if err != nil {
+		return err
+	}
+
+	_, err = GenerateMigration("create", "user")
+	if err != nil {
+		return err
+	}
+
+	_, err = GenerateMigration("create", "session")
+	if err != nil {
+		return err
+	}
+
 	err = makeEnv()
 	if err != nil {
 		return err
 	}
 
-	output, err = cmd("git", "remote", "remove", "origin")
+	output, err = helpers.Cmd("git", "remote", "remove", "origin")
 	fmt.Println(string(output))
 	if err != nil {
 		return err
 	}
 
-	output, err = cmd("go", "install", "github.com/pressly/goose/v3/cmd/goose@latest")
+	output, err = helpers.Cmd("go", "install", "github.com/pressly/goose/v3/helpers.Cmd/goose@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	output, err = cmd("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
+	output, err = helpers.Cmd("go", "install", "github.com/sqlc-dev/sqlc/helpers.Cmd/sqlc@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	output, err = cmd("go", "install", "go install github.com/a-h/templ/cmd/templ@latest")
+	output, err = helpers.Cmd("go", "install", "github.com/a-h/templ/helpers.Cmd/templ@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	output, err = cmd("templ", "generate")
+	output, err = helpers.Cmd("go", "install", "ariga.io/atlas-go-sdk/atlasexec@latest")
+
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	output, err = helpers.Cmd("templ", "generate")
 	fmt.Println(output)
 	if err != nil {
 		return err
@@ -91,7 +115,7 @@ func bootstrap(folderName string) error {
 	return nil
 }
 
-func renameBootstrap(path, name string) error {
+func renameScaffhold(path, name string) error {
 	return filepath.WalkDir(path, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -111,7 +135,7 @@ func renameBootstrap(path, name string) error {
 			return err
 		}
 
-		newContent := bytes.ReplaceAll(content, []byte("bootstrap"), []byte(name))
+		newContent := bytes.ReplaceAll(content, []byte("scaffhold"), []byte(name))
 
 		return os.WriteFile(path, newContent, 0644)
 	})

@@ -1,4 +1,4 @@
-package cmd
+package helpers
 
 import (
 	"fmt"
@@ -8,14 +8,14 @@ import (
 	"github.com/peterszarvas94/goat/config"
 )
 
-func createQueriesFile(modelname, sql string) (string, error) {
-	err := existOrCreateDir(config.QueriesDirPath)
+func CreateQueriesFile(modelname, sql string) (string, error) {
+	err := ExistsOrCreateDir(config.QueriesDirPath)
 	if err != nil {
 		return "", err
 	}
 
 	queriesFilePath := filepath.Join(config.QueriesDirPath, fmt.Sprintf("%s.sql", modelname))
-	err = existsOrCreateFile(queriesFilePath)
+	err = createFileIfNotExists(queriesFilePath)
 	if err != nil {
 		return "", err
 	}

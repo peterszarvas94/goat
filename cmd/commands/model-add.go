@@ -1,10 +1,12 @@
-package cmd
+package commands
 
 import (
 	"fmt"
+
+	"github.com/peterszarvas94/goat/cmd/helpers"
 )
 
-func modelAdd(modelname string) error {
+func ModelAdd(modelname string) error {
 	// 0. CHECK -> TODO imporve
 
 	if modelname == "" {
@@ -13,7 +15,7 @@ func modelAdd(modelname string) error {
 
 	// 1. MIGRATIONS
 
-	migrationFilepath, err := createMigrationFile(modelname, "")
+	migrationFilepath, err := GenerateMigration("create", modelname)
 	if err != nil {
 		return err
 	}
@@ -22,7 +24,7 @@ func modelAdd(modelname string) error {
 
 	// 2. SCHEMA
 
-	schemaFilePath, err := createSchemaFile(modelname, "")
+	schemaFilePath, err := helpers.CreateSchemaFile(modelname, "")
 	if err != nil {
 		return err
 	}
@@ -31,7 +33,7 @@ func modelAdd(modelname string) error {
 
 	// 3. QUERIES
 
-	queriesFilePath, err := createQueriesFile(modelname, "")
+	queriesFilePath, err := helpers.CreateQueriesFile(modelname, "")
 	if err != nil {
 		return err
 	}
@@ -40,7 +42,7 @@ func modelAdd(modelname string) error {
 
 	// 4. GENREATE GO TYPES AND FUNCTIONS
 
-	output, err := cmd("sqlc", "generate")
+	output, err := helpers.Cmd("sqlc", "generate")
 	fmt.Println(output)
 	if err != nil {
 		return err

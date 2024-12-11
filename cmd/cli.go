@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/peterszarvas94/goat/cmd/commands"
 	"github.com/spf13/cobra"
 )
 
@@ -12,13 +13,13 @@ var rootCmd = &cobra.Command{
 	Short: "Go Application Toolkit",
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Welcome to the goat bootstrap!\nTo get started, run \"goat new my-app\", or \"goat --help\"")
+		fmt.Println("Welcome to goat!\nTo get started, run \"goat new my-app\", or \"goat --help\"")
 	},
 }
 
-var bootstrapCmd = &cobra.Command{
+var scaffholdCmd = &cobra.Command{
 	Use:                   "new [name]",
-	Short:                 "Bootstrap project",
+	Short:                 "Scaffholfd project",
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -27,7 +28,7 @@ var bootstrapCmd = &cobra.Command{
 			folderName = args[0]
 		}
 
-		err := bootstrap(folderName)
+		err := commands.Scaffhold(folderName)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -40,7 +41,20 @@ var addModelCmd = &cobra.Command{
 	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := modelAdd(args[0])
+		err := commands.ModelAdd(args[0])
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	},
+}
+
+var migrationGenCmd = &cobra.Command{
+	Use:                   "mig:gen [table]",
+	Short:                 "Parse sql file",
+	Args:                  cobra.ExactArgs(1),
+	DisableFlagsInUseLine: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		_, err := commands.GenerateMigration("alter", args[0])
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -48,12 +62,12 @@ var addModelCmd = &cobra.Command{
 }
 
 var migrateUpCmd = &cobra.Command{
-	Use:                   "migrate:up",
+	Use:                   "mig:up",
 	Short:                 "Run up migrations",
 	Args:                  cobra.ExactArgs(0),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := migrateUpDown("up")
+		err := commands.MigrateUpDown("up")
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -61,12 +75,12 @@ var migrateUpCmd = &cobra.Command{
 }
 
 var migrateDownCmd = &cobra.Command{
-	Use:                   "migrate:down",
+	Use:                   "mig:down",
 	Short:                 "Run one migration down",
 	Args:                  cobra.ExactArgs(0),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := migrateUpDown("down")
+		err := commands.MigrateUpDown("down")
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -81,8 +95,9 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(bootstrapCmd)
+	rootCmd.AddCommand(scaffholdCmd)
 	rootCmd.AddCommand(addModelCmd)
 	rootCmd.AddCommand(migrateUpCmd)
 	rootCmd.AddCommand(migrateDownCmd)
+	rootCmd.AddCommand(migrationGenCmd)
 }
