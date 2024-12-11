@@ -50,7 +50,7 @@ func ModelAdd(modelname string) error {
 
 	fmt.Println("Go functions and types are generated")
 
-	fmt.Println("Run migration with \"goat migrate:up\"")
+	fmt.Println("Run migration with \"goat mig:up\"")
 
 	return nil
 }
