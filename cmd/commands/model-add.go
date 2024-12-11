@@ -15,7 +15,7 @@ func ModelAdd(modelname string) error {
 
 	// 1. MIGRATIONS
 
-	migrationFilepath, err := GenerateMigration("create", modelname)
+	migrationFilepath, err := helpers.CreateMigrationFile(modelname, true)
 	if err != nil {
 		return err
 	}

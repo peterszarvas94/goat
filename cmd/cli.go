@@ -48,13 +48,13 @@ var addModelCmd = &cobra.Command{
 	},
 }
 
-var migrationGenCmd = &cobra.Command{
-	Use:                   "mig:gen [table]",
-	Short:                 "Parse sql file",
+var migrationNewCmd = &cobra.Command{
+	Use:                   "mig:new [title]",
+	Short:                 "Add new empty migration file",
 	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		_, err := commands.GenerateMigration("alter", args[0])
+		err := commands.NewMigration(args[0])
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -99,5 +99,5 @@ func init() {
 	rootCmd.AddCommand(addModelCmd)
 	rootCmd.AddCommand(migrateUpCmd)
 	rootCmd.AddCommand(migrateDownCmd)
-	rootCmd.AddCommand(migrationGenCmd)
+	rootCmd.AddCommand(migrationNewCmd)
 }

@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/cmd/helpers"
+	"github.com/peterszarvas94/goat/config"
 )
 
 func Scaffhold(folderName string) error {
@@ -48,21 +49,6 @@ func Scaffhold(folderName string) error {
 		return err
 	}
 
-	_, err = os.Create("sqlite.db")
-	if err != nil {
-		return err
-	}
-
-	_, err = GenerateMigration("create", "user")
-	if err != nil {
-		return err
-	}
-
-	_, err = GenerateMigration("create", "session")
-	if err != nil {
-		return err
-	}
-
 	err = makeEnv()
 	if err != nil {
 		return err
@@ -74,26 +60,19 @@ func Scaffhold(folderName string) error {
 		return err
 	}
 
-	output, err = helpers.Cmd("go", "install", "github.com/pressly/goose/v3/helpers.Cmd/goose@latest")
+	output, err = helpers.Cmd("go", "install", "github.com/pressly/goose/v3/cmd/goose@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	output, err = helpers.Cmd("go", "install", "github.com/sqlc-dev/sqlc/helpers.Cmd/sqlc@latest")
+	output, err = helpers.Cmd("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
-	output, err = helpers.Cmd("go", "install", "github.com/a-h/templ/helpers.Cmd/templ@latest")
-	fmt.Println(output)
-	if err != nil {
-		return err
-	}
-
-	output, err = helpers.Cmd("go", "install", "ariga.io/atlas-go-sdk/atlasexec@latest")
-
+	output, err = helpers.Cmd("go", "install", "github.com/a-h/templ/cmd/templ@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
@@ -101,6 +80,11 @@ func Scaffhold(folderName string) error {
 
 	output, err = helpers.Cmd("templ", "generate")
 	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	_, err = os.Create(config.DBPath)
 	if err != nil {
 		return err
 	}
@@ -147,8 +131,10 @@ func makeEnv() error {
 		return err
 	}
 
-	envContent := `DBPATH=sqlite.db
+	envContent := fmt.Sprintf(`DBPATH=%s
 ENV=dev
-	`
+	`,
+		config.DBPath,
+	)
 	return os.WriteFile(".env", []byte(envContent), 0655)
 }
