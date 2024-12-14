@@ -44,7 +44,7 @@ func (m *Mux) TemplGet(path string, component templ.Component) {
 	m.addRoute("GET", path, templ.Handler(component))
 }
 
-func TemplShow(component templ.Component, w http.ResponseWriter, r *http.Request, status int) {
+func Render(w http.ResponseWriter, r *http.Request, component templ.Component, status int) {
 	w.WriteHeader(status)
 	component.Render(r.Context(), w)
 }
