@@ -58,6 +58,19 @@ var addModelCmd = &cobra.Command{
 	},
 }
 
+var genModelCmd = &cobra.Command{
+	Use:                   "model:gen [name]",
+	Short:                 "Generate model from existing schemas",
+	Args:                  cobra.ExactArgs(0),
+	DisableFlagsInUseLine: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		err := commands.ModelGen()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	},
+}
+
 var migrationNewCmd = &cobra.Command{
 	Use:                   "mig:new [title]",
 	Short:                 "Add new empty migration file",
@@ -108,6 +121,7 @@ func init() {
 	rootCmd.AddCommand(scaffholdCmd)
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(addModelCmd)
+	rootCmd.AddCommand(genModelCmd)
 	rootCmd.AddCommand(migrateUpCmd)
 	rootCmd.AddCommand(migrateDownCmd)
 	rootCmd.AddCommand(migrationNewCmd)
