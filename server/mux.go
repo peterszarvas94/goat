@@ -45,6 +45,6 @@ func (m *Mux) TemplGet(path string, component templ.Component) {
 }
 
 func TemplShow(component templ.Component, w http.ResponseWriter, r *http.Request, status int) {
-	handler := templ.Handler(component, templ.WithStatus(status))
-	handler.ServeHTTP(w, r)
+	w.WriteHeader(status)
+	component.Render(r.Context(), w)
 }
