@@ -12,10 +12,10 @@ type Server struct {
 	server *http.Server
 }
 
-func NewServer(m *Mux) *Server {
+func NewServer(router *Router, url string) *Server {
 	httpServer := &http.Server{
-		Addr:         m.url,
-		Handler:      m.mux,
+		Addr:         url,
+		Handler:      &router.Mux,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

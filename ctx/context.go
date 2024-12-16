@@ -1,0 +1,33 @@
+package ctx
+
+import (
+	"context"
+	"net/http"
+)
+
+type KV struct {
+	Key   string
+	Value any
+}
+
+func AddToContext(r *http.Request, items []KV) *http.Request {
+	var newR = r
+	for _, item := range items {
+		ctx := context.WithValue(newR.Context(), item.Key, item.Value)
+		newR = newR.WithContext(ctx)
+	}
+	return newR
+}
+
+func GetFromCtx[T any](r *http.Request, key string) (*T, bool) {
+	val := r.Context().Value(key)
+	if typedVal, ok := val.(*T); ok && typedVal != nil {
+		return typedVal, true
+	}
+	return nil, false
+}
+
+func DeleteFromCtx(r *http.Request, key string) *http.Request {
+	ctx := context.WithValue(context.Background(), key, nil)
+	return r.WithContext(ctx)
+}
