@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -58,20 +57,32 @@ func (h *PrettyHandler) Handle(ctx context.Context, record slog.Record) error {
 	builder.WriteString(fmt.Sprintf("\x1b[%dm%s\x1b[0m ", levelColor, levelPrefix))
 	builder.WriteString(fmt.Sprintf("\x1b[90m%s\x1b[0m ", time))
 
-	// Add source if enabled
-	if h.options.AddSource {
-		if pc, file, line, ok := runtime.Caller(4); ok {
-			funcName := runtime.FuncForPC(pc).Name()
-			builder.WriteString(fmt.Sprintf("\x1b[36m[%s:%d %s]\x1b[0m ",
-				shortenPath(file), line, shortenFuncName(funcName)))
-		}
-	}
+	// file := ""
+	// line := ""
+	//
+	// record.Attrs(func(attr slog.Attr) bool {
+	// 	if attr.Key == "file" {
+	// 		file = attr.Value.String()
+	// 	}
+	//
+	// 	if attr.Key == "line" {
+	// 		line = attr.Value.String()
+	// 	}
+	//
+	// 	return true
+	// })
+	//
+	// if file != "" && line != "" {
+	// 	builder.WriteString(fmt.Sprintf("\x1b[36m[%s:%s]\x1b[0m ", shortenPath(file), line))
+	// }
 
 	builder.WriteString(record.Message)
 
 	// Add attributes
 	record.Attrs(func(attr slog.Attr) bool {
-		builder.WriteString(fmt.Sprintf(" \x1b[33m%s\x1b[0m=\x1b[92m%v\x1b[0m", attr.Key, attr.Value))
+		if attr.Key != "file" && attr.Key != "line" {
+			builder.WriteString(fmt.Sprintf(" \x1b[33m%s\x1b[0m=\x1b[92m%v\x1b[0m", attr.Key, attr.Value))
+		}
 		return true
 	})
 
@@ -112,9 +123,4 @@ func shortenPath(path string) string {
 		return strings.Join(parts[len(parts)-2:], "/")
 	}
 	return path
-}
-
-func shortenFuncName(funcName string) string {
-	parts := strings.Split(funcName, ".")
-	return parts[len(parts)-1]
 }

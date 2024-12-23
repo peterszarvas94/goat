@@ -22,10 +22,6 @@ func generateCSRFToken() (string, error) {
 }
 
 func AddNewCSRFToken(sessionID string) (string, error) {
-	if _, ok := csrfTokens.Load(sessionID); ok {
-		return "", fmt.Errorf("CSRF token does not exist for session \"%s\"", sessionID)
-	}
-
 	newToken, err := generateCSRFToken()
 	if err != nil {
 		return "", err
@@ -34,6 +30,17 @@ func AddNewCSRFToken(sessionID string) (string, error) {
 	csrfTokens.Store(sessionID, newToken)
 
 	return newToken, nil
+}
+
+// call this when server starts
+func Setup(sessionIDs []string) error {
+	for _, sessionID := range sessionIDs {
+		_, err := AddNewCSRFToken(sessionID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func GetCSRFToken(sessionID string) (string, error) {

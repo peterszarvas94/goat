@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	l "github.com/peterszarvas94/goat/logger"
+	"github.com/peterszarvas94/goat/logger"
 )
 
 type Server struct {
@@ -33,16 +33,16 @@ func (s *Server) Serve(url string, id string) {
 	// Run graceful shutdown in a separate goroutine
 	go gracefulShutdown(s.server, done)
 
-	l.Logger.Info("Server is started: %s", slog.String("url", s.server.Addr), slog.String("id", id))
+	logger.Info("Server is started", slog.String("url", s.server.Addr), slog.String("id", id))
 
 	err := s.server.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		l.Logger.Error(err.Error())
+		logger.Error(err.Error())
 		panic(err.Error())
 	}
 
 	// Wait for the graceful shutdown to complete
 	<-done
 
-	l.Logger.Info("Graceful shutdown complete")
+	logger.Info("Graceful shutdown complete")
 }

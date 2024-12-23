@@ -5,15 +5,12 @@ import (
 	"net/http"
 )
 
-type KV struct {
-	Key   string
-	Value any
-}
+type KV map[string]any
 
-func AddToContext(r *http.Request, items []KV) *http.Request {
+func AddToContext(r *http.Request, items KV) *http.Request {
 	var newR = r
-	for _, item := range items {
-		ctx := context.WithValue(newR.Context(), item.Key, item.Value)
+	for key, value := range items {
+		ctx := context.WithValue(newR.Context(), key, value)
 		newR = newR.WithContext(ctx)
 	}
 	return newR
