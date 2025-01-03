@@ -10,20 +10,11 @@ import (
 	"time"
 )
 
-type Context map[string]string
-
 func newLogger(handler slog.Handler) *slog.Logger {
 	return slog.New(handler)
 }
 
 var Logger *slog.Logger
-var ctx = make(Context)
-
-func addContext(args ...any) []any {
-	newArgs := args
-	newArgs = append(newArgs, GetContext()...)
-	return newArgs
-}
 
 func addSource(args ...any) []any {
 	newArgs := args
@@ -39,51 +30,23 @@ func addSource(args ...any) []any {
 }
 
 func Debug(msg string, args ...any) {
-	newArgs := args
-	newArgs = addSource(newArgs...)
-	newArgs = addContext(newArgs...)
-	Logger.Debug(msg, newArgs...)
-	ClearContext()
+	args = addSource(args...)
+	Logger.Debug(msg, args...)
 }
 
 func Info(msg string, args ...any) {
-	newArgs := args
-	newArgs = addSource(newArgs...)
-	newArgs = addContext(newArgs...)
-	Logger.Info(msg, newArgs...)
-	ClearContext()
+	args = addSource(args...)
+	Logger.Info(msg, args...)
 }
 
 func Warn(msg string, args ...any) {
-	newArgs := args
-	newArgs = addSource(args)
-	newArgs = addContext(newArgs...)
-	Logger.Warn(msg, newArgs...)
-	ClearContext()
+	args = addSource(args...)
+	Logger.Warn(msg, args...)
 }
 
 func Error(msg string, args ...any) {
-	newArgs := args
-	newArgs = addSource(args)
-	newArgs = addContext(newArgs...)
-	Logger.Error(msg, newArgs...)
-	ClearContext()
-}
-
-func AddToContext(key string, value string) {
-	ctx[key] = value
-}
-
-func ClearContext() {
-	ctx = make(Context)
-}
-
-func GetContext() []any {
-	var args []any
-	for key, value := range ctx {
-		args = append(args, slog.String(key, value))
-	}
-	return args
+	args = addSource(args...)
+	Logger.Error(msg, args...)
 }
 
 func Setup(folderPath, filePrefix string, level slog.Level) error {

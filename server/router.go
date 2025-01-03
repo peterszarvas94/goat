@@ -76,6 +76,14 @@ func (r *Router) Favicon(filePath string) {
 	r.addRoute("GET", "/favicon.ico", handler)
 }
 
+func (r *Router) Static(route, folder string) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		fs := http.StripPrefix(route, http.FileServer(http.Dir(folder)))
+		fs.ServeHTTP(w, r)
+	}
+	r.addRoute("GET", route, handler)
+}
+
 func Render(w http.ResponseWriter, r *http.Request, component templ.Component, status int) {
 	w.WriteHeader(status)
 	component.Render(r.Context(), w)
