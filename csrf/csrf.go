@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"sync"
+
+	"github.com/peterszarvas94/goat/logger"
 )
 
 var csrfTokens = sync.Map{}
@@ -37,6 +39,7 @@ func Setup(sessionIDs []string) error {
 	for _, sessionID := range sessionIDs {
 		_, err := AddNewCSRFToken(sessionID)
 		if err != nil {
+			logger.Error(err.Error())
 			return err
 		}
 	}
