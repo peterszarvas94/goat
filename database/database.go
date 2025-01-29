@@ -11,7 +11,14 @@ import (
 var db *sql.DB
 
 func Connect(path string) (*sql.DB, error) {
+	logger.Debug("Connecting to %s", path)
 	conn, err := sql.Open("sqlite3", path)
+	if err != nil {
+		logger.Error(err.Error())
+		return nil, err
+	}
+
+	err = conn.Ping()
 	if err != nil {
 		logger.Error(err.Error())
 		return nil, err
