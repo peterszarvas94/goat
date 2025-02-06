@@ -19,16 +19,12 @@ The all-in-one web framework for go (will be)
 
 ### 2. Initialize new project
 
-`goat new [my-app]`
+`goat new [my-app] --template basic-auth`
 
 ### 3. Go to the new project folder
 
 `cd [my-app]`
 
-### 4. Run migrations
-
-`goat mig:up`
-
-### 5. Run dev server
+### 4. Run dev server
 
 `make dev`
