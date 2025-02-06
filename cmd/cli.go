@@ -29,7 +29,7 @@ var versionCmd = &cobra.Command{
 
 var scaffholdCmd = &cobra.Command{
 	Use:                   "new [name]",
-	Short:                 "Scaffholfd project",
+	Short:                 "Scaffhold project",
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -38,7 +38,12 @@ var scaffholdCmd = &cobra.Command{
 			folderName = args[0]
 		}
 
-		err := commands.Scaffhold(folderName)
+		template, _ := cmd.Flags().GetString("template")
+		if template == "" {
+			template = "bare"
+		}
+
+		err := commands.Scaffhold(folderName, template)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -118,6 +123,7 @@ func Execute() {
 }
 
 func init() {
+	scaffholdCmd.Flags().StringP("template", "t", "", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
 	rootCmd.AddCommand(scaffholdCmd)
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(addModelCmd)

@@ -8,9 +8,11 @@ import (
 
 	"github.com/peterszarvas94/goat/cmd/helpers"
 	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/utils"
 )
 
-func Scaffhold(folderName string) error {
+func Scaffhold(folderName, template string) error {
+	// the path we are installing to
 	path := folderName
 	if path == "" {
 		path = "."
@@ -23,12 +25,20 @@ func Scaffhold(folderName string) error {
 		}
 	}
 
-	output, err := helpers.Cmd("git", "clone", "https://github.com/peterszarvas94/goat-scaffhold.git", path)
+	// making tmp folder
+	err := os.MkdirAll("tmp", 0755)
+	if err != nil {
+		return err
+	}
+
+	// downloading the repo
+	output, err := helpers.Cmd("git", "clone", "https://github.com/peterszarvas94/goat-scaffhold.git", "tmp")
 	fmt.Println(string(output))
 	if err != nil {
 		return err
 	}
 
+	// if current repo, get pwd name
 	name := path
 	if name == "." {
 		wd, err := os.Getwd()
@@ -39,6 +49,21 @@ func Scaffhold(folderName string) error {
 		name = current
 	}
 
+	// copy the template files
+	templateDir := filepath.Join("tmp", "templates", template)
+
+	err = utils.CopyDir(templateDir, path)
+	if err != nil {
+		return err
+	}
+
+	// delete templ dir
+	err = os.RemoveAll("tmp")
+	if err != nil {
+		return err
+	}
+
+	// rename "scaffhold" in every file
 	err = renameScaffhold(path, name)
 	if err != nil {
 		return err
@@ -49,30 +74,47 @@ func Scaffhold(folderName string) error {
 		return err
 	}
 
+	// make env file
 	err = makeEnv()
 	if err != nil {
 		return err
 	}
 
-	output, err = helpers.Cmd("git", "remote", "remove", "origin")
+	// initialize git
+	output, err = helpers.Cmd("git", "init")
 	fmt.Println(string(output))
 	if err != nil {
 		return err
 	}
 
+	// install goose
 	output, err = helpers.Cmd("go", "install", "github.com/pressly/goose/v3/cmd/goose@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
+	// install sqlc
 	output, err = helpers.Cmd("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
 	fmt.Println(output)
 	if err != nil {
 		return err
 	}
 
+	// install and run templ
 	output, err = helpers.Cmd("go", "install", "github.com/a-h/templ/cmd/templ@latest")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	output, err = helpers.Cmd("go", "get", "github.com/a-h/templ/cmd/templ@latest")
+	fmt.Println(output)
+	if err != nil {
+		return err
+	}
+
+	output, err = helpers.Cmd("go", "mod", "tidy")
 	fmt.Println(output)
 	if err != nil {
 		return err
@@ -89,18 +131,13 @@ func Scaffhold(folderName string) error {
 		return err
 	}
 
+	// run migrations
 	err = migrateUpInitial()
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("Default db schema is migrated")
-
-	output, err = helpers.Cmd("go", "mod", "tidy")
-	fmt.Println(output)
-	if err != nil {
-		return err
-	}
 
 	return nil
 }
@@ -138,8 +175,9 @@ func makeEnv() error {
 	}
 
 	envContent := fmt.Sprintf(`DBPATH=%s
-ENV=dev
-	`,
+	GOATENV=dev
+	PORT=9999
+		`,
 		config.DBPath,
 	)
 	return os.WriteFile(".env", []byte(envContent), 0655)

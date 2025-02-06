@@ -35,6 +35,16 @@ func migrateUpInitial() error {
 		return err
 	}
 
+	entries, err := os.ReadDir(config.MigrationsPath)
+	if err != nil {
+		return err
+	}
+
+	// no migrations found
+	if len(entries) == 0 {
+		return nil
+	}
+
 	output, err := helpers.Cmd("goose", "-dir", config.MigrationsPath, "sqlite3", config.DBPath, "up")
 	fmt.Println(output)
 	if err != nil {
