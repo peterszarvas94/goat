@@ -7,6 +7,8 @@ import (
 	"strings"
 
 	"github.com/peterszarvas94/goat/logger"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func Load(variables interface{}, keys ...string) error {

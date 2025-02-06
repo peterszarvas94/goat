@@ -6,10 +6,16 @@ The all-in-one web framework for go (will be)
 
 ## Dependencies
 
+## You need to install
+
 - make: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
-- air: `go install github.com/air-verse/air@latest`
-- templ: `go install github.com/a-h/templ/cmd/templ@latest`
 - sqlite3: [https://www.sqlite.org/cli.html](https://www.sqlite.org/cli.html)
+
+## We will install for you
+
+- air: [https://github.com/air-verse/air](https://github.com/air-verse/air)
+- templ: [https://github.com/a-h/templ](https://github.com/a-h/templ)
+- sqlc: [https://github.com/sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc)
 
 ## CLI
 
