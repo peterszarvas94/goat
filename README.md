@@ -15,7 +15,7 @@ The all-in-one web framework for go (will be)
 
 ### 1. Intsall
 
-`go install github.com/peterszarvas04/goat`
+`go install github.com/peterszarvas94/goat`
 
 ### 2. Initialize new project
 
