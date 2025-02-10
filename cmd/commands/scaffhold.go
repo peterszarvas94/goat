@@ -8,7 +8,7 @@ import (
 
 	"github.com/peterszarvas94/goat/cmd/helpers"
 	"github.com/peterszarvas94/goat/config"
-	"github.com/peterszarvas94/goat/utils"
+	"github.com/peterszarvas94/goat/files"
 )
 
 func Scaffhold(folderName, template string) error {
@@ -52,7 +52,7 @@ func Scaffhold(folderName, template string) error {
 	// copy the template files
 	templateDir := filepath.Join("tmp", "templates", template)
 
-	err = utils.CopyDir(templateDir, path)
+	err = files.CopyDir(templateDir, path)
 	if err != nil {
 		return err
 	}

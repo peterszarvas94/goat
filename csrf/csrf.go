@@ -46,7 +46,7 @@ func Setup(sessionIDs []string) error {
 	return nil
 }
 
-func GetCSRFToken(sessionID string) (string, error) {
+func Get(sessionID string) (string, error) {
 	value, ok := csrfTokens.Load(sessionID)
 	if !ok {
 		return "", fmt.Errorf("CSRF token does not exist for session \"%s\"", sessionID)
@@ -60,7 +60,7 @@ func GetCSRFToken(sessionID string) (string, error) {
 	return storedToken, nil
 }
 
-func ValidateCSRFToken(sessionID, csrfToken string) error {
+func Validate(sessionID, csrfToken string) error {
 	value, ok := csrfTokens.Load(sessionID)
 
 	if !ok {
@@ -79,6 +79,6 @@ func ValidateCSRFToken(sessionID, csrfToken string) error {
 	return nil
 }
 
-func DeleteCSRFToken(sessionId string) {
+func Delete(sessionId string) {
 	csrfTokens.Delete(sessionId)
 }
