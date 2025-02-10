@@ -1,16 +1,14 @@
 module github.com/peterszarvas94/goat
 
-go 1.22.7
-
-toolchain go1.23.4
+go 1.23.6
 
 require (
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.3.833
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/spf13/cobra v1.8.1
-	golang.org/x/crypto v0.29.0
+	golang.org/x/crypto v0.31.0
 )
 
 require (

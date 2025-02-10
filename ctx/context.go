@@ -7,7 +7,7 @@ import (
 
 type KV map[string]any
 
-func AddToContext(r *http.Request, items KV) *http.Request {
+func Add(r *http.Request, items KV) *http.Request {
 	var newR = r
 	for key, value := range items {
 		ctx := context.WithValue(newR.Context(), key, value)
@@ -16,7 +16,7 @@ func AddToContext(r *http.Request, items KV) *http.Request {
 	return newR
 }
 
-func GetFromCtx[T any](r *http.Request, key string) (*T, bool) {
+func Get[T any](r *http.Request, key string) (*T, bool) {
 	val := r.Context().Value(key)
 	if typedVal, ok := val.(*T); ok && typedVal != nil {
 		return typedVal, true
@@ -24,7 +24,7 @@ func GetFromCtx[T any](r *http.Request, key string) (*T, bool) {
 	return nil, false
 }
 
-func DeleteFromCtx(r *http.Request, key string) *http.Request {
+func Delete(r *http.Request, key string) *http.Request {
 	ctx := context.WithValue(context.Background(), key, nil)
 	return r.WithContext(ctx)
 }
