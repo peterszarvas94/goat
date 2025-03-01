@@ -9,12 +9,12 @@ import (
 )
 
 func CreateSchemaFile(modelname string, sql string) (string, error) {
-	err := ExistsOrCreateDir(config.SchemaDirPath)
+	err := ExistsOrCreateDir(config.SchemaDir)
 	if err != nil {
 		return "", err
 	}
 
-	schemaFilePath := filepath.Join(config.SchemaDirPath, fmt.Sprintf("%s.sql", modelname))
+	schemaFilePath := filepath.Join(config.SchemaDir, fmt.Sprintf("%s.sql", modelname))
 	err = createFileIfNotExists(schemaFilePath)
 	if err != nil {
 		return "", err

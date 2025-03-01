@@ -88,3 +88,16 @@ func Render(w http.ResponseWriter, r *http.Request, component templ.Component, s
 	w.WriteHeader(status)
 	component.Render(r.Context(), w)
 }
+
+// Set up the following static routes
+//
+// favicon.ico
+//
+// scripts folder
+//
+// styles folder
+func (r *Router) Setup() {
+	r.Favicon("favicon.ico")
+	r.Static("/scripts/", "./scripts")
+	r.Static("/styles/", "./styles")
+}

@@ -9,12 +9,12 @@ import (
 )
 
 func CreateQueriesFile(modelname, sql string) (string, error) {
-	err := ExistsOrCreateDir(config.QueriesDirPath)
+	err := ExistsOrCreateDir(config.QueriesDir)
 	if err != nil {
 		return "", err
 	}
 
-	queriesFilePath := filepath.Join(config.QueriesDirPath, fmt.Sprintf("%s.sql", modelname))
+	queriesFilePath := filepath.Join(config.QueriesDir, fmt.Sprintf("%s.sql", modelname))
 	err = createFileIfNotExists(queriesFilePath)
 	if err != nil {
 		return "", err

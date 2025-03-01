@@ -15,7 +15,7 @@ func GetFileNameFromGooseOutput(output string) (string, error) {
 
 	filename := arr[5]
 
-	if !strings.HasPrefix(filename, config.MigrationsPath) {
+	if !strings.HasPrefix(filename, config.MigrationsDir) {
 		return "", fmt.Errorf("goose output is malformed")
 	}
 

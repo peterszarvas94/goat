@@ -10,12 +10,9 @@ import (
 	"time"
 )
 
-func newLogger(handler slog.Handler) *slog.Logger {
-	return slog.New(handler)
-}
-
 var Logger *slog.Logger
 
+// Using this instead of the built-in AddSource option
 func addSource(args ...any) []any {
 	newArgs := args
 	_, file, line, ok := runtime.Caller(3)
@@ -49,6 +46,11 @@ func Error(msg string, args ...any) {
 	Logger.Error(msg, args...)
 }
 
+// Creates 2 logger:
+//
+// 1 - JSON formatted logger for the log file
+//
+// 2 - pretty logger for the terminal output
 func Setup(folderPath, filePrefix string, level slog.Level) error {
 	filename := fmt.Sprintf("%s-%s.txt", filePrefix, time.Now().Format("2006-01-02"))
 	filePath := filepath.Join(folderPath, filename)
@@ -66,17 +68,15 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 
 	jsonHandler := slog.NewJSONHandler(file, &slog.HandlerOptions{
 		Level: level,
-		// AddSource: true,
 	})
 
 	textHandler := NewPrettyHandler(os.Stdout, &slog.HandlerOptions{
 		Level: level,
-		// AddSource: true,
 	})
 
 	handler := NewMultiHandler(jsonHandler, textHandler)
 
-	Logger = newLogger(handler)
+	Logger = slog.New(handler)
 
 	Logger.Debug("Logger set up done")
 

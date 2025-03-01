@@ -8,12 +8,12 @@ import (
 )
 
 func CreateMigrationFile(modelname string, withSql bool) (string, error) {
-	err := ExistsOrCreateDir(config.MigrationsPath)
+	err := ExistsOrCreateDir(config.MigrationsDir)
 	if err != nil {
 		return "", err
 	}
 
-	output, err := Cmd("goose", "-dir", config.MigrationsPath, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
+	output, err := Cmd("goose", "-dir", config.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
 	fmt.Println(output)
 	if err != nil {
 		return "", err

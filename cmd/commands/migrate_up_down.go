@@ -15,12 +15,12 @@ func MigrateUpDown(direction string) error {
 		return fmt.Errorf("DBPATH is missing from PATH")
 	}
 
-	err := helpers.ExistsOrCreateDir(config.MigrationsPath)
+	err := helpers.ExistsOrCreateDir(config.MigrationsDir)
 	if err != nil {
 		return err
 	}
 
-	output, err := helpers.Cmd("goose", "-dir", config.MigrationsPath, "sqlite3", dbPath, direction)
+	output, err := helpers.Cmd("goose", "-dir", config.MigrationsDir, "sqlite3", dbPath, direction)
 	fmt.Println(output)
 	if err != nil {
 		return err
@@ -30,12 +30,12 @@ func MigrateUpDown(direction string) error {
 }
 
 func migrateUpInitial() error {
-	err := helpers.ExistsOrCreateDir(config.MigrationsPath)
+	err := helpers.ExistsOrCreateDir(config.MigrationsDir)
 	if err != nil {
 		return err
 	}
 
-	entries, err := os.ReadDir(config.MigrationsPath)
+	entries, err := os.ReadDir(config.MigrationsDir)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func migrateUpInitial() error {
 		return nil
 	}
 
-	output, err := helpers.Cmd("goose", "-dir", config.MigrationsPath, "sqlite3", config.DBPath, "up")
+	output, err := helpers.Cmd("goose", "-dir", config.MigrationsDir, "sqlite3", config.DBPath, "up")
 	fmt.Println(output)
 	if err != nil {
 		return err

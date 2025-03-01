@@ -117,10 +117,10 @@ func getColorForLevel(level slog.Level) int {
 	}
 }
 
-func shortenPath(path string) string {
-	parts := strings.Split(path, "/")
-	if len(parts) > 2 {
-		return strings.Join(parts[len(parts)-2:], "/")
-	}
-	return path
-}
+// func shortenPath(path string) string {
+// 	parts := strings.Split(path, "/")
+// 	if len(parts) > 2 {
+// 		return strings.Join(parts[len(parts)-2:], "/")
+// 	}
+// 	return path
+// }
