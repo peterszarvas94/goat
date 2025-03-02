@@ -51,5 +51,7 @@ func migrateUpInitial() error {
 		return err
 	}
 
+	fmt.Println("Default db schema is migrated")
+
 	return err
 }

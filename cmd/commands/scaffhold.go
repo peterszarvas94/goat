@@ -137,8 +137,6 @@ func Scaffhold(folderName, template string) error {
 		return err
 	}
 
-	fmt.Println("Default db schema is migrated")
-
 	return nil
 }
 
@@ -175,8 +173,8 @@ func makeEnv() error {
 	}
 
 	envContent := fmt.Sprintf(`DBPATH=%s
-	GOATENV=dev
-	PORT=9999
+GOATENV=dev
+PORT=9999
 		`,
 		config.DBPath,
 	)
