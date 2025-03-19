@@ -8,7 +8,7 @@ var (
 	QueriesDir        = filepath.Join("db", "sql", "queries")
 	ScriptsDir        = "scripts"
 	StylesDir         = "styles"
-	ImportMapFile     = "importmap.json"
-	TSConfigPahtsFile = "tsconfig.paths.json"
+	ImportMapFile     = filepath.Join(ScriptsDir, "importmap.json")
+	TSConfigPahtsFile = filepath.Join(ScriptsDir, "tsconfig.paths.json")
 	LogDir            = "logs"
 )

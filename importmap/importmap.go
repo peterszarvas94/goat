@@ -8,6 +8,8 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
+	"github.com/peterszarvas94/goat/logger"
 )
 
 type ImportMap struct {
@@ -37,6 +39,7 @@ func Setup() error {
 	// read importmap.json
 	file, err := os.ReadFile(config.ImportMapFile)
 	if err != nil {
+		logger.Error(err.Error())
 		return err
 	}
 
@@ -48,8 +51,11 @@ func Setup() error {
 	// parse
 	var importmap ImportMap
 	if err := json.Unmarshal(file, &importmap); err != nil {
+		logger.Error(err.Error())
 		return err
 	}
+
+	logger.Debug("The importmap file is parsed")
 
 	// make tsconfig struct
 	tsConfigPaths := TsConfig{
@@ -65,24 +71,29 @@ func Setup() error {
 	}
 
 	for key, val := range importmap.Imports {
-		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, "/")}
+		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, fmt.Sprintf("/%s/", config.ScriptsDir))}
 	}
 
 	// write tsconfig into file
 	tsConfigPathsJSON, err := json.MarshalIndent(tsConfigPaths, "", "	")
 	if err != nil {
+		logger.Error(err.Error())
 		return err
 	}
 
-	err = os.WriteFile(config.TSConfigPahtsFile, tsConfigPathsJSON, 0644)
+	tsConfigPathsContent := fmt.Sprintf("%s\n%s", constants.DO_NOT_MODIFY, tsConfigPathsJSON)
+	err = os.WriteFile(config.TSConfigPahtsFile, []byte(tsConfigPathsContent), 0644)
 	if err != nil {
+		logger.Error(err.Error())
 		return err
 	}
+
+	logger.Debug("The tsconfig file is written")
 
 	return nil
 }
 
-// Renders importmap script tag.
+// Renders importmap script tag
 //
 // Data should be loaded first from "importmap.json" by calling Setup
 func ScriptTag() templ.Component {
