@@ -71,7 +71,7 @@ func Setup() error {
 	}
 
 	for key, val := range importmap.Imports {
-		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, fmt.Sprintf("/%s/", config.ScriptsDir))}
+		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, fmt.Sprintf("/%s/", config.JSDir))}
 	}
 
 	// write tsconfig into file

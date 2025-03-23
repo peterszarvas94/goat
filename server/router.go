@@ -1,11 +1,13 @@
 package server
 
 import (
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strings"
 
 	"github.com/a-h/templ"
+	"github.com/peterszarvas94/goat/config"
 	"github.com/peterszarvas94/goat/logger"
 )
 
@@ -85,6 +87,7 @@ func (r *Router) Static(route, folder string) {
 }
 
 func Render(w http.ResponseWriter, r *http.Request, component templ.Component, status int) {
+	w.Header().Set("templ-skip-modify", "false")
 	w.WriteHeader(status)
 	component.Render(r.Context(), w)
 }
@@ -98,6 +101,7 @@ func Render(w http.ResponseWriter, r *http.Request, component templ.Component, s
 // styles folder
 func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
-	r.Static("/scripts/", "./scripts")
-	r.Static("/styles/", "./styles")
+	// r.Static("/scripts/", "./scripts")
+	// r.Static("/styles/", "./styles")
+	r.Static(fmt.Sprintf("/%s/", config.AssetsDir), fmt.Sprintf("./%s", config.AssetsDir))
 }
