@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 )
 
 func CreateMigrationFile(modelname string, withSql bool) (string, error) {
-	err := ExistsOrCreateDir(config.MigrationsDir)
+	err := ExistsOrCreateDir(constants.MigrationsDir)
 	if err != nil {
 		return "", err
 	}
 
-	output, err := Cmd("goose", "-dir", config.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
+	output, err := Cmd("goose", "-dir", constants.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
 	fmt.Println(output)
 	if err != nil {
 		return "", err

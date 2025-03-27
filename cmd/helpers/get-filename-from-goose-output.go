@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 )
 
 func GetFileNameFromGooseOutput(output string) (string, error) {
@@ -15,7 +15,7 @@ func GetFileNameFromGooseOutput(output string) (string, error) {
 
 	filename := arr[5]
 
-	if !strings.HasPrefix(filename, config.MigrationsDir) {
+	if !strings.HasPrefix(filename, constants.MigrationsDir) {
 		return "", fmt.Errorf("goose output is malformed")
 	}
 

@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/peterszarvas94/goat/config"
 	"github.com/peterszarvas94/goat/constants"
 	"github.com/peterszarvas94/goat/logger"
 )
@@ -37,7 +36,7 @@ var scriptTag string = ""
 // Generates "tsconfig.paths.json", which can be imported into "tsconfig.json" using "extends": "./tsconfig.paths.json"
 func Setup() error {
 	// read importmap.json
-	file, err := os.ReadFile(config.ImportMapFile)
+	file, err := os.ReadFile(constants.ImportMapFile)
 	if err != nil {
 		logger.Error(err.Error())
 		return err
@@ -71,7 +70,7 @@ func Setup() error {
 	}
 
 	for key, val := range importmap.Imports {
-		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, fmt.Sprintf("/%s/", config.ScriptsDir))}
+		tsConfigPaths.CompilerOptions.Paths[key] = []string{strings.TrimPrefix(val, fmt.Sprintf("/%s/", constants.JSDir))}
 	}
 
 	// write tsconfig into file
@@ -81,8 +80,8 @@ func Setup() error {
 		return err
 	}
 
-	tsConfigPathsContent := fmt.Sprintf("%s\n%s", constants.DO_NOT_MODIFY, tsConfigPathsJSON)
-	err = os.WriteFile(config.TSConfigPahtsFile, []byte(tsConfigPathsContent), 0644)
+	tsConfigPathsContent := fmt.Sprintf("%s\n%s", constants.DoNotModify, tsConfigPathsJSON)
+	err = os.WriteFile(constants.TSConfigPahtsFile, []byte(tsConfigPathsContent), 0644)
 	if err != nil {
 		logger.Error(err.Error())
 		return err

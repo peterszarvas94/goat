@@ -5,16 +5,16 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 )
 
 func CreateSchemaFile(modelname string, sql string) (string, error) {
-	err := ExistsOrCreateDir(config.SchemaDir)
+	err := ExistsOrCreateDir(constants.SchemaDir)
 	if err != nil {
 		return "", err
 	}
 
-	schemaFilePath := filepath.Join(config.SchemaDir, fmt.Sprintf("%s.sql", modelname))
+	schemaFilePath := filepath.Join(constants.SchemaDir, fmt.Sprintf("%s.sql", modelname))
 	err = createFileIfNotExists(schemaFilePath)
 	if err != nil {
 		return "", err
