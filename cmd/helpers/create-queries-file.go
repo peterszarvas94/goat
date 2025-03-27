@@ -5,16 +5,16 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 )
 
 func CreateQueriesFile(modelname, sql string) (string, error) {
-	err := ExistsOrCreateDir(config.QueriesDir)
+	err := ExistsOrCreateDir(constants.QueriesDir)
 	if err != nil {
 		return "", err
 	}
 
-	queriesFilePath := filepath.Join(config.QueriesDir, fmt.Sprintf("%s.sql", modelname))
+	queriesFilePath := filepath.Join(constants.QueriesDir, fmt.Sprintf("%s.sql", modelname))
 	err = createFileIfNotExists(queriesFilePath)
 	if err != nil {
 		return "", err

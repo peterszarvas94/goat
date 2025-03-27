@@ -1,0 +1,14 @@
+package components
+
+import (
+	"path/filepath"
+	"github.com/peterszarvas94/goat/constants"
+)
+
+templ UserStyle(path string) {
+	@Style(filepath.Join(constants.UserStylesDir, path))
+}
+
+templ Style(path string) {
+	<link rel="stylesheet" href={ path }/>
+}

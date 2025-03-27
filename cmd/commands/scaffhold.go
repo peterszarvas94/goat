@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/cmd/helpers"
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 	"github.com/peterszarvas94/goat/files"
 )
 
@@ -126,7 +126,7 @@ func Scaffhold(folderName, template string) error {
 		return err
 	}
 
-	_, err = os.Create(config.DBPath)
+	_, err = os.Create(constants.DBPath)
 	if err != nil {
 		return err
 	}
@@ -176,7 +176,7 @@ func makeEnv() error {
 GOATENV=dev
 PORT=9999
 		`,
-		config.DBPath,
+		constants.DBPath,
 	)
 	return os.WriteFile(".env", []byte(envContent), 0655)
 }

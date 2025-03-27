@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/peterszarvas94/goat/cmd/commands"
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +23,7 @@ var versionCmd = &cobra.Command{
 	Short: "GOAT version",
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(config.Version)
+		fmt.Println(constants.Version)
 	},
 }
 

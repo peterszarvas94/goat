@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/peterszarvas94/goat/config"
+	"github.com/peterszarvas94/goat/constants"
 	"github.com/peterszarvas94/goat/logger"
 )
 
@@ -96,12 +96,10 @@ func Render(w http.ResponseWriter, r *http.Request, component templ.Component, s
 //
 // favicon.ico
 //
-// scripts folder
+// js folder
 //
-// styles folder
+// css folder
 func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
-	// r.Static("/scripts/", "./scripts")
-	// r.Static("/styles/", "./styles")
-	r.Static(fmt.Sprintf("/%s/", config.AssetsDir), fmt.Sprintf("./%s", config.AssetsDir))
+	r.Static(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
 }

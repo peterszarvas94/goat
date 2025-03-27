@@ -1,0 +1,14 @@
+package components
+
+import (
+	"path/filepath"
+	"github.com/peterszarvas94/goat/constants"
+)
+
+templ UserScript(path string) {
+	@Script(filepath.Join(constants.UserScriptsDir, path))
+}
+
+templ Script(path string) {
+	<script src={ path } type="module"></script>
+}
