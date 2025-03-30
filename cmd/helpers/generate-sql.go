@@ -5,7 +5,13 @@ import (
 	"strings"
 )
 
-func getDefaultMigraionSql(modelname string) string {
+func generateMigrationSql(modelname string, create bool) string {
+	if !create {
+		return `-- +goose Up
+
+-- +goose Down`
+	}
+
 	return fmt.Sprintf(`-- +goose Up
 CREATE TABLE %s (
   id TEXT PRIMARY KEY,
@@ -18,7 +24,7 @@ CREATE TABLE %s (
 DROP TABLE %s;`, modelname, modelname)
 }
 
-func GetDefaultSchemaSql(modelname string) string {
+func generateSchemaSql(modelname string) string {
 	return fmt.Sprintf(`CREATE TABLE %s (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
@@ -29,7 +35,7 @@ func GetDefaultSchemaSql(modelname string) string {
 	)
 }
 
-func getDefaultQueriesSql(modelname string) string {
+func generateQueriesSql(modelname string) string {
 	uppercasemodelName := fmt.Sprintf("%s%s", strings.ToUpper(string(modelname[0])), modelname[1:])
 	return fmt.Sprintf(`-- name: Get%sByID :one
 SELECT *

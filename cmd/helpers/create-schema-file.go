@@ -2,30 +2,29 @@ package helpers
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/constants"
 )
 
-func CreateSchemaFile(modelname string, sql string) (string, error) {
-	err := ExistsOrCreateDir(constants.SchemaDir)
+func CreateSchemaFile(modelname, sql string) (string, error) {
+	err := CreateDirIfNotExists(constants.SchemaDir)
 	if err != nil {
 		return "", err
 	}
 
 	schemaFilePath := filepath.Join(constants.SchemaDir, fmt.Sprintf("%s.sql", modelname))
-	err = createFileIfNotExists(schemaFilePath)
+	file, err := CreateNonExistingFile(schemaFilePath)
 	if err != nil {
 		return "", err
 	}
 
 	modelSQL := sql
 	if modelSQL == "" {
-		modelSQL = GetDefaultSchemaSql(modelname)
+		modelSQL = generateSchemaSql(modelname)
 	}
 
-	err = os.WriteFile(schemaFilePath, []byte(modelSQL), 0644)
+	_, err = file.Write([]byte(modelSQL))
 	if err != nil {
 		return "", err
 	}

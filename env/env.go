@@ -11,7 +11,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func Load(variables interface{}, keys ...string) error {
+func Load(variables any, keys ...string) error {
 	v := reflect.ValueOf(variables)
 	if v.Kind() != reflect.Ptr || v.Elem().Kind() != reflect.Struct {
 		err := fmt.Errorf("Load expects a pointer to a struct, received %v", v.Kind())
@@ -21,7 +21,7 @@ func Load(variables interface{}, keys ...string) error {
 
 	structValue := v.Elem()
 
-	for i := 0; i < structValue.NumField(); i++ {
+	for i := range structValue.NumField() {
 		field := structValue.Field(i)
 		fieldType := structValue.Type().Field(i)
 

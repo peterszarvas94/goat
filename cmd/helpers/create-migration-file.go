@@ -7,36 +7,28 @@ import (
 	"github.com/peterszarvas94/goat/constants"
 )
 
-func CreateMigrationFile(modelname string, withSql bool) (string, error) {
-	err := ExistsOrCreateDir(constants.MigrationsDir)
+func CreateMigrationFile(modelname string, create bool) (string, error) {
+	err := CreateDirIfNotExists(constants.MigrationsDir)
 	if err != nil {
 		return "", err
 	}
 
 	output, err := Cmd("goose", "-dir", constants.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
-	fmt.Println(output)
 	if err != nil {
 		return "", err
 	}
 
-	migrationFilepath, err := GetFileNameFromGooseOutput(output)
+	filePath, err := getFileNameFromGooseOutput(output)
 	if err != nil {
 		return "", err
 	}
 
-	migrationSQL := ""
-	if !withSql {
-		migrationSQL = `-- +goose Up
+	sql := generateMigrationSql(modelname, create)
 
--- +goose Down`
-	} else {
-		migrationSQL = getDefaultMigraionSql(modelname)
-	}
-
-	err = os.WriteFile(migrationFilepath, []byte(migrationSQL), 0644)
+	err = os.WriteFile(filePath, []byte(sql), 0644)
 	if err != nil {
 		return "", err
 	}
 
-	return migrationFilepath, nil
+	return filePath, nil
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/peterszarvas94/goat/constants"
 )
 
-func GetFileNameFromGooseOutput(output string) (string, error) {
+func getFileNameFromGooseOutput(output string) (string, error) {
 	arr := strings.Split(output, " ")
 	if len(arr) < 6 {
 		return "", fmt.Errorf("goose output is malformed")
