@@ -2,9 +2,15 @@ package assert
 
 import "fmt"
 
-func Equal(expected, actual interface{}) {
+func Equal(expected, actual any) {
 	if expected != actual {
 		panic(fmt.Sprintf("Expected %v, got %v", expected, actual))
+	}
+}
+
+func NotEqual(expected, actual any) {
+	if expected == actual {
+		panic(fmt.Sprintf("Expected %v to not be %v", expected, actual))
 	}
 }
 
@@ -20,13 +26,13 @@ func False(condition bool) {
 	}
 }
 
-func Nil(value interface{}) {
+func Nil(value any) {
 	if value != nil {
 		panic(fmt.Sprintf("Expected nil, got %v", value))
 	}
 }
 
-func NotNil(value interface{}) {
+func NotNil(value any) {
 	if value == nil {
 		panic("Expected value not to be nil")
 	}
