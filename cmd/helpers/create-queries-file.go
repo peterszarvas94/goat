@@ -2,33 +2,30 @@ package helpers
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/constants"
 )
 
-func CreateQueriesFile(modelname, sql string) (string, error) {
-	err := ExistsOrCreateDir(constants.QueriesDir)
+func CreateQueriesFile(modelname string) (string, error) {
+	err := CreateDirIfNotExists(constants.QueriesDir)
 	if err != nil {
 		return "", err
 	}
 
-	queriesFilePath := filepath.Join(constants.QueriesDir, fmt.Sprintf("%s.sql", modelname))
-	err = createFileIfNotExists(queriesFilePath)
+	filePath := filepath.Join(constants.QueriesDir, fmt.Sprintf("%s.sql", modelname))
+
+	file, err := CreateNonExistingFile(filePath)
 	if err != nil {
 		return "", err
 	}
 
-	queriesSQL := sql
-	if queriesSQL == "" {
-		queriesSQL = getDefaultQueriesSql(modelname)
-	}
+	sql := generateQueriesSql(modelname)
 
-	err = os.WriteFile(queriesFilePath, []byte(queriesSQL), 0644)
+	_, err = file.Write([]byte(sql))
 	if err != nil {
 		return "", err
 	}
 
-	return queriesFilePath, nil
+	return filePath, nil
 }

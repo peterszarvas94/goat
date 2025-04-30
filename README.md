@@ -25,11 +25,11 @@ The all-in-one web framework for go (will be)
 
 ### 2. Initialize new project
 
-`goat new [my-app] --template basic-auth`
+`goat init [app] [--template basic-auth]?`
 
 ### 3. Go to the new project folder
 
-`cd [my-app]`
+`cd [app]`
 
 ### 4. Run dev server
 

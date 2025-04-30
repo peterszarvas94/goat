@@ -10,5 +10,7 @@ func Cmd(name string, args ...string) (string, error) {
 	fmt.Println(cmd.String())
 	output, err := cmd.CombinedOutput()
 
+	fmt.Println(string(output))
+
 	return string(output), err
 }

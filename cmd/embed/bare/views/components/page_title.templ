@@ -1,0 +1,16 @@
+package components
+
+import "scaffhold/config"
+
+templ PageTitle() {
+	<a href="/" hx-boost="true">
+		<h1>{ config.AppName }</h1>
+	</a>
+	<div style="display: flex; justify-content: center; padding-bottom: 4rem;">
+		<select class="goat-select goat-theme-selector" id="theme-selector">
+			<option value="light">Light</option>
+			<option value="dark">Dark</option>
+			<option value="system">System</option>
+		</select>
+	</div>
+}

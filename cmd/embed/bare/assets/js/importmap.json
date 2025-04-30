@@ -1,0 +1,7 @@
+{
+	"imports": {
+		"htmx.org": "/assets/js/pkg/htmx.org@2.0.4.js",
+		"htmx-ext-head-support": "/assets/js/pkg/htmx-ext-head-support@2.0.4.js",
+		"goat-ui": "/assets/js/pkg/goat-ui@0.0.1.js"
+	}
+}

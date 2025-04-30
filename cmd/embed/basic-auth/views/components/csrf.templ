@@ -1,0 +1,10 @@
+package components
+
+templ CSRFInput(csrf_token string) {
+	<input
+		name="csrf_token"
+		type="hidden"
+		id="csrf_token"
+		value={ csrf_token }
+	/>
+}

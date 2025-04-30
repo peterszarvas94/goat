@@ -1,0 +1,41 @@
+package pages 
+
+import (
+	. "scaffhold/views/components"
+	"github.com/peterszarvas94/goat/components"
+)
+
+templ Register() {
+	@components.Head(components.HeadProps{
+		Title:       "scaffhold - login",
+		Description: "Log in to scaffhold",
+		Author:      "Peter Szarvas",
+		Keywords:    []string{"goat", "go", "templ", "htmx"},
+	})
+	@Page() {
+		@PageTitle()
+		<section id="register">
+			<h2>Register</h2>
+			<form
+				style="display: flex; flex-direction: column; gap: 1rem;"
+				hx-post="/register"
+				hx-target-error="#register-error"
+			>
+				@NameInput()
+				@EmailInput()
+				@PasswordInput()
+				<div style="display: flex; justify-content: space-between; align-items: end;">
+					<button class="goat-btn" type="submit">Submit</button>
+					<a
+						href="/login"
+						hx-boost="true"
+						style="text-decoration: underline;"
+					>
+						Login instead
+					</a>
+				</div>
+			</form>
+			<p style="padding: 1rem 0; color: var(--danger)" id="register-error"></p>
+		</section>
+	}
+}
