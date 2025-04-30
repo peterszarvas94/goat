@@ -1,11 +1,15 @@
 package cmd
 
 import (
+	_ "embed"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+//go:embed embed.zip
+var embedZip []byte
 
 var rootCmd = &cobra.Command{
 	Use:   "goat",
@@ -17,7 +21,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	initCmd.Flags().StringP("template", "t", "", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
+	initCmd.Flags().StringP("template", "t", "bare", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(modelAddCmd)

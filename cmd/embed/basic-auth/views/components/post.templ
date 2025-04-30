@@ -1,0 +1,10 @@
+package components
+
+import (
+	"scaffhold/db/models"
+)
+
+templ Post(post *models.Post) {
+	<li>{ post.Title }</li>
+	<p id="post-error" hx-swap-oob="true"></p>
+}

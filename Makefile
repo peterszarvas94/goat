@@ -1,5 +1,7 @@
+.PHONY: install tidy
+
 install:
-	go install ./...
+	go run ./install
 
 tidy:
 	go mod tidy

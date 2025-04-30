@@ -8,7 +8,7 @@ import (
 )
 
 // Replaces every occurence of "originalStr" with "newStr" in any file under "dir"
-func ReplaceAll(dir, originalStr, newStr string) error {
+func ReplaceAllString(dir, originalStr, newStr string) error {
 	return filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err

@@ -1,0 +1,12 @@
+views/**/*_templ.go
+views/**/*.txt
+.env
+sqlite.db
+dump.sql
+logs/
+main
+go.work
+go.work.sum
+scripts/node_modules
+tmp/
+.DS_Store/
