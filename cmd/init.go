@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/constants"
+	"github.com/peterszarvas94/goat/dependencies"
 	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
 )
@@ -73,6 +74,7 @@ var initCmd = &cobra.Command{
 		fmt.Printf("tmp removed")
 
 		// init
+
 		err = utils.Cmd("go", "mod", "init", "scaffhold")
 		if err != nil {
 			fmt.Println("Error initializing:", err.Error())
@@ -91,18 +93,7 @@ var initCmd = &cobra.Command{
 
 		// install deps
 
-		dependencies := []string{
-			"github.com/a-h/templ/cmd/templ@v0.3.857",
-			fmt.Sprintf("github.com/peterszarvas94/goat@%s", constants.Version),
-		}
-
-		for _, dep := range dependencies {
-			err = utils.Cmd("go", "get", "-u", dep)
-			if err != nil {
-				fmt.Printf("Error installing %s: %v\n", dep, err.Error())
-				os.Exit(1)
-			}
-		}
+		dependencies.InstallAll(template)
 
 		// installs cli-s
 
@@ -171,6 +162,14 @@ PORT=9999
 		err = utils.Cmd("go", "mod", "tidy")
 		if err != nil {
 			fmt.Println(err.Error())
+			os.Exit(1)
+		}
+
+		// vendor
+
+		err = utils.Cmd("go", "mod", "vendor", template)
+		if err != nil {
+			fmt.Println("Error initializing:", err.Error())
 			os.Exit(1)
 		}
 

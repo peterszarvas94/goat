@@ -21,7 +21,6 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	initCmd.Flags().StringP("template", "t", "bare", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(modelAddCmd)

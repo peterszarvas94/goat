@@ -1,12 +1,8 @@
-views/**/*_templ.go
-views/**/*.txt
-.env
+.DS_Store/
+*/**/node_modules/
 sqlite.db
 dump.sql
 logs/
-main
-go.work
-go.work.sum
-scripts/node_modules
 tmp/
-.DS_Store/
+go.mod
+go.sum

@@ -13,7 +13,7 @@ func CreateMigrationFile(modelname string, create bool) (string, error) {
 		return "", err
 	}
 
-	output, err := Cmd("goose", "-dir", constants.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
+	output, err := CmdWithOutput("goose", "-dir", constants.MigrationsDir, "create", fmt.Sprintf("create_%s_table", modelname), "sql")
 	if err != nil {
 		return "", err
 	}
