@@ -3,12 +3,12 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/peterszarvas94/goat/cmd/helpers"
+	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
 )
 
 func createMigration(modelName string) error {
-	migrationFilepath, err := helpers.CreateMigrationFile(modelName, false)
+	migrationFilepath, err := utils.CreateMigrationFile(modelName, false)
 	if err != nil {
 		return err
 	}

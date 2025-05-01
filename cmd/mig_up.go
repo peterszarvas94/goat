@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/peterszarvas94/goat/cmd/helpers"
 	"github.com/peterszarvas94/goat/constants"
+	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -15,12 +15,12 @@ func migrate(direction string) error {
 		return fmt.Errorf("DBPATH is missing from PATH")
 	}
 
-	err := helpers.CreateDirIfNotExists(constants.MigrationsDir)
+	err := utils.CreateDirIfNotExists(constants.MigrationsDir)
 	if err != nil {
 		return err
 	}
 
-	_, err = helpers.Cmd("goose", "-dir", constants.MigrationsDir, "sqlite3", dbPath, direction)
+	err = utils.Cmd("goose", "-dir", constants.MigrationsDir, "sqlite3", dbPath, direction)
 	if err != nil {
 		return err
 	}

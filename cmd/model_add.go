@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/peterszarvas94/goat/cmd/helpers"
+	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ func addModel(modelname string) error {
 
 	/* 1. MIGRATIONS */
 
-	migrationFilepath, err := helpers.CreateMigrationFile(modelname, true)
+	migrationFilepath, err := utils.CreateMigrationFile(modelname, true)
 	if err != nil {
 		return err
 	}
@@ -26,7 +26,7 @@ func addModel(modelname string) error {
 
 	/* 2. SCHEMA */
 
-	schemaFilePath, err := helpers.CreateSchemaFile(modelname, "")
+	schemaFilePath, err := utils.CreateSchemaFile(modelname, "")
 	if err != nil {
 		return err
 	}
@@ -35,7 +35,7 @@ func addModel(modelname string) error {
 
 	/* 3. QUERIES */
 
-	queriesFilePath, err := helpers.CreateQueriesFile(modelname)
+	queriesFilePath, err := utils.CreateQueriesFile(modelname)
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func addModel(modelname string) error {
 
 	/* 4. SQLC */
 
-	_, err = helpers.Cmd("sqlc", "generate")
+	err = utils.Cmd("sqlc", "generate")
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
-.PHONY: install tidy
+.PHONY: install publish 
 
 install:
 	go run ./install
 
-tidy:
-	go mod tidy
+publish:
+	go run ./publish

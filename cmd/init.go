@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/peterszarvas94/goat/cmd/helpers"
 	"github.com/peterszarvas94/goat/constants"
 	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
@@ -17,7 +16,7 @@ var initCmd = &cobra.Command{
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		// 0. parse dir name and template name
+		// parse dir name and template name
 
 		var targetDir string
 		if len(args) > 0 {
@@ -33,7 +32,7 @@ var initCmd = &cobra.Command{
 			fmt.Println(err.Error())
 		}
 
-		// 1. get project name
+		// get project name
 
 		projectName := targetDir
 		if projectName == "./" {
@@ -46,7 +45,7 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Project name is %s\n", projectName)
 
-		// 2. unzip
+		// unzip
 
 		err = utils.UnzipFromEmbed(embedZip, "tmp")
 		if err != nil {
@@ -55,8 +54,6 @@ var initCmd = &cobra.Command{
 		}
 
 		fmt.Printf("Unzipped to tmp\n")
-
-		// 2. copy template
 
 		templateDir := filepath.Join("tmp", template)
 		err = utils.CopyDir(templateDir, targetDir)
@@ -75,9 +72,16 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("tmp removed")
 
-		// 2. rename
+		// init
+		err = utils.Cmd("go", "mod", "init", "scaffhold")
+		if err != nil {
+			fmt.Println("Error initializing:", err.Error())
+			os.Exit(1)
+		}
 
-		err = helpers.ReplaceAllString(targetDir, "scaffhold", projectName)
+		// rename
+
+		err = utils.ReplaceAllString(targetDir, "scaffhold", projectName)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -85,7 +89,38 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Renamed %s to %s\n", "scaffhold", projectName)
 
-		// 3. env
+		// install deps
+
+		dependencies := []string{
+			"github.com/a-h/templ/cmd/templ@v0.3.857",
+			fmt.Sprintf("github.com/peterszarvas94/goat@%s", constants.Version),
+		}
+
+		for _, dep := range dependencies {
+			err = utils.Cmd("go", "get", "-u", dep)
+			if err != nil {
+				fmt.Printf("Error installing %s: %v\n", dep, err.Error())
+				os.Exit(1)
+			}
+		}
+
+		// installs cli-s
+
+		clis := []string{
+			"github.com/pressly/goose/v3/cmd/goose@v3.24.2",
+			"github.com/sqlc-dev/sqlc/cmd/sqlc@v1.29.0",
+			"github.com/a-h/templ/cmd/templ@v0.3.857",
+		}
+
+		for _, cli := range clis {
+			err = utils.Cmd("go", "install", cli)
+			if err != nil {
+				fmt.Printf("Error installing %s: %v\n", cli, err.Error())
+				os.Exit(1)
+			}
+		}
+
+		// env
 
 		err = os.Chdir(targetDir)
 		if err != nil {
@@ -93,7 +128,6 @@ var initCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		// TODO: include it in embedded repo
 		file, err := os.Create(".env")
 		if err != nil {
 			fmt.Println(err.Error())
@@ -124,53 +158,31 @@ PORT=9999
 			os.Exit(1)
 		}
 
-		// 4. git
+		// git
 
-		_, err = helpers.Cmd("git", "init")
+		err = utils.Cmd("git", "init")
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		// 5. installs
+		// tidy
 
-		_, err = helpers.Cmd("go", "install", "github.com/pressly/goose/v3/cmd/goose@latest")
+		err = utils.Cmd("go", "mod", "tidy")
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		_, err = helpers.Cmd("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
+		// generate
+
+		err = utils.Cmd("templ", "generate")
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		_, err = helpers.Cmd("go", "install", "github.com/a-h/templ/cmd/templ@latest")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
-		}
-
-		_, err = helpers.Cmd("go", "get", "github.com/a-h/templ/cmd/templ@latest")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
-		}
-
-		_, err = helpers.Cmd("go", "mod", "tidy")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
-		}
-
-		_, err = helpers.Cmd("templ", "generate")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
-		}
-
-		// 6. db
+		// db
 
 		file, err = os.Create(constants.DBPath)
 		if err != nil {
@@ -179,7 +191,7 @@ PORT=9999
 		}
 		defer file.Close()
 
-		err = helpers.CreateDirIfNotExists(constants.MigrationsDir)
+		err = utils.CreateDirIfNotExists(constants.MigrationsDir)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -193,11 +205,11 @@ PORT=9999
 
 		// no migrations found (for e.g. "bare" template)
 		if len(entries) == 0 {
-			fmt.Println(err.Error())
-			os.Exit(1)
+			fmt.Println("No mogrations found")
+			os.Exit(0)
 		}
 
-		_, err = helpers.Cmd("goose", "-dir", constants.MigrationsDir, "sqlite3", constants.DBPath, "up")
+		err = utils.Cmd("goose", "-dir", constants.MigrationsDir, "sqlite3", constants.DBPath, "up")
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -205,4 +217,8 @@ PORT=9999
 
 		fmt.Println("Default db schema is migrated")
 	},
+}
+
+func init() {
+	initCmd.Flags().StringP("template", "t", "bare", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
 }

@@ -3,12 +3,12 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/peterszarvas94/goat/cmd/helpers"
+	"github.com/peterszarvas94/goat/utils"
 	"github.com/spf13/cobra"
 )
 
 func generateModel() error {
-	_, err := helpers.Cmd("sqlc", "generate")
+	err := utils.Cmd("sqlc", "generate")
 	return err
 }
 
