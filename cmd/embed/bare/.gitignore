@@ -1,8 +1,0 @@
-.DS_Store/
-*/**/node_modules/
-sqlite.db
-dump.sql
-logs/
-tmp/
-go.mod
-go.sum
