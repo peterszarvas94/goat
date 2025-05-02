@@ -14,7 +14,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = utils.Cmd("go", "install", "-mod", "vendor", "main.go")
+	err = utils.Cmd("go", "install", "-mod=vendor", "./...")
 	if err != nil {
 		fmt.Println("Error installing:", err.Error())
 		os.Exit(1)
