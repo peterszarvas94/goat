@@ -48,13 +48,13 @@ var initCmd = &cobra.Command{
 
 		// unzip
 
-		err = utils.UnzipFromEmbed(embedZip, "tmp")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
-		}
-
-		fmt.Printf("Unzipped to tmp\n")
+		// err = utils.UnzipFromEmbed(embedZip, "tmp")
+		// if err != nil {
+		// 	fmt.Println(err.Error())
+		// 	os.Exit(1)
+		// }
+		//
+		// fmt.Printf("Unzipped to tmp\n")
 
 		templateDir := filepath.Join("tmp", template)
 		err = utils.CopyDir(templateDir, targetDir)

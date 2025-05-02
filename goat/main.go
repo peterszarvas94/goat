@@ -3,7 +3,7 @@ package main
 import (
 	_ "embed"
 
-	"github.com/peterszarvas94/goat/cli/cmd"
+	"github.com/peterszarvas94/goat/goat/cmd"
 )
 
 //go:embed VERSION
