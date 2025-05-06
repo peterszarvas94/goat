@@ -8,6 +8,13 @@ import (
 	"github.com/peterszarvas94/goat/pkg/utils"
 )
 
+var folders = []string{
+	"",
+	"cli/goat/",
+	"templates/bare/",
+	"templates/basic-auth/",
+}
+
 func main() {
 	// Check for uncommitted changes
 	if err := utils.Cmd("git", "diff", "--quiet"); err != nil {
@@ -23,9 +30,15 @@ func main() {
 	}
 
 	// Create the new tag
-	if err := utils.Cmd("git", "tag", constants.Version, "-m", constants.Version); err != nil {
-		fmt.Printf("git tag %s failed: %v\n", constants.Version, err)
-		os.Exit(1)
+	for _, folder := range folders {
+		tag := fmt.Sprintf("%s%s", folder, constants.Version)
+		err = utils.Cmd("git", "tag", tag, "-m", tag)
+		if err != nil {
+			fmt.Printf("git tag %s failed: %v\n", constants.Version, err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("Tagged %s\n", tag)
 	}
 
 	// Push the changes

@@ -3,7 +3,7 @@ module github.com/peterszarvas94/goat/cli/goat
 go 1.24.1
 
 require (
-	github.com/peterszarvas94/goat/pkg v0.3.1
+	github.com/peterszarvas94/goat/pkg v0.3.2
 	github.com/spf13/cobra v1.9.1
 )
 
