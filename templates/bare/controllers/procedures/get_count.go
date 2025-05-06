@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/request"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/request"
 )
 
 var count = 0

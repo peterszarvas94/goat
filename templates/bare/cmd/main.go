@@ -8,11 +8,11 @@ import (
 	"scaffhold/controllers/pages"
 	"scaffhold/controllers/procedures"
 
-	"github.com/peterszarvas94/goat/env"
-	"github.com/peterszarvas94/goat/importmap"
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/server"
-	"github.com/peterszarvas94/goat/uuid"
+	"github.com/peterszarvas94/goat/pkg/env"
+	"github.com/peterszarvas94/goat/pkg/importmap"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/server"
+	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
 func main() {

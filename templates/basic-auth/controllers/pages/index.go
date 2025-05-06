@@ -9,11 +9,11 @@ import (
 	"scaffhold/views/components"
 	"scaffhold/views/pages"
 
-	"github.com/peterszarvas94/goat/csrf"
-	"github.com/peterszarvas94/goat/database"
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/request"
-	"github.com/peterszarvas94/goat/server"
+	"github.com/peterszarvas94/goat/pkg/csrf"
+	"github.com/peterszarvas94/goat/pkg/database"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/request"
+	"github.com/peterszarvas94/goat/pkg/server"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {

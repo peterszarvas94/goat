@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/peterszarvas94/goat/dependencies"
-	"github.com/peterszarvas94/goat/utils"
+	"github.com/peterszarvas94/goat/pkg/dependencies"
+	"github.com/peterszarvas94/goat/pkg/utils"
 )
 
 func main() {

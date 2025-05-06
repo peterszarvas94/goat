@@ -9,12 +9,12 @@ import (
 	"scaffhold/config"
 	"scaffhold/db/models"
 
-	"github.com/peterszarvas94/goat/csrf"
-	"github.com/peterszarvas94/goat/database"
-	"github.com/peterszarvas94/goat/hash"
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/request"
-	"github.com/peterszarvas94/goat/uuid"
+	"github.com/peterszarvas94/goat/pkg/csrf"
+	"github.com/peterszarvas94/goat/pkg/database"
+	"github.com/peterszarvas94/goat/pkg/hash"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/request"
+	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {

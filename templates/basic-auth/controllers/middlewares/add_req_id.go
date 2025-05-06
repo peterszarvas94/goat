@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/uuid"
+	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
 func AddRequestID(next http.HandlerFunc) http.HandlerFunc {

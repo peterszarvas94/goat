@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"scaffhold/views/pages"
 
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/request"
-	"github.com/peterszarvas94/goat/server"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/request"
+	"github.com/peterszarvas94/goat/pkg/server"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {

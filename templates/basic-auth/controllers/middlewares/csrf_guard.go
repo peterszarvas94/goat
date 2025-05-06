@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"scaffhold/db/models"
 
-	"github.com/peterszarvas94/goat/csrf"
-	"github.com/peterszarvas94/goat/request"
+	"github.com/peterszarvas94/goat/pkg/csrf"
+	"github.com/peterszarvas94/goat/pkg/request"
 )
 
 func CSRFGuard(next http.HandlerFunc) http.HandlerFunc {

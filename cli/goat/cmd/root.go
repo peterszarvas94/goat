@@ -27,11 +27,7 @@ func init() {
 	rootCmd.AddCommand(migrationNewCmd)
 }
 
-var version string
-
 func Execute(v string) {
-	version = v
-
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println("Error:", err)
 		os.Exit(1)

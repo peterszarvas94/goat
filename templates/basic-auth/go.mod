@@ -4,8 +4,10 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.865
-	github.com/peterszarvas94/goat/pkg v0.2.0
+	github.com/peterszarvas94/goat/pkg v0.3.0
 )
+
+replace github.com/peterszarvas94/goat/pkg => ../../pkg
 
 require (
 	github.com/google/uuid v1.6.0 // indirect

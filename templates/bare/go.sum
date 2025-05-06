@@ -6,5 +6,3 @@ github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
 github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
-github.com/peterszarvas94/goat v0.0.30 h1:3+1nEU1rq0B+Wuo7W0veMbivMvsGlXsqs0fdbmOgGD8=
-github.com/peterszarvas94/goat v0.0.30/go.mod h1:xHtLMN5Th/sEefSFdyx9/RP7if8xZZ3FsXOlVm+Ldn8=

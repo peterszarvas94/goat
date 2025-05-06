@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"scaffhold/controllers/helpers"
 
-	"github.com/peterszarvas94/goat/request"
+	"github.com/peterszarvas94/goat/pkg/request"
 )
 
 func GuestGuard(next http.HandlerFunc) http.HandlerFunc {

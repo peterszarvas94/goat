@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/logger"
-	"github.com/peterszarvas94/goat/request"
+	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/request"
 )
 
 func PostCount(w http.ResponseWriter, r *http.Request) {
