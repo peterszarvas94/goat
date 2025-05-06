@@ -21,6 +21,9 @@
 - [ ] slogger: default instead of export
 - [ ] embed this repo into goat repo
 
+- [ ] bump version script
+- [ ] rewrite readme
+
 ## BARE
 
 - no tasks
