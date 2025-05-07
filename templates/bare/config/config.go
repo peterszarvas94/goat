@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	AppName  = "scaffhold"
+	AppName  = "bare"
 	LogLevel = slog.LevelDebug
 )
 

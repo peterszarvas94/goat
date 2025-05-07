@@ -9,9 +9,9 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"basic-auth/db/models"
+	. "basic-auth/views/components"
 	"github.com/peterszarvas94/goat/pkg/components"
-	"scaffhold/db/models"
-	. "scaffhold/views/components"
 )
 
 type IndexProps struct {
@@ -42,7 +42,7 @@ func Index(props *IndexProps) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = components.Head(components.HeadProps{
-			Title:       "scaffhold",
+			Title:       "basic-auth",
 			Description: "The greatest webpage of all time",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},

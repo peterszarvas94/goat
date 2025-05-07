@@ -1,8 +1,8 @@
 package middlewares
 
 import (
+	"basic-auth/controllers/helpers"
 	"net/http"
-	"scaffhold/controllers/helpers"
 
 	"github.com/peterszarvas94/goat/pkg/request"
 )

@@ -1,4 +1,4 @@
-module scaffhold
+module bare
 
 go 1.24.1
 
@@ -7,9 +7,9 @@ require (
 	github.com/peterszarvas94/goat/pkg v0.3.2
 )
 
-replace github.com/peterszarvas94/goat/pkg => ../../pkg
-
 require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 )
+
+replace github.com/peterszarvas94/goat/ => ../../../goat

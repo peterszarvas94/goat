@@ -13,7 +13,7 @@ import (
 
 var initCmd = &cobra.Command{
 	Use:                   "init [name]",
-	Short:                 "Scaffhold project",
+	Short:                 "Initialize project",
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -46,16 +46,6 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Project name is %s\n", projectName)
 
-		// unzip
-
-		// err = utils.UnzipFromEmbed(embedZip, "tmp")
-		// if err != nil {
-		// 	fmt.Println(err.Error())
-		// 	os.Exit(1)
-		// }
-		//
-		// fmt.Printf("Unzipped to tmp\n")
-
 		templateDir := filepath.Join("tmp", template)
 		err = utils.CopyDir(templateDir, targetDir)
 		if err != nil {
@@ -75,21 +65,21 @@ var initCmd = &cobra.Command{
 
 		// init
 
-		err = utils.Cmd("go", "mod", "init", "scaffhold")
-		if err != nil {
-			fmt.Println("Error initializing:", err.Error())
-			os.Exit(1)
-		}
+		// err = utils.Cmd("go", "mod", "init", projectName)
+		// if err != nil {
+		// 	fmt.Println("Error initializing:", err.Error())
+		// 	os.Exit(1)
+		// }
 
 		// rename
 
-		err = utils.ReplaceAllString(targetDir, "scaffhold", projectName)
+		err = utils.ReplaceAllString(targetDir, template, projectName)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Printf("Renamed %s to %s\n", "scaffhold", projectName)
+		fmt.Printf("Renamed %s to %s\n", template, projectName)
 
 		// install deps
 

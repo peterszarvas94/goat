@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	. "basic-auth/views/components"
 	"github.com/peterszarvas94/goat/pkg/components"
-	. "scaffhold/views/components"
 )
 
 func Register() templ.Component {
@@ -35,8 +35,8 @@ func Register() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = components.Head(components.HeadProps{
-			Title:       "scaffhold - login",
-			Description: "Log in to scaffhold",
+			Title:       "basic-auth - login",
+			Description: "Log in to basic-auth",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},
 		}).Render(ctx, templ_7745c5c3_Buffer)

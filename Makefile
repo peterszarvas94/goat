@@ -1,10 +1,5 @@
-.PHONY: install publish init-dev 
+.PHONY: publish
 
-install:
-	go run ./scripts/install/main.go
-
+# e.g. `make run publish`
 publish:
-	go run ./scripts/publish/main.go
-
-init-dev:
-	go run ./scripts/init-dev/main.go
+	go run ./publish

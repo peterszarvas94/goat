@@ -1,8 +1,8 @@
 package pages
 
 import (
-	. "scaffhold/views/components"
-	"scaffhold/db/models"
+	. "basic-auth/views/components"
+	"basic-auth/db/models"
 	"github.com/peterszarvas94/goat/pkg/components"
 )
 
@@ -14,7 +14,7 @@ type IndexProps struct {
 
 templ Index(props *IndexProps) {
 	@components.Head(components.HeadProps{
-		Title:       "scaffhold",
+		Title:       "basic-auth",
 		Description: "The greatest webpage of all time",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},

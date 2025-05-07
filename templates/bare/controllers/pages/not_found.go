@@ -1,9 +1,9 @@
 package pages
 
 import (
+	"bare/views/pages"
 	"errors"
 	"net/http"
-	"scaffhold/views/pages"
 
 	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"

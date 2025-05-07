@@ -18,11 +18,15 @@
 - [x] better styling
 - [x] page based scripts
 - [x] page based css
-- [ ] slogger: default instead of export
 - [ ] embed this repo into goat repo
-
+    - remove maddness
+    - fix the damn publish thing
+    - put variable into a txt
+    - put necessary utils in publish, so no pkg needed
+- [ ] slogger: default instead of export
 - [ ] bump version script
 - [ ] rewrite readme
+- [ ] test!!!
 
 ## BARE
 

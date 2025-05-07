@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 
-	"scaffhold/db/models"
+	"basic-auth/db/models"
 
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/hash"

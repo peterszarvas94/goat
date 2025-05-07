@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"scaffhold/db/models"
+	"basic-auth/db/models"
 )
 
 func Post(post *models.Post) templ.Component {

@@ -1,13 +1,13 @@
 package pages
 
 import (
+	"basic-auth/controllers/helpers"
+	"basic-auth/db/models"
+	"basic-auth/views/components"
+	"basic-auth/views/pages"
 	"context"
 	"errors"
 	"net/http"
-	"scaffhold/controllers/helpers"
-	"scaffhold/db/models"
-	"scaffhold/views/components"
-	"scaffhold/views/pages"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"

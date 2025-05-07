@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	AppName  = "scaffhold"
+	AppName  = "basic-auth"
 	LogLevel = slog.LevelDebug
 )
 

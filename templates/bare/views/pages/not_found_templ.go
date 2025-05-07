@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	. "bare/views/components"
 	"github.com/peterszarvas94/goat/pkg/components"
-	. "scaffhold/views/components"
 )
 
 func NotFound() templ.Component {
@@ -35,7 +35,7 @@ func NotFound() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = components.Head(components.HeadProps{
-			Title:       "scaffhold 404",
+			Title:       "bare 404",
 			Description: "Not found",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},

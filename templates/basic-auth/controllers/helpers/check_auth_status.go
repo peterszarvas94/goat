@@ -1,9 +1,9 @@
 package helpers
 
 import (
+	"basic-auth/db/models"
 	"errors"
 	"net/http"
-	"scaffhold/db/models"
 )
 
 func CheckAuthStatus(r *http.Request) (*models.User, *models.Session, error) {

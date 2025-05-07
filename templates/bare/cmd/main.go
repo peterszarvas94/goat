@@ -3,10 +3,10 @@ package main
 import (
 	"os"
 
-	"scaffhold/config"
-	. "scaffhold/controllers/middlewares"
-	"scaffhold/controllers/pages"
-	"scaffhold/controllers/procedures"
+	"bare/config"
+	. "bare/controllers/middlewares"
+	"bare/controllers/pages"
+	"bare/controllers/procedures"
 
 	"github.com/peterszarvas94/goat/pkg/env"
 	"github.com/peterszarvas94/goat/pkg/importmap"

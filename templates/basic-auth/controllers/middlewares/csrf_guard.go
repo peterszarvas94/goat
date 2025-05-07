@@ -1,9 +1,9 @@
 package middlewares
 
 import (
+	"basic-auth/db/models"
 	"errors"
 	"net/http"
-	"scaffhold/db/models"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/request"

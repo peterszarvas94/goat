@@ -1,8 +1,8 @@
 package middlewares
 
 import (
+	"basic-auth/config"
 	"net/http"
-	"scaffhold/config"
 )
 
 func Cache(next http.HandlerFunc) http.HandlerFunc {

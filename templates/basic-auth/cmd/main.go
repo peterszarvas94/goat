@@ -4,12 +4,12 @@ import (
 	"context"
 	"os"
 
-	"scaffhold/config"
-	. "scaffhold/controllers/middlewares"
-	"scaffhold/controllers/pages"
-	"scaffhold/controllers/procedures"
-	"scaffhold/db/models"
-	pageViews "scaffhold/views/pages"
+	"basic-auth/config"
+	. "basic-auth/controllers/middlewares"
+	"basic-auth/controllers/pages"
+	"basic-auth/controllers/procedures"
+	"basic-auth/db/models"
+	pageViews "basic-auth/views/pages"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"

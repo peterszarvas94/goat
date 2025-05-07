@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	. "bare/views/components"
 	"github.com/peterszarvas94/goat/pkg/components"
-	. "scaffhold/views/components"
 )
 
 func Index() templ.Component {
@@ -35,7 +35,7 @@ func Index() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = components.Head(components.HeadProps{
-			Title:       "scaffhold",
+			Title:       "bare",
 			Description: "The greatest webpage of all time",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},

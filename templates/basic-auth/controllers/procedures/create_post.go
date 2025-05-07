@@ -1,11 +1,11 @@
 package procedures
 
 import (
+	"basic-auth/db/models"
+	"basic-auth/views/components"
 	"context"
 	"errors"
 	"net/http"
-	"scaffhold/db/models"
-	"scaffhold/views/components"
 
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/logger"

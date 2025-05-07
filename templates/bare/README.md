@@ -1,4 +1,4 @@
-# scaffhold
+# basic-auth
 
 ## Goat commands
 

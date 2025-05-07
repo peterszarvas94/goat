@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"scaffhold/config"
-	"scaffhold/db/models"
+	"basic-auth/config"
+	"basic-auth/db/models"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"

@@ -25,7 +25,7 @@ func CopyFile(srcPath, dstPath string) error {
 	return err
 }
 
-func WalkAndCopy(srcDir, dstDir string) fs.WalkDirFunc {
+func walkAndCopy(srcDir, dstDir string) fs.WalkDirFunc {
 	return func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -54,5 +54,5 @@ func WalkAndCopy(srcDir, dstDir string) fs.WalkDirFunc {
 }
 
 func CopyDir(srcDir, dstDir string) error {
-	return filepath.WalkDir(srcDir, WalkAndCopy(srcDir, dstDir))
+	return filepath.WalkDir(srcDir, walkAndCopy(srcDir, dstDir))
 }
