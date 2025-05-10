@@ -77,8 +77,6 @@ func main() {
 			fmt.Printf("Error writing modfile: %s\n", err.Error())
 			os.Exit(1)
 		}
-
-		fmt.Printf("Modfile updated in modfile: %s\n", modFilePath)
 	}
 
 	// git stuff
@@ -149,8 +147,6 @@ func main() {
 			fmt.Printf("Error writing mod file: %s\n", err.Error())
 			os.Exit(1)
 		}
-
-		fmt.Printf("Modfile restored: %s\n", modFilePath)
 
 		err = utils.Cmd("go", "mod", "tidy")
 		if err != nil {
