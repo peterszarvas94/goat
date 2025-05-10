@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.865
-	github.com/peterszarvas94/goat v0.3.10
+	github.com/peterszarvas94/goat v0.3.11
 )
 
 require (
@@ -12,4 +12,4 @@ require (
 	github.com/joho/godotenv v1.5.1 // indirect
 )
 
-replace github.com/peterszarvas94/goat => ../../../goat
+// replace github.com/peterszarvas94/goat => ../../../goat
