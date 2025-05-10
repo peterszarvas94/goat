@@ -32,11 +32,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	ok, err = utils.HasUncomittedChanges()
+	has, err := utils.HasUncomittedChanges()
 	if err != nil {
 		fmt.Printf("Error checking uncommitted changes %s: %s\n", version, err.Error())
 	}
-	if !ok {
+	if has {
 		fmt.Println("You have uncomitted changes")
 		os.Exit(1)
 	} else {
