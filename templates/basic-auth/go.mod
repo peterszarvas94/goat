@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.865
-	github.com/peterszarvas94/goat/pkg v0.3.2
+	github.com/peterszarvas94/goat/pkg v0.3.5
 )
 
 require (
@@ -14,4 +14,4 @@ require (
 	golang.org/x/crypto v0.31.0 // indirect
 )
 
-replace github.com/peterszarvas94/goat/ => ../../../goat
+// replace github.com/peterszarvas94/goat/ => ../../../goat
