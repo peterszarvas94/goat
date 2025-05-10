@@ -32,6 +32,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// check git status
 	has, err := utils.HasUncomittedChanges()
 	if err != nil {
 		fmt.Printf("Error checking uncommitted changes %s: %s\n", version, err.Error())
@@ -61,7 +62,7 @@ func main() {
 		scanner := bufio.NewScanner(modFile)
 		for scanner.Scan() {
 			line := scanner.Text()
-			start := strings.Index(line, "github.com/peterszarvas94/goat/pkg")
+			start := strings.Index(line, "github.com/peterszarvas94/goat")
 			if start != -1 {
 				parts := strings.Fields(line[start:])
 				if len(parts) == 2 {
@@ -115,7 +116,7 @@ func main() {
 
 	fmt.Println("Pushed files")
 
-	err = utils.Cmd("git", "tag", version)
+	err = utils.Cmd("git", "tag", version, "-m", version)
 	if err != nil {
 		fmt.Printf("Error with \"git tag\": %s\n", err.Error())
 		os.Exit(1)
@@ -144,7 +145,7 @@ func main() {
 		scanner := bufio.NewScanner(modFile)
 		for scanner.Scan() {
 			line := scanner.Text()
-			start := strings.Index(line, " // replace github.com/peterszarvas94/goat/")
+			start := strings.Index(line, "// replace github.com/peterszarvas94/goat")
 			if start != -1 {
 				line = strings.TrimPrefix(line, "// ")
 				fmt.Printf("Replace directive restored in modfile: %s\n", modFilePath)
