@@ -8,7 +8,6 @@ import (
 )
 
 func InstallAll(template string) {
-
 	version, err := utils.GetVersion()
 	if err != nil {
 		fmt.Printf("Can not get version: %s", err.Error())

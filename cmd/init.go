@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 
 	"github.com/peterszarvas94/goat/pkg/constants"
-	"github.com/peterszarvas94/goat/pkg/dependencies"
 	"github.com/peterszarvas94/goat/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -17,7 +16,7 @@ var initCmd = &cobra.Command{
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
 	Run: func(cmd *cobra.Command, args []string) {
-		// parse dir name and template name
+		// parse target dir name and path
 
 		var targetDir string
 		if len(args) > 0 {
@@ -28,10 +27,25 @@ var initCmd = &cobra.Command{
 			targetDir = "./"
 		}
 
+		fmt.Printf("Target dir is: %s\n", targetDir)
+
+		targetDirFullPath, err := filepath.Abs(targetDir)
+		if err != nil {
+			fmt.Printf("Can not get target directory full path: %v", err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("Target dir full path is: %s\n", targetDirFullPath)
+
+		// parse tepmlate
+
 		template, err := cmd.Flags().GetString("template")
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Printf("Can not parse flag \"--template\"%v", err.Error())
+			os.Exit(1)
 		}
+
+		fmt.Printf("Getting template: %s\n", template)
 
 		// get project name
 
@@ -44,36 +58,53 @@ var initCmd = &cobra.Command{
 			projectName = filepath.Base(pwd)
 		}
 
-		fmt.Printf("Project name is %s\n", projectName)
+		fmt.Printf("Project name: %s\n", projectName)
 
-		templateDir := filepath.Join("tmp", template)
-		err = utils.CopyDir(templateDir, targetDir)
+		tmp, err := os.MkdirTemp("", "goat-template")
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("Error creating temp dir")
 			os.Exit(1)
 		}
 
-		fmt.Printf("Copied from tmp to %s\n", templateDir)
+		fmt.Printf("Temp dir created: %s\n", tmp)
 
-		err = os.RemoveAll("tmp")
+		version, err := utils.GetVersion()
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Printf("Can not get version: %v", err)
 			os.Exit(1)
 		}
 
-		fmt.Printf("tmp removed")
+		// clone repo
 
-		// init
+		err = utils.Cmd("git", "clone", "https://github.com/peterszarvas94/goat.git", tmp)
+		if err != nil {
+			fmt.Printf("Can not clone repo: %v", err)
+			os.Exit(1)
+		}
 
-		// err = utils.Cmd("go", "mod", "init", projectName)
-		// if err != nil {
-		// 	fmt.Println("Error initializing:", err.Error())
-		// 	os.Exit(1)
-		// }
+		err = os.Chdir(tmp)
+		if err != nil {
+			fmt.Printf("Can change directory to tmp: %v", err)
+			os.Exit(1)
+		}
+
+		// checkout version
+
+		err = utils.Cmd("git", "checkout", version)
+		if err != nil {
+			fmt.Printf("Can checkout version: %v", err)
+			os.Exit(1)
+		}
+
+		err = utils.CopyDir(filepath.Join(tmp, "tepmlates", template), targetDirFullPath)
+		if err != nil {
+			fmt.Printf("Can copy dir %s to %s: %v", tmp, targetDirFullPath, err)
+			os.Exit(1)
+		}
 
 		// rename
 
-		err = utils.ReplaceAllString(targetDir, template, projectName)
+		err = utils.ReplaceAllString(targetDirFullPath, template, projectName)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -81,9 +112,13 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Renamed %s to %s\n", template, projectName)
 
-		// install deps
+		// tidy
 
-		dependencies.InstallAll(template)
+		err = utils.Cmd("go", "mod", "tidy")
+		if err != nil {
+			fmt.Printf("Error tidying: %v\n", err.Error())
+			os.Exit(1)
+		}
 
 		// installs cli-s
 
@@ -103,7 +138,7 @@ var initCmd = &cobra.Command{
 
 		// env
 
-		err = os.Chdir(targetDir)
+		err = os.Chdir(targetDirFullPath)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -157,7 +192,7 @@ PORT=9999
 
 		// vendor
 
-		err = utils.Cmd("go", "mod", "vendor", template)
+		err = utils.Cmd("go", "mod", "vendor")
 		if err != nil {
 			fmt.Println("Error initializing:", err.Error())
 			os.Exit(1)
