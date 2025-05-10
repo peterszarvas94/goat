@@ -32,6 +32,17 @@ func main() {
 		os.Exit(1)
 	}
 
+	ok, err = utils.HasUncomittedChanges()
+	if err != nil {
+		fmt.Printf("Error checking uncommitted changes %s: %s\n", version, err.Error())
+	}
+	if !ok {
+		fmt.Println("You have uncomitted changes")
+		os.Exit(1)
+	} else {
+		fmt.Println("You dont have uncomitted changes")
+	}
+
 	// changing go.mod files for templates:
 	// - replacing goat version
 	// - removing "replace" directives
@@ -103,6 +114,12 @@ func main() {
 	}
 
 	fmt.Println("Pushed files")
+
+	err = utils.Cmd("git", "tag", version)
+	if err != nil {
+		fmt.Printf("Error with \"git tag\": %s\n", err.Error())
+		os.Exit(1)
+	}
 
 	err = utils.Cmd("git", "push", "--tags")
 	if err != nil {
