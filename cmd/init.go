@@ -7,6 +7,7 @@ import (
 
 	"github.com/peterszarvas94/goat/pkg/constants"
 	"github.com/peterszarvas94/goat/pkg/utils"
+	"github.com/peterszarvas94/goat/pkg/version"
 	"github.com/spf13/cobra"
 )
 
@@ -68,12 +69,6 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Temp dir created: %s\n", tmp)
 
-		version, err := utils.GetVersion()
-		if err != nil {
-			fmt.Printf("Can not get version: %v", err)
-			os.Exit(1)
-		}
-
 		// clone repo
 
 		err = utils.Cmd("git", "clone", "https://github.com/peterszarvas94/goat.git", tmp)
@@ -90,13 +85,13 @@ var initCmd = &cobra.Command{
 
 		// checkout version
 
-		_, err = utils.CmdWithOutput("git", "checkout", version)
+		_, err = utils.CmdWithOutput("git", "checkout", version.Version)
 		if err != nil {
 			fmt.Printf("Can checkout version: %v", err)
 			os.Exit(1)
 		}
 
-		fmt.Printf("Checked out version: %s\n", version)
+		fmt.Printf("Checked out version: %s\n", version.Version)
 
 		err = utils.CopyDir(filepath.Join(tmp, "templates", template), targetDirFullPath)
 		if err != nil {

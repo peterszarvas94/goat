@@ -8,15 +8,11 @@ import (
 	"strings"
 
 	"github.com/peterszarvas94/goat/pkg/utils"
+	"github.com/peterszarvas94/goat/pkg/version"
 )
 
 func main() {
-	// checking version
-	version, err := utils.GetVersion()
-	if err != nil {
-		fmt.Printf("Can not get version: %s", err.Error())
-		os.Exit(1)
-	}
+	version := version.Version
 
 	fmt.Printf("Publishing version: %s\n", version)
 
