@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.867
-	github.com/peterszarvas94/goat v0.3.12
+	github.com/peterszarvas94/goat v0.3.13
 )
 
 require (
