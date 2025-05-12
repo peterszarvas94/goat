@@ -2,7 +2,7 @@
 
 GO Application Toolkit
 
-The all-in-one web framework for go (will be)
+The all-in-one web framework for go (in progress!)
 
 ## Dependencies
 
@@ -11,7 +11,7 @@ The all-in-one web framework for go (will be)
 - make: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
 - sqlite3: [https://www.sqlite.org/cli.html](https://www.sqlite.org/cli.html)
 
-### We will install for you
+### GOAT will install for you
 
 - air: [https://github.com/air-verse/air](https://github.com/air-verse/air)
 - templ: [https://github.com/a-h/templ](https://github.com/a-h/templ)
@@ -27,10 +27,14 @@ The all-in-one web framework for go (will be)
 
 `goat init [app] [--template basic-auth]?`
 
-### 3. Go to the new project folder
+### 3. Go to the new project folder (if it is not the current folder)
 
 `cd [app]`
 
 ### 4. Run dev server
 
 `make dev`
+
+### 5. Check out site with live-reload
+
+http:/localhost:7331

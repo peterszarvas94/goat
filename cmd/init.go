@@ -13,6 +13,7 @@ import (
 
 var initCmd = &cobra.Command{
 	Use:                   "init [name]",
+	Aliases:               []string{"i"},
 	Short:                 "Initialize project",
 	Args:                  cobra.RangeArgs(0, 1),
 	DisableFlagsInUseLine: true,
@@ -122,7 +123,7 @@ var initCmd = &cobra.Command{
 		clis := []string{
 			"github.com/pressly/goose/v3/cmd/goose@v3.24.2",
 			"github.com/sqlc-dev/sqlc/cmd/sqlc@v1.29.0",
-			"github.com/a-h/templ/cmd/templ@v0.3.857",
+			"github.com/a-h/templ/cmd/templ@v0.3.865",
 		}
 
 		for _, cli := range clis {

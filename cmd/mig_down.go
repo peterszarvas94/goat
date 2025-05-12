@@ -8,6 +8,7 @@ import (
 
 var migrateDownCmd = &cobra.Command{
 	Use:                   "mig:down",
+	Aliases:               []string{"md"},
 	Short:                 "Run one migration down",
 	Args:                  cobra.ExactArgs(0),
 	DisableFlagsInUseLine: true,

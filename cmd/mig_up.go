@@ -30,6 +30,7 @@ func migrate(direction string) error {
 
 var migrateUpCmd = &cobra.Command{
 	Use:                   "mig:up",
+	Aliases:               []string{"mu"},
 	Short:                 "Run up migrations",
 	Args:                  cobra.ExactArgs(0),
 	DisableFlagsInUseLine: true,

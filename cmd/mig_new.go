@@ -19,6 +19,7 @@ func createMigration(modelName string) error {
 
 var migrationNewCmd = &cobra.Command{
 	Use:                   "mig:new [title]",
+	Aliases:               []string{"mn"},
 	Short:                 "Add new empty migration file",
 	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,

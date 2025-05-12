@@ -58,6 +58,7 @@ func addModel(modelname string) error {
 
 var modelAddCmd = &cobra.Command{
 	Use:                   "model:add [name]",
+	Aliases:               []string{"moa"},
 	Short:                 "Add new model",
 	Args:                  cobra.ExactArgs(1),
 	DisableFlagsInUseLine: true,

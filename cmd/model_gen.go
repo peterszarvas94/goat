@@ -14,6 +14,7 @@ func generateModel() error {
 
 var modelGenCmd = &cobra.Command{
 	Use:                   "model:gen [name]",
+	Aliases:               []string{"mog"},
 	Short:                 "Generate model from existing schemas",
 	Args:                  cobra.ExactArgs(0),
 	DisableFlagsInUseLine: true,
