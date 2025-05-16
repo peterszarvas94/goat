@@ -3,6 +3,7 @@ package procedures
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -12,7 +13,6 @@ import (
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/hash"
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
@@ -60,7 +60,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Credentials are valid", "req_id", reqID)
+	slog.Debug("Credentials are valid", "req_id", reqID)
 
 	sessionId := uuid.New("ses")
 	session, err := queries.CreateSession(context.Background(), models.CreateSessionParams{
@@ -74,7 +74,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("New session", "req_id", reqID)
+	slog.Debug("New session", "req_id", reqID)
 
 	_, err = csrf.AddNewCSRFToken(session.ID)
 	if err != nil {
@@ -97,6 +97,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, cookie)
 
-	logger.Debug("Logged in", "req_id", reqID)
+	slog.Debug("Logged in", "req_id", reqID)
 	request.HxRedirect(w, r, "/", "req_id", reqID)
 }

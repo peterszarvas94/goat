@@ -3,13 +3,13 @@ package procedures
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"basic-auth/db/models"
 
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/hash"
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
@@ -79,6 +79,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Registered", "req_id", reqID)
+	slog.Debug("Registered", "req_id", reqID)
 	request.HxRedirect(w, r, "/login", "req_id", reqID)
 }

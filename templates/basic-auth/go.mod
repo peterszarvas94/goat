@@ -14,4 +14,4 @@ require (
 	golang.org/x/crypto v0.38.0 // indirect
 )
 
-// replace github.com/peterszarvas94/goat => ../../../goat
+replace github.com/peterszarvas94/goat => ../../../goat

@@ -5,46 +5,8 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
-	"runtime"
-	"strconv"
 	"time"
 )
-
-var Logger *slog.Logger
-
-// Using this instead of the built-in AddSource option
-func addSource(args ...any) []any {
-	newArgs := args
-	_, file, line, ok := runtime.Caller(3)
-	if !ok {
-		file = "unknown"
-		line = 0
-	}
-
-	newArgs = append(newArgs, slog.String("file", file))
-	newArgs = append(newArgs, slog.String("line", strconv.Itoa(line)))
-	return newArgs
-}
-
-func Debug(msg string, args ...any) {
-	args = addSource(args...)
-	Logger.Debug(msg, args...)
-}
-
-func Info(msg string, args ...any) {
-	args = addSource(args...)
-	Logger.Info(msg, args...)
-}
-
-func Warn(msg string, args ...any) {
-	args = addSource(args...)
-	Logger.Warn(msg, args...)
-}
-
-func Error(msg string, args ...any) {
-	args = addSource(args...)
-	Logger.Error(msg, args...)
-}
 
 // Creates 2 logger:
 //
@@ -76,9 +38,10 @@ func Setup(folderPath, filePrefix string, level slog.Level) error {
 
 	handler := NewMultiHandler(jsonHandler, textHandler)
 
-	Logger = slog.New(handler)
+	myLogger := slog.New(handler)
 
-	Logger.Debug("Logger set up done")
+	slog.SetDefault(myLogger)
 
+	slog.Debug("Logger set up done")
 	return nil
 }

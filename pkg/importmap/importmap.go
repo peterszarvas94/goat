@@ -3,12 +3,12 @@ package importmap
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/pkg/constants"
-	"github.com/peterszarvas94/goat/pkg/logger"
 )
 
 type ImportMap struct {
@@ -38,7 +38,7 @@ func Setup() error {
 	// read importmap.json
 	file, err := os.ReadFile(constants.ImportMapFile)
 	if err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		return err
 	}
 
@@ -50,11 +50,11 @@ func Setup() error {
 	// parse
 	var importmap ImportMap
 	if err := json.Unmarshal(file, &importmap); err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		return err
 	}
 
-	logger.Debug("The importmap file is parsed")
+	slog.Debug("The importmap file is parsed")
 
 	// make tsconfig struct
 	tsConfigPaths := TsConfig{
@@ -76,18 +76,18 @@ func Setup() error {
 	// write tsconfig into file
 	tsConfigPathsJSON, err := json.MarshalIndent(tsConfigPaths, "", "	")
 	if err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		return err
 	}
 
 	tsConfigPathsContent := fmt.Sprintf("%s\n%s", constants.DoNotModify, tsConfigPathsJSON)
 	err = os.WriteFile(constants.TSConfigPahtsFile, []byte(tsConfigPathsContent), 0644)
 	if err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		return err
 	}
 
-	logger.Debug("The tsconfig file is written")
+	slog.Debug("The tsconfig file is written")
 
 	return nil
 }

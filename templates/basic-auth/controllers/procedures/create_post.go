@@ -5,10 +5,10 @@ import (
 	"basic-auth/views/components"
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/peterszarvas94/goat/pkg/database"
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 	"github.com/peterszarvas94/goat/pkg/uuid"
@@ -66,7 +66,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Post created, rendering new post", "req_id", reqID)
+	slog.Debug("Post created, rendering new post", "req_id", reqID)
 
 	server.Render(w, r, components.Post(&models.Post{
 		Title: post.Title,

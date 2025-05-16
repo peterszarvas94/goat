@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log/slog"
 	"os"
 
 	"basic-auth/config"
@@ -36,7 +37,7 @@ func main() {
 	// set up scripts
 	err = importmap.Setup()
 	if err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		os.Exit(1)
 	}
 
@@ -50,7 +51,7 @@ func main() {
 	queries := models.New(db)
 	sessionIDs, err := queries.ListSessionIDs(context.Background())
 	if err != nil {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		os.Exit(1)
 	}
 

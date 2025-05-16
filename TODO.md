@@ -18,14 +18,12 @@
 - [x] better styling
 - [x] page based scripts
 - [x] page based css
-- [ ] embed this repo into goat repo
-    - remove maddness
-    - fix the damn publish thing
-    - put variable into a txt
-    - put necessary utils in publish, so no pkg needed
-- [ ] slogger: default instead of export
+- [x] combine goat-scaffhold repo with goat repo
+- [x] slogger: default instead of export
+- [ ] always use client side redirection, to awoid theme flicker -> do I need to do something with the <head> ?
+- [ ] combine lytepage repo with goat repo
 - [ ] bump version script
-- [ ] rewrite readme
+- [x] rewrite readme
 - [ ] test!!!
 
 ## BARE

@@ -3,9 +3,9 @@ package procedures
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 )
 
@@ -18,7 +18,7 @@ func GetCount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Count", "req_id", reqID)
+	slog.Debug("Count", "req_id", reqID)
 	w.Header().Set("Content-Type", "text/html")
 	w.Write(fmt.Appendf([]byte{}, "%d", count))
 }

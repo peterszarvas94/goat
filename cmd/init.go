@@ -227,7 +227,7 @@ PORT=9999
 
 		// no migrations found (for e.g. "bare" template)
 		if len(entries) == 0 {
-			fmt.Println("No mogrations found")
+			fmt.Println("No migrations found")
 			os.Exit(0)
 		}
 

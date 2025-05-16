@@ -1,11 +1,11 @@
 [build]
-bin = "tmp/bin/fake"
-pre_cmd = [
-    "printf '#!/bin/sh\nexit 0\n' > tmp/bin/fake",
-    "chmod +x tmp/bin/fake"
-]
 cmd = "templ generate --notify-proxy"
+bin = ""
+full_bin = "/bin/sleep 0"
 delay = 100
 include_dir = ["assets"]
 include_ext = ["js", "css", "json"]
 exclude_dir = []
+
+[log]
+main_only = true

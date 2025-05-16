@@ -3,9 +3,9 @@ package pages
 import (
 	"bare/views/pages"
 	"errors"
+	"log/slog"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 )
@@ -17,6 +17,6 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Rendering notfound page", "path", r.URL.Path, "req_id", reqID)
+	slog.Debug("Rendering notfound page", "path", r.URL.Path, "req_id", reqID)
 	server.Render(w, r, pages.NotFound(), http.StatusNotFound)
 }

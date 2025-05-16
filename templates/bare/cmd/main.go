@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	// set up logger
+	// set up slog
 	err := logger.Setup("logs", "server-logs", config.LogLevel)
 	if err != nil {
 		os.Exit(1)

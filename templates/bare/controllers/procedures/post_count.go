@@ -2,9 +2,9 @@ package procedures
 
 import (
 	"errors"
+	"log/slog"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 )
 
@@ -17,6 +17,6 @@ func PostCount(w http.ResponseWriter, r *http.Request) {
 
 	count++
 
-	logger.Debug("Count increased", "req_id", reqID)
+	slog.Debug("Count increased", "req_id", reqID)
 	GetCount(w, r)
 }

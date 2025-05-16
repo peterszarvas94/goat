@@ -8,7 +8,6 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/pkg/constants"
-	"github.com/peterszarvas94/goat/pkg/logger"
 )
 
 type Middleware func(http.HandlerFunc) http.HandlerFunc
@@ -47,7 +46,7 @@ func (r *Router) addRoute(method string, path string, handler http.HandlerFunc, 
 	pattern := strings.Join([]string{method, path}, " ")
 	wrappedHandler := r.applyMiddlewares(handler, routeMiddlewares...)
 	r.Mux.Handle(pattern, wrappedHandler)
-	logger.Debug("Route added", slog.String("method", method), slog.String("path", path))
+	slog.Debug("Route added", slog.String("method", method), slog.String("path", path))
 }
 
 func (r *Router) Get(path string, handler http.HandlerFunc, middlewares ...Middleware) {

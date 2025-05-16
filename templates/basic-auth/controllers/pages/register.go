@@ -3,9 +3,9 @@ package pages
 import (
 	"basic-auth/views/pages"
 	"errors"
+	"log/slog"
 	"net/http"
 
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 )
@@ -17,6 +17,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Rendering register page", "req_id", reqID)
+	slog.Debug("Rendering register page", "req_id", reqID)
 	server.Render(w, r, pages.Register(), http.StatusOK)
 }

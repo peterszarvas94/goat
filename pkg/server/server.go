@@ -7,8 +7,6 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/peterszarvas94/goat/pkg/logger"
 )
 
 type Server struct {
@@ -36,18 +34,18 @@ func (s *Server) Serve(url string, id string) {
 	// Run graceful shutdown in a separate goroutine
 	go gracefulShutdown(s.server, done)
 
-	logger.Info("Server is started", slog.String("url", s.server.Addr), slog.String("id", id))
+	slog.Info("Server is started", slog.String("url", s.server.Addr), slog.String("id", id))
 
 	err := s.server.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		logger.Error(err.Error())
+		slog.Error(err.Error())
 		panic(err.Error())
 	}
 
 	// Wait for the graceful shutdown to complete
 	<-done
 
-	logger.Info("Graceful shutdown complete")
+	slog.Info("Graceful shutdown complete")
 }
 
 func gracefulShutdown(server *http.Server, done chan bool) {
@@ -58,17 +56,17 @@ func gracefulShutdown(server *http.Server, done chan bool) {
 	// Listen for the interrupt signal.
 	<-ctx.Done()
 
-	logger.Info("Shutting down gracefully, press Ctrl+C again to force")
+	slog.Info("Shutting down gracefully, press Ctrl+C again to force")
 
 	// The context is used to inform the server it has 5 seconds to finish
 	// the request it is currently handling
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		logger.Error("Server forced to shutdown", slog.String("msg", err.Error()))
+		slog.Error("Server forced to shutdown", slog.String("msg", err.Error()))
 	}
 
-	logger.Debug("Server exiting")
+	slog.Debug("Server exiting")
 
 	// Notify the main goroutine that the shutdown is complete
 	done <- true

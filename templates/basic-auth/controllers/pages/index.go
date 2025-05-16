@@ -7,11 +7,11 @@ import (
 	"basic-auth/views/pages"
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 )
@@ -27,8 +27,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	ctxUser, ctxSession, err := helpers.CheckAuthStatus(r)
 	if err != nil {
-		logger.Debug(err.Error(), "req_id", reqID)
-		logger.Debug("Rendering index page as guest", "req_id", reqID)
+		slog.Debug(err.Error(), "req_id", reqID)
+		slog.Debug("Rendering index page as guest", "req_id", reqID)
 		server.Render(w, r, pages.Index(props), http.StatusOK)
 		return
 	}
@@ -64,6 +64,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		UserID:    ctxUser.ID,
 	}
 
-	logger.Debug("Rendering index page as user", "req_id", reqID)
+	slog.Debug("Rendering index page as user", "req_id", reqID)
 	server.Render(w, r, pages.Index(props), http.StatusOK)
 }

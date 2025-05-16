@@ -4,11 +4,11 @@ import (
 	"basic-auth/db/models"
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"
-	"github.com/peterszarvas94/goat/pkg/logger"
 	"github.com/peterszarvas94/goat/pkg/request"
 )
 
@@ -25,7 +25,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Debug("Cookie found", "req_id", reqID, "session_id", cookie.Value)
+	slog.Debug("Cookie found", "req_id", reqID, "session_id", cookie.Value)
 
 	db, err := database.Get()
 	if err != nil {
@@ -44,6 +44,6 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 	csrf.Delete(cookie.Value)
 
-	logger.Debug("Logged out", "req_id", reqID)
+	slog.Debug("Logged out", "req_id", reqID)
 	request.HxRedirect(w, r, "/", "req_id", reqID)
 }
