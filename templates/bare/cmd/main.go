@@ -5,8 +5,8 @@ import (
 
 	"bare/config"
 	. "bare/controllers/middlewares"
-	"bare/controllers/pages"
-	"bare/controllers/procedures"
+	. "bare/controllers/pages"
+	. "bare/controllers/procedures"
 
 	"github.com/peterszarvas94/goat/pkg/env"
 	"github.com/peterszarvas94/goat/pkg/importmap"
@@ -41,12 +41,13 @@ func main() {
 
 	router.Setup()
 
-	router.Use(Cache, AddReqID)
+	router.Use(RemoveTrailingSlash, Cache, AddRequestId)
 
-	router.Get("/", pages.NotFound)
-	router.Get("/{$}", pages.Index)
-	router.Get("/count", procedures.GetCount)
-	router.Post("/count", procedures.PostCount)
+	router.Get("/", NotFoundPageHandler)
+	router.Get("/{$}", IndexPageHandler)
+
+	router.Get("/count", GetCountHandler)
+	router.Post("/count", PostCountHandler)
 
 	s := server.NewServer(router, url)
 

@@ -20,9 +20,8 @@
 - [x] page based css
 - [x] combine goat-scaffhold repo with goat repo
 - [x] slogger: default instead of export
-- [ ] always use client side redirection, to awoid theme flicker -> do I need to do something with the <head> ?
+- [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the <head> ?
 - [ ] combine lytepage repo with goat repo
-- [ ] bump version script
 - [x] rewrite readme
 - [ ] test!!!
 
@@ -36,6 +35,9 @@
 - [ ] email verification
 - [ ] profile page to change name / email / password
 
-## OAUTH
+## ADVANCED AUTH (these should be framework-provided functions)
 
 - [ ] add google / github auth tepmlate
+- [ ] add passkey
+- [ ] add otp
+- [ ] add magic link

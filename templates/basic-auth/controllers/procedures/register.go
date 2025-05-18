@@ -14,7 +14,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
-func Register(w http.ResponseWriter, r *http.Request) {
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
 	if reqID == "" || !ok {
 		request.ServerError(w, r, errors.New("Request ID is missing"))

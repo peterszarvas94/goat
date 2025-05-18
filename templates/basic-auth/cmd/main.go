@@ -7,10 +7,9 @@ import (
 
 	"basic-auth/config"
 	. "basic-auth/controllers/middlewares"
-	"basic-auth/controllers/pages"
-	"basic-auth/controllers/procedures"
+	. "basic-auth/controllers/pages"
+	. "basic-auth/controllers/procedures"
 	"basic-auth/db/models"
-	pageViews "basic-auth/views/pages"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"
@@ -67,17 +66,22 @@ func main() {
 
 	router.Setup()
 
-	router.Use(Cache, AddRequestID, AddAuthState)
+	router.Use(RemoveTrailingSlash, Cache, AddRequestID, AddAuthState)
 
-	router.TemplGet("/", pageViews.NotFound())
-	router.Get("/{$}", pages.Index)
-	router.Get("/register", pages.Register, GuestGuard)
-	router.Get("/login", pages.Login, GuestGuard)
+	router.Get("/", NotFoundPageHandler)
 
-	router.Post("/register", procedures.Register, GuestGuard)
-	router.Post("/login", procedures.Login, GuestGuard)
-	router.Post("/logout", procedures.Logout, AuthGuard)
-	router.Post("/post", procedures.CreatePost, AuthGuard, CSRFGuard)
+	router.Get("/{$}", IndexPageHandler)
+	router.Get("/register", RegisterPageHandler, GuestGuard)
+	router.Post("/register", RegisterHandler, GuestGuard)
+
+	router.Get("/login", LoginPageHandler, GuestGuard)
+
+	router.Post("/login", LoginHandler, GuestGuard)
+
+	router.Post("/logout", LogoutHandler, AuthGuard)
+
+	router.Post("/post", CreatePostHandler, AuthGuard, CSRFGuard)
+	router.Get("/post/{id}", PostPageHandler, AuthGuard)
 
 	s := server.NewServer(router, url)
 

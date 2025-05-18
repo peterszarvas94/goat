@@ -10,7 +10,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/server"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func IndexPageHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
 	if reqID == "" || !ok {
 		request.ServerError(w, r, errors.New("Request ID is missing"))
@@ -18,5 +18,5 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	slog.Debug("Rendering index", "req_id", reqID)
-	server.Render(w, r, pages.Index(), http.StatusOK)
+	server.Render(w, r, pages.IndexPageTemplate(), http.StatusOK)
 }

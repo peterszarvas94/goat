@@ -10,7 +10,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/server"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func LoginPageHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
 	if reqID == "" || !ok {
 		request.ServerError(w, r, errors.New("Request ID is missing"))
@@ -18,5 +18,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	slog.Debug("Rendering login page", "req_id", reqID)
-	server.Render(w, r, pages.Login(), http.StatusOK)
+	server.Render(w, r, pages.LoginPageTemplate(), http.StatusOK)
 }

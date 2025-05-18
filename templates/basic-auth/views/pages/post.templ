@@ -2,18 +2,22 @@ package pages
 
 import (
 	. "basic-auth/views/components"
+	"basic-auth/db/models"
 	"github.com/peterszarvas94/goat/pkg/components"
 )
 
-templ NotFoundPageTemplate() {
+templ PostPageTemplate(post *models.Post) {
 	@components.Head(components.HeadProps{
-		Title:       "basic-auth 404",
-		Description: "Not found",
+		Title:       "basic-auth - post",
+		Description: "Post page for basic-auth",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
 	})
 	@Page() {
 		@PageTitle()
-		<div>404 not found :(</div>
+		<main>
+			<h2>{ post.Title }</h2>
+			<p>{ post.Content }</p>
+		</main>
 	}
 }

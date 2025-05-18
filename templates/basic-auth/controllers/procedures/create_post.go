@@ -14,7 +14,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
-func CreatePost(w http.ResponseWriter, r *http.Request) {
+func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
 	if reqID == "" || !ok {
 		request.ServerError(w, r, errors.New("Request ID is missing"))
@@ -69,6 +69,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Post created, rendering new post", "req_id", reqID)
 
 	server.Render(w, r, components.Post(&models.Post{
+		ID:    post.ID,
 		Title: post.Title,
 	}), http.StatusOK)
 }

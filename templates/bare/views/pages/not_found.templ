@@ -5,7 +5,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/components"
 )
 
-templ NotFound() {
+templ NotFoundPageTemplate() {
 	@components.Head(components.HeadProps{
 		Title:       "bare 404",
 		Description: "Not found",
@@ -13,6 +13,7 @@ templ NotFound() {
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
 	})
 	@Page() {
+		@PageTitle()
 		<div>404 not found :(</div>
 	}
 }

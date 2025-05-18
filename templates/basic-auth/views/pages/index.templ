@@ -12,7 +12,7 @@ type IndexProps struct {
 	Posts         []models.Post
 }
 
-templ Index(props *IndexProps) {
+templ IndexPageTemplate(props *IndexProps) {
 	@components.Head(components.HeadProps{
 		Title:       "basic-auth",
 		Description: "The greatest webpage of all time",
@@ -27,6 +27,7 @@ templ Index(props *IndexProps) {
 				@Postform(*props.PostformProps)
 				<section>
 					<h2>Posts</h2>
+					<p id="post-error" hx-swap-oob="true"></p>
 					<ul id="posts">
 						for _, post := range props.Posts {
 							@Post(&post)

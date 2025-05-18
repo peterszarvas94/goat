@@ -1,12 +1,11 @@
 package components
 
 import (
-	"path/filepath"
-	"github.com/peterszarvas94/goat/pkg/constants"
+	"fmt"
 )
 
 templ UserScript(path string) {
-	@Script(filepath.Join(constants.UserScriptsDir, path))
+	@Script(fmt.Sprintf("/assets/js/src/%s", path))
 }
 
 templ Script(path string) {

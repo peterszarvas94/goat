@@ -2,9 +2,16 @@ package components
 
 import (
 	"basic-auth/db/models"
+	"fmt"
 )
 
 templ Post(post *models.Post) {
-	<li>{ post.Title }</li>
-	<p id="post-error" hx-swap-oob="true"></p>
+	<li>
+		<a
+			href={ templ.SafeURL(fmt.Sprintf("/post/%s", post.ID)) }
+			hx-boost="true"
+		>
+			{ post.Title }
+		</a>
+	</li>
 }
