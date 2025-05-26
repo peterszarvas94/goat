@@ -1,0 +1,18 @@
+select.goat-select {
+	outline-color: transparent;
+	outline-width: 1px;
+	outline-style: solid;
+	padding: 0.5rem 1.8rem 0.5rem 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+	appearance: none;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+
+	background-image: var(--arrow);
+	background-repeat: no-repeat;
+	background-position: right 0.3rem center;
+	background-size: 1.3rem;
+	color: var(--text);
+}

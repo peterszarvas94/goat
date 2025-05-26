@@ -7,6 +7,8 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/spf13/cobra v1.9.1
+	github.com/yuin/goldmark v1.7.12
+	github.com/yuin/goldmark-emoji v1.0.6
 	golang.org/x/crypto v0.38.0
 )
 

@@ -24,6 +24,9 @@ var (
 	UserScriptsDir    = filepath.Join("assets", "js", "src")
 	ImportMapFile     = filepath.Join("assets", "js", "importmap.json")
 	TSConfigPahtsFile = filepath.Join("assets", "js", "tsconfig.paths.json")
+	ContentDir        = "content"
+	MarkdownDir       = filepath.Join("content", "md")
+	HtmlDir           = filepath.Join("content", "html")
 )
 
 // log

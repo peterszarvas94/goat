@@ -1,0 +1,9 @@
+section.goat-card,
+article.goat-card,
+div.goat-card {
+	padding: 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+	background-color: var(--bg);
+	color: var(--text);
+}

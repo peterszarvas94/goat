@@ -1,0 +1,12 @@
+[data-theme="dark"] {
+	--page-bg: #121212;
+	--page-text: white;
+	--bg: #121212;
+	--text: white;
+	--danger: #f04f54;
+	--primary: #1e90ff;
+	--success: #28a745;
+	--border: #666666;
+
+	--arrow: url("data:image/svg+xml;utf8,<svg fill='white' viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><path d='M12 16l-6-6h12z'/></svg>");
+}

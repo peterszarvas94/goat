@@ -1,0 +1,10 @@
+section.goat-float,
+article.goat-float,
+div.goat-float {
+	padding: 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+	box-shadow: 0 0 0.5rem 0 var(--border);
+	background-color: var(--bg);
+	color: var(--text);
+}

@@ -1,0 +1,24 @@
+input.goat-input {
+	outline-color: transparent;
+	outline-width: 1px;
+	outline-style: solid;
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+	width: 100%;
+	background-color: var(--bg);
+	color: var(--text);
+
+	&:focus-visible {
+		outline-color: var(--border);
+	}
+
+	&::placeholder {
+		color: var(--border);
+	}
+
+	&[data-com-onepassword-filled],
+	&[data-com-onepassword-filled]:focus {
+		background-clip: text !important;
+	}
+}

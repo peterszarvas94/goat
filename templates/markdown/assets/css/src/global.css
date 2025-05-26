@@ -1,0 +1,23 @@
+@import "../pkg/preflight.css";
+@import "../pkg/goat-ui@0.0.1/light/light.css";
+@import "../pkg/goat-ui@0.0.1/dark/dark.css";
+
+body {
+	background-color: var(--page-bg);
+	color: var(--page-text);
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+	margin: 0 auto;
+	padding: 2rem 0;
+}
+
+.main-grid {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 2rem;
+}

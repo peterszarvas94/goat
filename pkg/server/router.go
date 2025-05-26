@@ -8,6 +8,7 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/pkg/constants"
+	"github.com/peterszarvas94/goat/pkg/content"
 )
 
 type Middleware func(http.HandlerFunc) http.HandlerFunc
@@ -77,10 +78,19 @@ func (r *Router) Favicon(filePath string) {
 	r.addRoute("GET", "/favicon.ico", handler)
 }
 
-func (r *Router) Static(route, folder string) {
+func (r *Router) StaticFolder(route, folder string) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		fs := http.StripPrefix(route, http.FileServer(http.Dir(folder)))
 		fs.ServeHTTP(w, r)
+	}
+	r.addRoute("GET", route, handler)
+}
+
+func (r *Router) StaticFile(route, filePath string) {
+	fmt.Sprintln(route)
+	fmt.Sprintln(filePath)
+	handler := func(w http.ResponseWriter, req *http.Request) {
+		http.ServeFile(w, req, filePath)
 	}
 	r.addRoute("GET", route, handler)
 }
@@ -98,7 +108,12 @@ func Render(w http.ResponseWriter, r *http.Request, component templ.Component, s
 // js folder
 //
 // css folder
+//
+// html folder
 func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
-	r.Static(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
+	r.StaticFolder(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
+	for route, file := range content.Files {
+		r.StaticFile(fmt.Sprintf("/%s", route), fmt.Sprintf("./%s", file))
+	}
 }
