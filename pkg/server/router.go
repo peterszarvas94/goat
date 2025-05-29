@@ -114,6 +114,8 @@ func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
 	r.StaticFolder(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
 	for route, file := range content.Files {
-		r.StaticFile(fmt.Sprintf("/%s", route), fmt.Sprintf("./%s", file))
+		fmt.Printf("%+v\n", file.Frontmatter)
+		slog.Debug(fmt.Sprintf("Adding route for static file: /%s.html", route))
+		r.StaticFile(fmt.Sprintf("/%s", route), fmt.Sprintf("./%s", file.HtmlPath))
 	}
 }

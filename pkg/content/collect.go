@@ -7,8 +7,10 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 
+	"github.com/adrg/frontmatter"
 	"github.com/peterszarvas94/goat/pkg/constants"
 	"github.com/yuin/goldmark"
 	emoji "github.com/yuin/goldmark-emoji"
@@ -16,12 +18,19 @@ import (
 	"github.com/yuin/goldmark/parser"
 )
 
-type FileMap map[string]string
+type File struct {
+	HtmlPath    string
+	Content     string
+	Frontmatter any
+}
+
+// key is the "route"
+type FileMap map[string]File
 
 // key: file path, value: file content
 var Files FileMap
 
-func Setup() (FileMap, error) {
+func Setup(matter any) (FileMap, error) {
 	// clear map
 	Files = make(FileMap)
 
@@ -30,7 +39,7 @@ func Setup() (FileMap, error) {
 		return make(FileMap), err
 	}
 
-	err = filepath.WalkDir(constants.MarkdownDir, walk())
+	err = filepath.WalkDir(constants.MarkdownDir, walk(matter))
 	if err != nil {
 		return make(FileMap), err
 	}
@@ -38,7 +47,7 @@ func Setup() (FileMap, error) {
 	return Files, nil
 }
 
-func walk() fs.WalkDirFunc {
+func walk(matter any) fs.WalkDirFunc {
 	return func(markdownFilePath string, info fs.DirEntry, err error) error {
 		if err != nil {
 			return fmt.Errorf("failed to access path %s: %w", markdownFilePath, err)
@@ -48,28 +57,53 @@ func walk() fs.WalkDirFunc {
 			return nil
 		}
 
-		html, err := parseMarkdownFile(markdownFilePath)
+		content, err := readFile(markdownFilePath)
 		if err != nil {
-			return err
+			return fmt.Errorf("Can not read file %s: %v\n", markdownFilePath, err)
 		}
 
-		err = writeHtmlFile(markdownFilePath, html)
+		var matter2 any
+
+		if reflect.TypeOf(matter).Kind() == reflect.Ptr &&
+			reflect.TypeOf(matter).Elem().Kind() == reflect.Struct {
+
+			originalValue := reflect.ValueOf(matter).Elem()
+			newValue := reflect.New(originalValue.Type())
+			newValue.Elem().Set(originalValue)
+
+			matter2 = newValue.Interface()
+		}
+
+		body, err := frontmatter.MustParse(strings.NewReader(content), matter2)
 		if err != nil {
-			return err
+			return fmt.Errorf("Can not parse frontmatter: %v\n", err)
+		}
+		content = string(body)
+
+		htmlContent, err := parseMarkdown(content)
+		if err != nil {
+			return fmt.Errorf("Can not parse markdown: %v\n", err)
+		}
+
+		err = writeHtmlFile(markdownFilePath, htmlContent, matter2)
+		if err != nil {
+			return fmt.Errorf("Can not write html file: %v\n", err)
 		}
 
 		return nil
 	}
 }
 
-func parseMarkdownFile(path string) (string, error) {
+func readFile(path string) (string, error) {
 	contentBytes, err := os.ReadFile(path)
 	if err != nil {
 		return "", fmt.Errorf("failed to read file %s: %w", path, err)
 	}
 
-	rawContent := string(contentBytes)
+	return string(contentBytes), nil
+}
 
+func parseMarkdown(rawContent string) (string, error) {
 	markdown := goldmark.New(
 		goldmark.WithExtensions(
 			extension.GFM,
@@ -84,7 +118,7 @@ func parseMarkdownFile(path string) (string, error) {
 
 	var buf bytes.Buffer
 	if err := markdown.Convert([]byte(rawContent), &buf); err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to convert file: %v", err)
 	}
 
 	return buf.String(), nil
@@ -98,9 +132,9 @@ func clearHTMLFolder() error {
 	return nil
 }
 
-func writeHtmlFile(filePath, html string) error {
+func writeHtmlFile(markdownFilePath, content string, matter any) error {
 	// content/md/hello/world.md -> hello/world.md
-	mdPath := filePath[len(constants.MarkdownDir)+1:]
+	mdPath := markdownFilePath[len(constants.MarkdownDir)+1:]
 
 	// hello/world or hello\world
 	barePath := mdPath[:len(mdPath)-len(".md")]
@@ -121,16 +155,21 @@ func writeHtmlFile(filePath, html string) error {
 
 	file, err := os.Create(htmlPath)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to create html file %s: %v", htmlPath, err)
 	}
 	defer file.Close()
 
-	_, err = file.WriteString(html)
+	_, err = file.WriteString(content)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to write html file %s: %v", htmlPath, err)
 	}
 
-	Files[route] = htmlPath
+	Files[route] = File{
+		HtmlPath:    htmlPath,
+		Content:     content,
+		Frontmatter: matter,
+	}
+
 	slog.Debug("HTML file generated", "route", route, "path", htmlPath)
 
 	return nil
