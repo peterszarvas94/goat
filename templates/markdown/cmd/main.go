@@ -17,10 +17,6 @@ import (
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
-type Matter struct {
-	Title string
-}
-
 func main() {
 	// set up slog
 	err := logger.Setup("logs", "server-logs", config.LogLevel)
@@ -41,8 +37,7 @@ func main() {
 	}
 
 	// parse md files
-	matter := &Matter{}
-	_, err = content.Setup(matter)
+	_, err = content.Setup()
 	if err != nil {
 		fmt.Printf("setup: %v\n", err)
 		os.Exit(1)

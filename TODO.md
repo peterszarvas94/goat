@@ -24,6 +24,7 @@
 - [ ] combine lytepage repo with goat repo
     - [x] basic static html rendering
     - [x] dynamic frontmatter
+    - [ ] template for md rendering
 - [x] rewrite readme
 - [ ] test!!!
 

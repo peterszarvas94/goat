@@ -4,18 +4,18 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.865
-	github.com/adrg/frontmatter v0.2.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/spf13/cobra v1.9.1
 	github.com/yuin/goldmark v1.7.12
 	github.com/yuin/goldmark-emoji v1.0.6
+	go.abhg.dev/goldmark/frontmatter v0.2.0
 	golang.org/x/crypto v0.38.0
 )
 
 require (
-	github.com/BurntSushi/toml v0.3.1 // indirect
-	gopkg.in/yaml.v2 v2.3.0 // indirect
+	github.com/BurntSushi/toml v1.2.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
