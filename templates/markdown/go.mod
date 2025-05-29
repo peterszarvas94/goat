@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.865
-	github.com/peterszarvas94/goat v0.3.18
+	github.com/peterszarvas94/goat v0.3.19
 )
 
 require (
@@ -17,4 +17,4 @@ require (
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
 
-replace github.com/peterszarvas94/goat => ../../../goat
+// replace github.com/peterszarvas94/goat => ../../../goat
