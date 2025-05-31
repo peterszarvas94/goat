@@ -97,7 +97,7 @@ func main() {
 
 	fmt.Println("Staged files")
 
-	err = utils.Cmd("git", "commit", "--amend", "-m", fmt.Sprintf("publish: %s", version))
+	err = utils.Cmd("git", "commit", "--amend", "-m", fmt.Sprintf("$(git show --format=%B HEAD)$(printf '\\n')publish: %s", version))
 	if err != nil {
 		fmt.Printf("Error with \"git commit\": %s\n", err.Error())
 		os.Exit(1)
