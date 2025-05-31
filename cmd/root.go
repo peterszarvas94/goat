@@ -35,14 +35,6 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.Flags().BoolP("version", "v", false, "Print GOAT version")
-
-	rootCmd.AddCommand(initCmd)
-	rootCmd.AddCommand(versionCmd)
-	rootCmd.AddCommand(modelAddCmd)
-	rootCmd.AddCommand(modelGenCmd)
-	rootCmd.AddCommand(migrateUpCmd)
-	rootCmd.AddCommand(migrateDownCmd)
-	rootCmd.AddCommand(migrationNewCmd)
 }
 
 func Execute() {

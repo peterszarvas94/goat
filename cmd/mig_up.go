@@ -41,3 +41,7 @@ var migrateUpCmd = &cobra.Command{
 		}
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(migrateUpCmd)
+}

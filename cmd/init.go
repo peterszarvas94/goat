@@ -41,13 +41,13 @@ var initCmd = &cobra.Command{
 
 		// parse tepmlate
 
-		template, err := cmd.Flags().GetString("template")
+		example, err := cmd.Flags().GetString("template")
 		if err != nil {
 			fmt.Printf("Can not parse flag \"--template\"%v", err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Printf("Getting template: %s\n", template)
+		fmt.Printf("Getting template: %s\n", example)
 
 		// get project name
 
@@ -94,7 +94,7 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Checked out version: %s\n", version.Version)
 
-		err = utils.CopyDir(filepath.Join(tmp, "templates", template), targetDirFullPath)
+		err = utils.CopyDir(filepath.Join(tmp, constants.ExamplesDir, example), targetDirFullPath)
 		if err != nil {
 			fmt.Printf("Can copy dir %s to %s: %v", tmp, targetDirFullPath, err)
 			os.Exit(1)
@@ -102,13 +102,13 @@ var initCmd = &cobra.Command{
 
 		// rename
 
-		err = utils.ReplaceAllString(targetDirFullPath, template, projectName)
+		err = utils.ReplaceAllString(targetDirFullPath, example, projectName)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Printf("Renamed %s to %s\n", template, projectName)
+		fmt.Printf("Renamed %s to %s\n", example, projectName)
 
 		// tidy
 
@@ -242,5 +242,7 @@ PORT=9999
 }
 
 func init() {
-	initCmd.Flags().StringP("template", "t", "bare", "Specify a project template, e.g. \"bare\", \"basic-auth\"")
+	initCmd.Flags().StringP("example", "e", "bare", "Specify an example project template. List available templates: \"goat examples\"")
+
+	rootCmd.AddCommand(initCmd)
 }

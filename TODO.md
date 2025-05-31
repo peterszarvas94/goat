@@ -20,11 +20,12 @@
 - [x] page based css
 - [x] combine goat-scaffhold repo with goat repo
 - [x] slogger: default instead of export
-- [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the <head> ?
+- [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the `<head>` ?
 - [ ] combine lytepage repo with goat repo
     - [x] basic static html rendering
-    - [x] dynamic frontmatter
+    - [x] dynamic frontmatter -> `map[string]any`
     - [ ] template for md rendering
+    - [ ] special route handling (index, 404)
 - [x] rewrite readme
 - [ ] test!!!
 

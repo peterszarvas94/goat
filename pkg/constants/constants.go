@@ -29,5 +29,8 @@ var (
 	HtmlDir           = filepath.Join("content", "html")
 )
 
+// examples
+var ExamplesDir = "examples"
+
 // log
 var LogDir = "logs"

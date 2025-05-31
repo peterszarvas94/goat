@@ -25,3 +25,7 @@ var modelGenCmd = &cobra.Command{
 		}
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(modelGenCmd)
+}

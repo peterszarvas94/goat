@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/peterszarvas94/goat/pkg/constants"
 	"github.com/peterszarvas94/goat/pkg/utils"
 	"github.com/peterszarvas94/goat/pkg/version"
 )
@@ -40,10 +41,10 @@ func main() {
 		fmt.Println("You dont have uncomitted changes")
 	}
 
-	// changing go.mod files for templates:
+	// changing go.mod files for examples:
 	// - replacing goat version
 	// - removing "replace" directives
-	subfolders, err := utils.GetSubfolders("templates")
+	subfolders, err := utils.GetSubfolders(constants.ExamplesDir)
 	for _, folder := range subfolders {
 		modFilePath := filepath.Join(folder, "go.mod")
 
@@ -96,7 +97,7 @@ func main() {
 
 	fmt.Println("Staged files")
 
-	err = utils.Cmd("git", "commit", "-m", fmt.Sprintf("publish: %s", version))
+	err = utils.Cmd("git", "commit", "--amend", "-m", fmt.Sprintf("publish: %s", version))
 	if err != nil {
 		fmt.Printf("Error with \"git commit\": %s\n", err.Error())
 		os.Exit(1)

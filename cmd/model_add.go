@@ -69,3 +69,7 @@ var modelAddCmd = &cobra.Command{
 		}
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(modelAddCmd)
+}
