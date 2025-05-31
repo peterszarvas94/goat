@@ -8,6 +8,7 @@ import (
 	. "markdown/controllers/middlewares"
 	. "markdown/controllers/pages"
 	. "markdown/controllers/procedures"
+	"markdown/views"
 
 	"github.com/peterszarvas94/goat/pkg/content"
 	"github.com/peterszarvas94/goat/pkg/env"
@@ -37,6 +38,7 @@ func main() {
 	}
 
 	// parse md files
+	content.RegisterTemplate(views.Md)
 	_, err = content.Setup()
 	if err != nil {
 		fmt.Printf("setup: %v\n", err)

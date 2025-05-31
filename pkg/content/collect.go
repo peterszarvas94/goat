@@ -2,6 +2,7 @@ package content
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/fs"
 	"log/slog"
@@ -9,7 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/pkg/constants"
+	"github.com/yosssi/gohtml"
 	"github.com/yuin/goldmark"
 	emoji "github.com/yuin/goldmark-emoji"
 	"github.com/yuin/goldmark/extension"
@@ -31,6 +34,12 @@ type FileMap map[string]File
 var Files FileMap
 
 var md goldmark.Markdown
+
+var TemplateFunc func(htmlContent string, matter map[string]any) templ.Component
+
+func RegisterTemplate(template func(htmlContent string, matter map[string]any) templ.Component) {
+	TemplateFunc = template
+}
 
 func Setup() (*FileMap, error) {
 	// clear map
@@ -68,7 +77,7 @@ func walk() fs.WalkDirFunc {
 		doc := root.OwnerDocument()
 		matter := doc.Meta()
 
-		htmlContent, err := mdToHtml(markdownContent)
+		htmlContent, err := mdToHtml(markdownContent, matter)
 		if err != nil {
 			return fmt.Errorf("Can not parse markdown: %v\n", err)
 		}
@@ -99,13 +108,27 @@ func readFile(path string) (string, error) {
 	return string(contentBytes), nil
 }
 
-func mdToHtml(rawContent string) (string, error) {
+func mdToHtml(rawContent string, matter map[string]any) (string, error) {
+	var htmlContent string
+
+	// no template set, just parse to html
 	var buf bytes.Buffer
 	if err := md.Convert([]byte(rawContent), &buf); err != nil {
 		return "", fmt.Errorf("failed to convert file: %v", err)
 	}
 
-	return buf.String(), nil
+	htmlContent = buf.String()
+
+	// template is set, rendering
+	if TemplateFunc != nil {
+		var buf bytes.Buffer
+		TemplateFunc(htmlContent, matter).Render(context.Background(), &buf)
+		htmlContent = buf.String()
+	}
+
+	htmlContent = gohtml.Format(htmlContent)
+
+	return htmlContent, nil
 }
 
 func clearHtmlFolder() error {

@@ -1,0 +1,13 @@
+package views
+
+// this is the template of out md files
+templ Md(htmlContent string, matter map[string]any) {
+	{{ title := matter["title"].(string) }}
+	<h1 class="title">{ title }</h1>
+	<div>
+		@templ.Raw(htmlContent)
+	</div>
+	<footer>
+		this is footer hello
+	</footer>
+}

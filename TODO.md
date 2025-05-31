@@ -24,7 +24,7 @@
 - [ ] combine lytepage repo with goat repo
     - [x] basic static html rendering
     - [x] dynamic frontmatter -> `map[string]any`
-    - [ ] template for md rendering
+    - [x] template for md rendering
     - [ ] special route handling (index, 404)
 - [x] rewrite readme
 - [ ] test!!!
