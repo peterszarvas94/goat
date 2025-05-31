@@ -97,7 +97,13 @@ func main() {
 
 	fmt.Println("Staged files")
 
-	err = utils.Cmd("git", "commit", "--amend", "-m", fmt.Sprintf("$(git show --format=%B HEAD)$(printf '\\n')publish: %s", version))
+	lastCommitMsg, err := utils.CmdWithOutput("git", "log", "-1", "--pretty=format:%s")
+	if err != nil {
+		fmt.Printf("Error with \"git log\": %s\n", err.Error())
+		os.Exit(1)
+	}
+
+	err = utils.Cmd("git", "commit", "--amend", "-m", fmt.Sprintf("%s\npublish: %s", lastCommitMsg, version))
 	if err != nil {
 		fmt.Printf("Error with \"git commit\": %s\n", err.Error())
 		os.Exit(1)
