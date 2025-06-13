@@ -7,6 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/spf13/cobra v1.9.1
+	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4
 	github.com/yuin/goldmark v1.7.12
 	github.com/yuin/goldmark-emoji v1.0.6
 	go.abhg.dev/goldmark/frontmatter v0.2.0
@@ -15,7 +16,6 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
 	golang.org/x/net v0.40.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
@@ -25,5 +25,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 )
+
+replace github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 => ../gohtml
 
 retract [v0.0.0-0, v0.3.10]

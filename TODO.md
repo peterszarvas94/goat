@@ -25,7 +25,10 @@
     - [x] basic static html rendering
     - [x] dynamic frontmatter -> `map[string]any`
     - [x] template for md rendering
-    - [ ] special route handling (index, 404)
+    - [ ] special route handling
+        - [x] index
+        - [ ] 404 as "catch all"
+    - [ ] options for formatting html
 - [x] rewrite readme
 - [ ] test!!!
 

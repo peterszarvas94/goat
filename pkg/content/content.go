@@ -22,9 +22,10 @@ import (
 )
 
 type File struct {
-	HtmlPath    string
-	Content     string
-	Frontmatter map[string]any
+	MarkdownPath string
+	HtmlPath     string
+	Content      string
+	Frontmatter  map[string]any
 }
 
 // key is the "route"
@@ -40,6 +41,8 @@ var TemplateFunc func(htmlContent string, matter map[string]any) templ.Component
 func RegisterTemplate(template func(htmlContent string, matter map[string]any) templ.Component) {
 	TemplateFunc = template
 }
+
+var formatting = true
 
 func Setup() (*FileMap, error) {
 	// clear map
@@ -84,15 +87,20 @@ func walk() fs.WalkDirFunc {
 
 		route, htmlFilePath := getHtmlInfo(markdownFilePath)
 
+		if file, exists := Files[route]; exists {
+			return fmt.Errorf("Can not covert file %s, route %s already used for %s\n", markdownFilePath, route, file.MarkdownPath)
+		}
+
 		err = writeHtmlFile(htmlFilePath, htmlContent)
 		if err != nil {
 			return fmt.Errorf("Can not write html file: %v\n", err)
 		}
 
 		Files[route] = File{
-			HtmlPath:    htmlFilePath,
-			Content:     htmlContent,
-			Frontmatter: matter,
+			MarkdownPath: markdownFilePath,
+			HtmlPath:     htmlFilePath,
+			Content:      htmlContent,
+			Frontmatter:  matter,
 		}
 
 		return nil
@@ -126,7 +134,9 @@ func mdToHtml(rawContent string, matter map[string]any) (string, error) {
 		htmlContent = buf.String()
 	}
 
-	htmlContent = gohtml.Format(htmlContent)
+	if formatting {
+		htmlContent = gohtml.Format(htmlContent)
+	}
 
 	return htmlContent, nil
 }
@@ -140,28 +150,31 @@ func clearHtmlFolder() error {
 }
 
 func getHtmlInfo(markdownFilePath string) (route string, htmlPath string) {
-	// content/md/hello/world.md -> hello/world.md
-	mdPath := markdownFilePath[len(constants.MarkdownDir)+1:]
+	htmlPath = strings.TrimSuffix(markdownFilePath, ".md")
+	htmlPath = strings.TrimSuffix(htmlPath, "/index")
+	htmlPath = strings.Replace(htmlPath, constants.MarkdownDir, constants.HtmlDir, 1)
 
-	// hello/world or hello\world
-	barePath := mdPath[:len(mdPath)-len(".md")]
+	route = strings.TrimPrefix(htmlPath, constants.HtmlDir)
+	route = filepath.ToSlash(route)
+	if route == "" {
+		route = "/"
+	}
 
-	// hello/world
-	route = filepath.ToSlash(barePath)
-
-	// content/html/hello/world.html
-	htmlPath = filepath.Join(constants.HtmlDir, barePath+".html")
+	htmlPath = fmt.Sprintf("%s/index.html", htmlPath)
 
 	return route, htmlPath
 }
 
 func writeHtmlFile(htmlFilePath, content string) error {
-	// content/html/hello/world.html -> content/html/hello
 	htmlFileDir := filepath.Dir(htmlFilePath)
 
 	err := os.MkdirAll(htmlFileDir, 0755)
 	if err != nil {
 		return err
+	}
+
+	if _, err := os.Stat(htmlFilePath); err == nil {
+		return fmt.Errorf("html file %s already exists", htmlFilePath)
 	}
 
 	file, err := os.Create(htmlFilePath)
@@ -180,7 +193,22 @@ func writeHtmlFile(htmlFilePath, content string) error {
 	return nil
 }
 
+func SetIndentString(indent string) {
+	gohtml.IndentString = indent
+}
+
+func SetCondense(condense bool) {
+	gohtml.Condense = condense
+}
+
+func SetFormatting(format bool) {
+	formatting = format
+}
+
 func init() {
+	gohtml.Condense = true
+	gohtml.IndentString = "\t"
+
 	md = goldmark.New(
 		goldmark.WithExtensions(
 			extension.GFM,

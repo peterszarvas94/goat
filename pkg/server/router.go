@@ -43,39 +43,55 @@ func (r *Router) applyMiddlewares(handler http.HandlerFunc, routeMiddlewares ...
 	return handler
 }
 
+func logRoute(method, path, file string) {
+	if file == "" {
+		slog.Debug("Route added",
+			slog.String("method", method),
+			slog.String("path", path),
+		)
+	} else {
+		slog.Debug("Route added",
+			slog.String("method", method),
+			slog.String("path", path),
+			slog.String("filePath", file),
+		)
+	}
+}
+
 func (r *Router) addRoute(method string, path string, handler http.HandlerFunc, routeMiddlewares ...Middleware) {
 	pattern := strings.Join([]string{method, path}, " ")
 	wrappedHandler := r.applyMiddlewares(handler, routeMiddlewares...)
 	r.Mux.Handle(pattern, wrappedHandler)
-	slog.Debug("Route added", slog.String("method", method), slog.String("path", path))
 }
 
 func (r *Router) Get(path string, handler http.HandlerFunc, middlewares ...Middleware) {
 	r.addRoute("GET", path, handler, middlewares...)
+	logRoute("GET", path, "")
 }
 
 func (r *Router) Post(path string, handler http.HandlerFunc, middlewares ...Middleware) {
 	r.addRoute("POST", path, handler, middlewares...)
+	logRoute("POST", path, "")
 }
 
 func (r *Router) Patch(path string, handler http.HandlerFunc, middlewares ...Middleware) {
 	r.addRoute("PATCH", path, handler, middlewares...)
+	logRoute("PATCH", path, "")
 }
 
 func (r *Router) Delete(path string, handler http.HandlerFunc, middlewares ...Middleware) {
 	r.addRoute("DELETE", path, handler, middlewares...)
+	logRoute("DELELTE", path, "")
 }
 
 func (r *Router) TemplGet(path string, component templ.Component, middlewares ...Middleware) {
 	handler := templ.Handler(component).ServeHTTP
 	r.addRoute("GET", path, handler, middlewares...)
+	logRoute("GET", path, "")
 }
 
 func (r *Router) Favicon(filePath string) {
-	handler := func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, filePath)
-	}
-	r.addRoute("GET", "/favicon.ico", handler)
+	r.StaticFile("/favicon.ico", "./favicon.ico")
 }
 
 func (r *Router) StaticFolder(route, folder string) {
@@ -84,6 +100,7 @@ func (r *Router) StaticFolder(route, folder string) {
 		fs.ServeHTTP(w, r)
 	}
 	r.addRoute("GET", route, handler)
+	logRoute("GET", route, folder)
 }
 
 func (r *Router) StaticFile(route, filePath string) {
@@ -93,6 +110,7 @@ func (r *Router) StaticFile(route, filePath string) {
 		http.ServeFile(w, req, filePath)
 	}
 	r.addRoute("GET", route, handler)
+	logRoute("GET", route, filePath)
 }
 
 func Render(w http.ResponseWriter, r *http.Request, component templ.Component, status int) {
@@ -114,7 +132,6 @@ func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
 	r.StaticFolder(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
 	for route, file := range content.Files {
-		slog.Debug(fmt.Sprintf("Adding route for static file: /%s.html", route))
-		r.StaticFile(fmt.Sprintf("/%s", route), fmt.Sprintf("./%s", file.HtmlPath))
+		r.StaticFile(fmt.Sprintf("%s", route), fmt.Sprintf("./%s", file.HtmlPath))
 	}
 }

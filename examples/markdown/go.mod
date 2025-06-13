@@ -3,7 +3,7 @@ module markdown
 go 1.24.1
 
 require (
-	github.com/a-h/templ v0.3.865
+	github.com/a-h/templ v0.3.898
 	github.com/peterszarvas94/goat v0.3.27
 )
 
@@ -19,4 +19,6 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-// replace github.com/peterszarvas94/goat => ../../../goat
+replace github.com/peterszarvas94/goat => ../../../goat
+
+replace github.com/yosssi/gohtml => ../../../gohtml
