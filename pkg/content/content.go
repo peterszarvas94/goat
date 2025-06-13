@@ -12,7 +12,7 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/peterszarvas94/goat/pkg/constants"
-	"github.com/yosssi/gohtml"
+	"github.com/peterszarvas94/gohtml"
 	"github.com/yuin/goldmark"
 	emoji "github.com/yuin/goldmark-emoji"
 	"github.com/yuin/goldmark/extension"
