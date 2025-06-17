@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
 	"markdown/config"
@@ -30,14 +31,14 @@ func main() {
 	// set up env vars
 	err = env.Load(&config.Vars)
 	if err != nil {
-		fmt.Printf("Can not load env vars: %v\n", err)
+		slog.Error(fmt.Sprintf("Can not load env vars: %v\n", err))
 		os.Exit(1)
 	}
 
 	// set up scripts
 	err = importmap.Setup()
 	if err != nil {
-		fmt.Printf("Can not setup importmap: %v\n", err)
+		slog.Error(fmt.Sprintf("Can not setup importmap: %v\n", err))
 		os.Exit(1)
 	}
 
@@ -45,7 +46,14 @@ func main() {
 	content.RegisterTemplate(views.Md)
 	_, err = content.Setup()
 	if err != nil {
-		fmt.Printf("Can not convert content: %v\n", err)
+		slog.Error(fmt.Sprintf("Can not convert content: %v\n", err))
+		os.Exit(1)
+	}
+
+	// get 404/index.html
+	err, notFoundFile := content.GetNotFoundFile()
+	if err != nil {
+		slog.Error(fmt.Sprintf("Can not get 'notFoundFile': %v\n", err))
 		os.Exit(1)
 	}
 
@@ -58,7 +66,7 @@ func main() {
 
 	router.Setup()
 
-	router.Get("/", NotFoundPageHandler)
+	router.StaticFile("/", notFoundFile.HtmlPath)
 	router.Get("/{$}", IndexPageHandler)
 
 	router.Get("/count", GetCountHandler)

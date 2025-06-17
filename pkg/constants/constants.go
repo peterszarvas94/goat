@@ -26,7 +26,10 @@ var (
 	TSConfigPahtsFile = filepath.Join("assets", "js", "tsconfig.paths.json")
 	ContentDir        = "content"
 	MarkdownDir       = filepath.Join("content", "md")
+	NotFoundTemplate1 = filepath.Join("content", "md", "404.md")
+	NotFoundTemplate2 = filepath.Join("content", "md", "404", "index.md")
 	HtmlDir           = filepath.Join("content", "html")
+	NotFoundFile      = filepath.Join("content", "html", "404", "index.html")
 )
 
 // examples

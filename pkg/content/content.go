@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/fs"
 	"log/slog"
+	"maps"
 	"os"
 	"path/filepath"
 	"strings"
@@ -22,10 +23,12 @@ import (
 )
 
 type File struct {
-	MarkdownPath string
-	HtmlPath     string
-	Content      string
-	Frontmatter  map[string]any
+	MarkdownPath  string
+	HtmlPath      string
+	MdContent     string // The content of the md file
+	ParsedContent string // Parsed md to html
+	Content       string // Fully rendered html, with the template included, formatted
+	Frontmatter   map[string]any
 }
 
 // key is the "route"
@@ -40,6 +43,15 @@ var TemplateFunc func(htmlContent string, matter map[string]any) templ.Component
 
 func RegisterTemplate(template func(htmlContent string, matter map[string]any) templ.Component) {
 	TemplateFunc = template
+}
+
+func GetNotFoundFile() (error, *File) {
+	for _, file := range maps.All(Files) {
+		if file.HtmlPath == constants.NotFoundFile {
+			return nil, &file
+		}
+	}
+	return fmt.Errorf("Add a '%s' or '%s'\n", constants.NotFoundTemplate1, constants.NotFoundTemplate2), nil
 }
 
 var formatting = true
@@ -80,9 +92,14 @@ func walk() fs.WalkDirFunc {
 		doc := root.OwnerDocument()
 		matter := doc.Meta()
 
-		htmlContent, err := mdToHtml(markdownContent, matter)
+		parsedContent, err := parseMd(markdownContent)
 		if err != nil {
 			return fmt.Errorf("Can not parse markdown: %v\n", err)
+		}
+
+		htmlContent, err := applyTemplate(parsedContent, matter)
+		if err != nil {
+			return fmt.Errorf("Can not apply template: %v\n", err)
 		}
 
 		route, htmlFilePath := getHtmlInfo(markdownFilePath)
@@ -99,6 +116,7 @@ func walk() fs.WalkDirFunc {
 		Files[route] = File{
 			MarkdownPath: markdownFilePath,
 			HtmlPath:     htmlFilePath,
+			MdContent:    markdownContent,
 			Content:      htmlContent,
 			Frontmatter:  matter,
 		}
@@ -116,29 +134,33 @@ func readFile(path string) (string, error) {
 	return string(contentBytes), nil
 }
 
-func mdToHtml(rawContent string, matter map[string]any) (string, error) {
+func parseMd(markdownContent string) (string, error) {
 	var htmlContent string
 
-	// no template set, just parse to html
 	var buf bytes.Buffer
-	if err := md.Convert([]byte(rawContent), &buf); err != nil {
+	err := md.Convert([]byte(markdownContent), &buf)
+	if err != nil {
 		return "", fmt.Errorf("failed to convert file: %v", err)
 	}
 
 	htmlContent = buf.String()
+	return htmlContent, nil
+}
 
-	// template is set, rendering
+func applyTemplate(parsedContent string, matter map[string]any) (string, error) {
+	content := parsedContent
+
 	if TemplateFunc != nil {
 		var buf bytes.Buffer
-		TemplateFunc(htmlContent, matter).Render(context.Background(), &buf)
-		htmlContent = buf.String()
+		TemplateFunc(content, matter).Render(context.Background(), &buf)
+		content = buf.String()
 	}
 
 	if formatting {
-		htmlContent = gohtml.Format(htmlContent)
+		content = gohtml.Format(content)
 	}
 
-	return htmlContent, nil
+	return content, nil
 }
 
 func clearHtmlFolder() error {
