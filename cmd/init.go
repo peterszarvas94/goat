@@ -41,13 +41,13 @@ var initCmd = &cobra.Command{
 
 		// parse tepmlate
 
-		example, err := cmd.Flags().GetString("template")
+		example, err := cmd.Flags().GetString("example")
 		if err != nil {
-			fmt.Printf("Can not parse flag \"--template\"%v", err.Error())
+			fmt.Printf("Can not parse flag \"--example\"%v", err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Printf("Getting template: %s\n", example)
+		fmt.Printf("Getting example: %s\n", example)
 
 		// get project name
 
@@ -62,7 +62,7 @@ var initCmd = &cobra.Command{
 
 		fmt.Printf("Project name: %s\n", projectName)
 
-		tmp, err := os.MkdirTemp("", "goat-template")
+		tmp, err := os.MkdirTemp("", "goat-examples")
 		if err != nil {
 			fmt.Println("Error creating temp dir")
 			os.Exit(1)
@@ -225,7 +225,7 @@ PORT=9999
 			os.Exit(1)
 		}
 
-		// no migrations found (for e.g. "bare" template)
+		// no migrations found (for e.g. "bare" example)
 		if len(entries) == 0 {
 			fmt.Println("No migrations found")
 			os.Exit(0)
@@ -242,7 +242,7 @@ PORT=9999
 }
 
 func init() {
-	initCmd.Flags().StringP("example", "e", "bare", "Specify an example project template. List available templates: \"goat examples\"")
+	initCmd.Flags().StringP("example", "e", "bare", "Specify an example project template. List available: \"goat examples\"")
 
 	rootCmd.AddCommand(initCmd)
 }
