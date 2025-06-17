@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"slices"
-	"strings"
 
 	"github.com/peterszarvas94/goat/pkg/constants"
 	"github.com/spf13/cobra"
@@ -18,7 +17,7 @@ var exampleCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Avaiable examlpes:")
 		for folder := range slices.Values(constants.Examples) {
-			fmt.Printf("- %s\n", strings.Split(folder, "/")[1])
+			fmt.Printf("- %s\n", folder)
 		}
 
 	},
