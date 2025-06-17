@@ -33,7 +33,10 @@ var (
 )
 
 // examples
-var ExamplesDir = "examples"
+var (
+	ExamplesDir = "examples"
+	Examples    = []string{"bare", "basic-auth", "markdown"}
+)
 
 // log
 var LogDir = "logs"
