@@ -13,5 +13,5 @@ func TagPageHandler(w http.ResponseWriter, r *http.Request) {
 
 	files := content.GetTaggedFiles(tag)
 
-	server.Render(w, r, pages.TagPageTemplate(files), http.StatusOK)
+	server.Render(w, r, pages.TagPageTemplate(tag, files), http.StatusOK)
 }

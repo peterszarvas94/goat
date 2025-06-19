@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"github.com/peterszarvas94/goat/pkg/components"
+	"github.com/peterszarvas94/goat/pkg/content"
 	. "markdown/views/components"
 )
 
@@ -59,7 +60,11 @@ func IndexPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div style=\"display: flex; flex-direction: column; gap: 1rem; align-items: center;\"><button class=\"goat-btn\" hx-post=\"/count\" hx-target=\"#counter\">Count</button><div style=\"display: flex; justify-content: center; font-size: 2rem;\"><div id=\"counter\" hx-get=\"/count\" hx-trigger=\"load\"></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div style=\"display: flex; flex-direction: column; gap: 1rem; align-items: center;\"><button class=\"goat-btn\" hx-post=\"/count\" hx-target=\"#counter\">Count</button><div style=\"display: flex; justify-content: center; font-size: 2rem;\"><div id=\"counter\" hx-get=\"/count\" hx-trigger=\"load\"></div></div></div><h2>Articles:</h2>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = ArticleList(content.Files).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

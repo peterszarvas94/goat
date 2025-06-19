@@ -10,8 +10,12 @@
     - [x] special route handling
         - [x] index
         - [x] 404 as "catch all"
+        - [x] tag
+        - [x] category
     - [x] options for formatting html
+    - [ ] ssr for dev?
 - [ ] test!!!
+- [ ] do I need preflight? (not)
 
 ## BARE
 
@@ -32,4 +36,5 @@
 
 ## MARKDOWN
 
-- [ ] add links to example pages into homepage
+- [x] add links to example pages into homepage
+- [ ] styling

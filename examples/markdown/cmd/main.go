@@ -69,6 +69,7 @@ func main() {
 	router.StaticFile("/", notFoundFile.HtmlPath)
 	router.Get("/{$}", IndexPageHandler)
 	router.Get("/tag/{tag}", TagPageHandler)
+	router.Get("/category/{category}", CategoryPageHandler)
 
 	router.Get("/count", GetCountHandler)
 	router.Post("/count", PostCountHandler)

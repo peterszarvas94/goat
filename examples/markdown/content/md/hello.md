@@ -1,5 +1,6 @@
 ---
 title: "test 123"
+category: "test"
 ---
 
 # This is hello.md

@@ -7,7 +7,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/components"
 )
 
-templ TagPageTemplate(tag string, files content.FileMap) {
+templ CategoryPageTemplate(category string, files content.FileMap) {
 	@components.Head(components.HeadProps{
 		Title:       "markdown",
 		Description: "The greatest webpage of all time",
@@ -16,7 +16,7 @@ templ TagPageTemplate(tag string, files content.FileMap) {
 	})
 	@Page() {
 		@PageTitle()
-		<h2>{ fmt.Sprintf("tag: %s", tag) } </h2>
+		<h2>{ fmt.Sprintf("category: %s", category) } </h2>
 		@ArticleList(files)
 	}
 }

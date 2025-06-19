@@ -31,17 +31,19 @@ type File struct {
 	Frontmatter   map[string]any
 }
 
-// key is the "route"
+// key: route, value: File
 type FileMap map[string]File
 
-// key: file path, value: file content
+// all the parsed markdown files
 var Files FileMap
 
 var md goldmark.Markdown
 
-var TemplateFunc func(htmlContent string, matter map[string]any) templ.Component
+type TemplateFuncT = func(file File) templ.Component
 
-func RegisterTemplate(template func(htmlContent string, matter map[string]any) templ.Component) {
+var TemplateFunc TemplateFuncT
+
+func RegisterTemplate(template TemplateFuncT) {
 	TemplateFunc = template
 }
 
@@ -97,29 +99,33 @@ func walk() fs.WalkDirFunc {
 			return fmt.Errorf("Can not parse markdown: %v\n", err)
 		}
 
-		htmlContent, err := applyTemplate(parsedContent, matter)
+		route, htmlFilePath := getHtmlInfo(markdownFilePath)
+
+		file := File{
+			MarkdownPath:  markdownFilePath,
+			HtmlPath:      htmlFilePath,
+			MdContent:     markdownContent,
+			ParsedContent: parsedContent,
+			Frontmatter:   matter,
+		}
+
+		fullContent, err := getFullRenderedTemplate(file)
 		if err != nil {
 			return fmt.Errorf("Can not apply template: %v\n", err)
 		}
 
-		route, htmlFilePath := getHtmlInfo(markdownFilePath)
+		file.Content = fullContent
 
 		if file, exists := Files[route]; exists {
 			return fmt.Errorf("Can not covert file %s, route %s already used for %s\n", markdownFilePath, route, file.MarkdownPath)
 		}
 
-		err = writeHtmlFile(htmlFilePath, htmlContent)
+		err = writeHtmlFile(htmlFilePath, fullContent)
 		if err != nil {
 			return fmt.Errorf("Can not write html file: %v\n", err)
 		}
 
-		Files[route] = File{
-			MarkdownPath: markdownFilePath,
-			HtmlPath:     htmlFilePath,
-			MdContent:    markdownContent,
-			Content:      htmlContent,
-			Frontmatter:  matter,
-		}
+		Files[route] = file
 
 		return nil
 	}
@@ -147,12 +153,12 @@ func parseMd(markdownContent string) (string, error) {
 	return htmlContent, nil
 }
 
-func applyTemplate(parsedContent string, matter map[string]any) (string, error) {
-	content := parsedContent
+func getFullRenderedTemplate(file File) (string, error) {
+	content := file.Content
 
 	if TemplateFunc != nil {
 		var buf bytes.Buffer
-		TemplateFunc(content, matter).Render(context.Background(), &buf)
+		TemplateFunc(file).Render(context.Background(), &buf)
 		content = buf.String()
 	}
 

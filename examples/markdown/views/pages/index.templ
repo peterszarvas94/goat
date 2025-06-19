@@ -3,6 +3,7 @@ package pages
 import (
 	. "markdown/views/components"
 	"github.com/peterszarvas94/goat/pkg/components"
+	"github.com/peterszarvas94/goat/pkg/content"
 )
 
 templ IndexPageTemplate() {
@@ -20,5 +21,7 @@ templ IndexPageTemplate() {
 				<div id="counter" hx-get="/count" hx-trigger="load"></div>
 			</div>
 		</div>
+		<h2>Articles:</h2>
+		@ArticleList(content.Files)
 	}
 }

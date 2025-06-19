@@ -1,0 +1,18 @@
+package components
+
+import (
+	"maps"
+	"github.com/peterszarvas94/goat/pkg/content"
+)
+
+templ ArticleList(files content.FileMap) {
+	<ul>
+		for route, file := range maps.All(files) {
+			<li>
+				<a href={ templ.SafeURL(route) } style="text-decoration: underline;">
+					{ content.GetTitle(file.Frontmatter, route) }
+				</a>
+			</li>
+		}
+	</ul>
+}
