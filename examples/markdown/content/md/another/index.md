@@ -1,9 +1,8 @@
 ---
-title: "testing this hello"
 another: ["1", "2"]
-tags:
-    - one
-    - two
+tag:
+    - "one"
+    - "two"
 ---
 
 # We are here

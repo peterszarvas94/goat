@@ -1,0 +1,31 @@
+package pages
+
+import (
+	"maps"
+	. "markdown/views/components"
+	"github.com/peterszarvas94/goat/pkg/content"
+	"github.com/peterszarvas94/goat/pkg/components"
+)
+
+templ TagPageTemplate(files content.FileMap) {
+	@components.Head(components.HeadProps{
+		Title:       "markdown",
+		Description: "The greatest webpage of all time",
+		Author:      "Peter Szarvas",
+		Keywords:    []string{"goat", "go", "templ", "htmx"},
+	})
+	@Page() {
+		@PageTitle()
+		<div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+			<ul>
+				for route, file := range maps.All(files) {
+					<li>
+						<a href={ templ.SafeURL(route) }>
+							{ content.GetTitle(file.Frontmatter, route) }
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	}
+}

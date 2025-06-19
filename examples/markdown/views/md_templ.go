@@ -8,12 +8,9 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func getTitle(matter map[string]any) string {
-	if title, ok := matter["title"].(string); ok {
-		return title
-	}
-	return ""
-}
+import (
+	"github.com/peterszarvas94/goat/pkg/content"
+)
 
 // this is the template of out md files
 func Md(htmlContent string, matter map[string]any) templ.Component {
@@ -42,9 +39,9 @@ func Md(htmlContent string, matter map[string]any) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(getTitle(matter))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(content.GetTitle(matter, ""))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/md.templ`, Line: 12, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/md.templ`, Line: 9, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
