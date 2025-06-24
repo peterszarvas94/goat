@@ -27,16 +27,10 @@ templ Head(props HeadProps) {
 		<!--js-->
 		<!-- definition in the importmap.json -->
 		@importmap.ScriptTag()
-		<!-- loaded for every route -->
-		@UserScript("global.js")
-		<!-- page-specific scripts -->
 		for _, script := range props.Scripts {
 			@UserScript(script)
 		}
 		<!--css-->
-		<!-- loaded for every route -->
-		@UserStyle("global.css")
-		<!-- page-specific styles -->
 		for _, style := range props.Styles {
 			@UserStyle(style)
 		}

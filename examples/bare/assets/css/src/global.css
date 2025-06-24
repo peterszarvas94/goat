@@ -1,10 +1,7 @@
-@import "../pkg/preflight.css";
-@import "../pkg/goat-ui@0.0.1/light/light.css";
-@import "../pkg/goat-ui@0.0.1/dark/dark.css";
+@import "../pkg/daisyui-themes@5.0.43.css";
+@import "../pkg/daisyui@5.0.43.css";
 
 body {
-	background-color: var(--page-bg);
-	color: var(--page-text);
 	max-width: 600px;
 	margin: 0 auto;
 }

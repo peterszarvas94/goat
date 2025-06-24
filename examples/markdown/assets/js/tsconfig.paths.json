@@ -10,9 +10,6 @@
 		],
 		"baseUrl": "./",
 		"paths": {
-			"goat-ui": [
-				"pkg/goat-ui@0.0.1.js"
-			],
 			"htmx-ext-head-support": [
 				"pkg/htmx-ext-head-support@2.0.4.js"
 			],

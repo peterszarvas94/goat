@@ -1,5 +1,11 @@
 # TODO
 
+## UI
+
+- [ ] ditch goat ui (honestly was a nice try)
+- [ ] daysi ui + tw typography (for makrdown) + some syntaxt highlighter
+    - [ ] rewrite all page head to manually include global
+
 ## GENERAL
 
 - [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the `<head>` ?
