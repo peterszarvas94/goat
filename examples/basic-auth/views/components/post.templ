@@ -10,6 +10,7 @@ templ Post(post *models.Post) {
 		<a
 			href={ templ.SafeURL(fmt.Sprintf("/post/%s", post.ID)) }
 			hx-boost="true"
+			class="link"
 		>
 			{ post.Title }
 		</a>

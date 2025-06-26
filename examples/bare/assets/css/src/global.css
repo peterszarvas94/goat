@@ -1,20 +1,2 @@
 @import "../pkg/daisyui-themes@5.0.43.css";
 @import "../pkg/daisyui@5.0.43.css";
-
-body {
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-h1 {
-	font-size: 2rem;
-	text-align: center;
-	margin: 0 auto;
-	padding: 2rem 0;
-}
-
-.main-grid {
-	display: grid;
-	grid-template-columns: 1fr 2fr;
-	gap: 2rem;
-}

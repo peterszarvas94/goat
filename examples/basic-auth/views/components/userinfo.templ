@@ -12,12 +12,12 @@ type UserinfoProps struct {
 templ Userinfo(user UserinfoProps) {
 	<section
 		id="userinfo"
-		style="display: flex; gap: 1rem; justify-content: center; align-items: center;"
+		class="flex gap-4 justify-center items-center"
 	>
 		<div>
 			logged in as:
 			{ fmt.Sprintf("%s (%s)", user.Name, user.Email) }
 		</div>
-		<button class="goat-btn" hx-post="/logout">Logout</button>
+		<button class="btn" hx-post="/logout">Logout</button>
 	</section>
 }

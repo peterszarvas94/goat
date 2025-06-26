@@ -9,11 +9,13 @@ import (
 
 	"basic-auth/config"
 	"basic-auth/db/models"
+	"basic-auth/views/components"
 
 	"github.com/peterszarvas94/goat/pkg/csrf"
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/hash"
 	"github.com/peterszarvas94/goat/pkg/request"
+	"github.com/peterszarvas94/goat/pkg/server"
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
 
@@ -29,15 +31,24 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	messages := []components.ToastMessage{}
+
 	email := r.FormValue("email")
 	if email == "" {
-		request.BadRequest(w, r, errors.New("Email can not be empty"), "req_id", reqID)
-		return
+		msg := "Email can not be empty"
+		slog.Warn(msg)
+		messages = append(messages, components.ToastMessage{Message: msg, Level: "error"})
 	}
 
 	password := r.FormValue("password")
 	if password == "" {
-		request.BadRequest(w, r, errors.New("Password can not be empty"), "req_id", reqID)
+		msg := "Password can not be empty"
+		slog.Warn(msg)
+		messages = append(messages, components.ToastMessage{Message: msg, Level: "error"})
+	}
+
+	if len(messages) > 0 {
+		server.Render(w, r, components.Toast(messages), http.StatusBadRequest)
 		return
 	}
 

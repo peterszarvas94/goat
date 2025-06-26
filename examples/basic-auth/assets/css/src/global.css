@@ -1,27 +1,2 @@
-@import "https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css";
-@import "https://cdn.jsdelivr.net/npm/tailwindcss@3.4.0/base.min.css";
-
-body {
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-h1 {
-	font-size: 2rem;
-	text-align: center;
-	margin: 0 auto;
-	padding: 2rem 0;
-}
-
-h2 {
-	font-size: 1.5rem;
-	text-align: center;
-	margin: 0 auto;
-	padding: 2rem 0;
-}
-
-.main-grid {
-	display: grid;
-	grid-template-columns: 1fr 2fr;
-	gap: 2rem;
-}
+@import "../pkg/daisyui-themes@5.0.43.css";
+@import "../pkg/daisyui@5.0.43.css";

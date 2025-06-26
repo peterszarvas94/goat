@@ -13,12 +13,12 @@ templ Postform(props PostformProps) {
 		hx-target="#posts"
 		hx-target-error="#post-error"
 		hx-swap="beforeend"
-		style="display: flex; flex-direction: column; gap: 1rem; width: 100%;"
+		class="flex flex-col gap-4 w-full"
 	>
 		@TitleInput()
 		@ContentInput()
 		@CSRFInput(props.CSRFToken)
 		<button class="goat-btn" type="submit">Create post</button>
 	</form>
-	<p style="padding: 1rem 0; color: var(--danger);" id="post-error"></p>
+	<p class="py-4 text-error" id="post-error"></p>
 }

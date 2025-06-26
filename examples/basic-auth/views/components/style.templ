@@ -1,12 +1,11 @@
 package components
 
 import (
-	"path/filepath"
-	"github.com/peterszarvas94/goat/pkg/constants"
+	"fmt"
 )
 
 templ UserStyle(path string) {
-	@Style(filepath.Join(constants.UserStylesDir, path))
+	@Style(fmt.Sprintf("/assets/css/src/%s", path))
 }
 
 templ Style(path string) {
