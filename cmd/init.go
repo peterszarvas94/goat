@@ -121,9 +121,9 @@ var initCmd = &cobra.Command{
 		// installs cli-s
 
 		clis := []string{
-			"github.com/pressly/goose/v3/cmd/goose@v3.24.2",
-			"github.com/sqlc-dev/sqlc/cmd/sqlc@v1.29.0",
-			"github.com/a-h/templ/cmd/templ@v0.3.865",
+			fmt.Sprintf("github.com/pressly/goose/v3/cmd/goose@%s", constants.GooseVersion),
+			fmt.Sprintf("github.com/sqlc-dev/sqlc/cmd/sqlc@%s", constants.SqlcVersion),
+			fmt.Sprintf("github.com/a-h/templ/cmd/templ@%s", constants.TemplVersion),
 		}
 
 		for _, cli := range clis {

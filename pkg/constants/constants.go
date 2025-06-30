@@ -40,3 +40,10 @@ var (
 
 // log
 var LogDir = "logs"
+
+// versions
+var (
+	GooseVersion string = "v3.24.2"
+	SqlcVersion  string = "v1.29.0"
+	TemplVersion string = "v0.3.906"
+)
