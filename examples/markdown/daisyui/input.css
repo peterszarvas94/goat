@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@source "../views";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, retro, aqua, halloween, forest, lofi;
+}

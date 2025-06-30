@@ -1,0 +1,19 @@
+{
+	"name": "daisyui",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"css": "npx @tailwindcss/cli -i ./input.css  -o ../assets/css/src/output.css",
+		"css:watch": "npx @tailwindcss/cli -i ./input.css  -o ../assets/css/src/output.css --watch"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@tailwindcss/cli": "^4.1.11",
+		"@tailwindcss/typography": "^0.5.16",
+		"daisyui": "^5.0.43",
+		"tailwindcss": "^4.1.11"
+	}
+}

@@ -1,3 +1,1 @@
-@import "../pkg/daisyui-themes@5.0.43.css";
-@import "../pkg/daisyui@5.0.43.css";
-@import "../pkg/tailwind-typography@v0.4.1.css";
+@import "./output.css";
