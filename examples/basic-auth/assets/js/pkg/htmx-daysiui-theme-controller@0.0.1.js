@@ -1,5 +1,7 @@
 import htmx from "htmx.org";
 
+htmx.logAll();
+
 /**
  * Apply theme to theme controllers
  * @param {string} theme - Theme name to apply
@@ -17,17 +19,18 @@ function applyTheme(theme) {
  * @returns {string} "dark" or "light"
  */
 function getSystemTheme() {
-	const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const prefersDark = window.matchMedia(
+		"(prefers-color-scheme: dark)",
+	).matches;
 	return prefersDark ? "dark" : "light";
 }
+
+const events = ["htmx:load", "htmx:afterSettle", "htmx:historyRestore"];
 
 // handle page load via navigating or boosted links
 htmx.defineExtension("daisyui-theme-controller", {
 	onEvent: function (name, event) {
-		if (
-			(name === "htmx:load" || name === "htmx:afterSettle") &&
-			event.target === document.body
-		) {
+		if (events.includes(name) && event.target === document.body) {
 			const savedTheme = localStorage.getItem("theme-controller");
 			const themeToApply = savedTheme || getSystemTheme();
 
@@ -35,13 +38,20 @@ htmx.defineExtension("daisyui-theme-controller", {
 			if (!savedTheme) {
 				localStorage.setItem("theme-controller", themeToApply);
 			}
-			
+
 			document.body.removeAttribute("style");
 			document.body.classList.add("opacity-100!");
 		}
 		return true;
 	},
 });
+
+// Handle page load (including browser back/forward navigation)
+// window.addEventListener("load", () => {
+// 	const savedTheme = localStorage.getItem("theme-controller");
+// 	const themeToApply = savedTheme || getSystemTheme();
+// 	applyTheme(themeToApply);
+// });
 
 // Handle system preference changes
 window

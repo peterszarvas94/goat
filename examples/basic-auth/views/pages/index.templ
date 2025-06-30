@@ -22,14 +22,14 @@ templ IndexPageTemplate(props *IndexProps) {
 	})
 	@Page() {
 		@PageTitle()
-		<div class="flex flex-col gap-4">
+		<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
 			if props.UserinfoProps != nil && props.PostformProps != nil {
 				@Userinfo(*props.UserinfoProps)
 				@Postform(*props.PostformProps)
 				<section>
-					<h2>Posts</h2>
+					<h2 class="text-xl">Posts</h2>
 					<p id="post-error" hx-swap-oob="true"></p>
-					<ul id="posts">
+					<ul class="list" id="posts">
 						for _, post := range props.Posts {
 							@Post(&post)
 						}
@@ -40,6 +40,6 @@ templ IndexPageTemplate(props *IndexProps) {
 					<a class="btn" href="/login">Login</a>
 				</div>
 			}
-		</div>
+		</main>
 	}
 }

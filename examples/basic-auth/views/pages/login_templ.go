@@ -61,7 +61,7 @@ func LoginPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <section id=\"login\" class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-xl w-full text-center my-4\">Log in</h2><form class=\"flex flex-col gap-4 w-full\" hx-post=\"/login\" hx-target-error=\"#toast\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <main id=\"login\" class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-xl w-full text-center my-4\">Log in</h2><form class=\"flex flex-col gap-4 w-full\" hx-post=\"/login\" hx-target-error=\"#toast\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -73,7 +73,7 @@ func LoginPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex justify-between items-end\"><button class=\"btn btn-primary\" type=\"submit\">Submit</button> <a href=\"/register\" class=\"btn\">Register instead</a></div></form></section>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex justify-between items-end\"><button class=\"btn btn-primary\" type=\"submit\">Submit</button> <a href=\"/register\" class=\"btn\">Register instead</a></div></form></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

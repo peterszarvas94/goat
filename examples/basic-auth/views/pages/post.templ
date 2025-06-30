@@ -12,11 +12,13 @@ templ PostPageTemplate(post *models.Post) {
 		Description: "Post page for basic-auth",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
+		Scripts:     []string{"global.js"},
+		Styles:      []string{"global.css"},
 	})
 	@Page() {
 		@PageTitle()
-		<main>
-			<h2>{ post.Title }</h2>
+		<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
+			<h2 class="self-center text-2xl my-4">{ post.Title }</h2>
 			<p>{ post.Content }</p>
 		</main>
 	}

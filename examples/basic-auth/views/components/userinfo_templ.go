@@ -38,7 +38,7 @@ func Userinfo(user UserinfoProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section id=\"userinfo\" class=\"flex gap-4 justify-center items-center\"><div>logged in as: ")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section id=\"userinfo\" class=\"flex flex-col gap-4 justify-center items-center\"><div class=\"italic\">logged in as: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

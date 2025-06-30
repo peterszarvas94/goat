@@ -39,6 +39,8 @@ func RegisterPageTemplate() templ.Component {
 			Description: "Log in to basic-auth",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},
+			Scripts:     []string{"global.js"},
+			Styles:      []string{"global.css"},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -59,7 +61,7 @@ func RegisterPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <section id=\"register\" class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-xl w-full text-center my-4\">Register</h2><form class=\"flex flex-col gap-4 w-full\" hx-post=\"/register\" hx-target-error=\"#register-error\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <main id=\"register\" class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-xl w-full text-center my-4\">Register</h2><form class=\"flex flex-col gap-4 w-full\" hx-post=\"/register\" hx-target-error=\"#register-error\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -75,7 +77,7 @@ func RegisterPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex justify-between items-end\"><button class=\"btn btn-primary\" type=\"submit\">Submit</button> <a href=\"/login\" class=\"btn\">Login instead</a></div></form><p class=\"py-4 text-error\" id=\"register-error\"></p></section>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex justify-between items-end\"><button class=\"btn btn-primary\" type=\"submit\">Submit</button> <a href=\"/login\" class=\"btn\">Login instead</a></div></form><p class=\"py-4 text-error\" id=\"register-error\"></p></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

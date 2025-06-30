@@ -11,10 +11,12 @@ templ RegisterPageTemplate() {
 		Description: "Log in to basic-auth",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
+		Scripts:     []string{"global.js"},
+		Styles:      []string{"global.css"},
 	})
 	@Page() {
 		@PageTitle()
-		<section id="register" class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
+		<main id="register" class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
 			<h2 class="text-xl w-full text-center my-4">Register</h2>
 			<form
 				class="flex flex-col gap-4 w-full"
@@ -35,6 +37,6 @@ templ RegisterPageTemplate() {
 				</div>
 			</form>
 			<p class="py-4 text-error" id="register-error"></p>
-		</section>
+		</main>
 	}
 }
