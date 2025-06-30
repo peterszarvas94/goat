@@ -2,15 +2,16 @@ package pages
 
 import (
 	. "bare/views/components"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 templ NotFoundPageTemplate() {
-	@components.Head(components.HeadProps{
+	@Head(HeadProps{
 		Title:       "bare 404",
 		Description: "Not found",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
+		Scripts:     []string{"global.js"},
+		Styles:      []string{"global.css"},
 	})
 	@Page() {
 		@PageTitle()

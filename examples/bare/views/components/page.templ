@@ -1,8 +1,10 @@
 package components 
 
 templ Page() {
-	// opacity 0 until theme loads
-	<body hx-ext="head-support,daisyui-theme-controller" style="opacity: 0;">
+	<body
+		hx-ext="response-targets,daisyui-theme-controller"
+		style="opacity: 0;"
+	>
 		{ children... }
 	</body>
 }

@@ -9,7 +9,6 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/peterszarvas94/goat/pkg/components"
 	"github.com/peterszarvas94/goat/pkg/content"
 	. "markdown/views/components"
 )
@@ -35,11 +34,13 @@ func IndexPageTemplate() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.Head(components.HeadProps{
+		templ_7745c5c3_Err = Head(HeadProps{
 			Title:       "markdown",
 			Description: "The greatest webpage of all time",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},
+			Scripts:     []string{"global.js"},
+			Styles:      []string{"global.css"},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -60,11 +61,15 @@ func IndexPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div style=\"display: flex; flex-direction: column; gap: 1rem; align-items: center;\"><button class=\"goat-btn\" hx-post=\"/count\" hx-target=\"#counter\">Count</button><div style=\"display: flex; justify-content: center; font-size: 2rem;\"><div id=\"counter\" hx-get=\"/count\" hx-trigger=\"load\"></div></div></div><h2>Articles:</h2>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <main class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-2xl w-full text-center my-4\">Articles:</h2>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			templ_7745c5c3_Err = ArticleList(content.Files).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

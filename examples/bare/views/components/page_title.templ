@@ -6,8 +6,20 @@ import (
 )
 
 templ PageTitle() {
-	<header class="flex justify-between items-center w-full max-w-5xl">
-		<a href="/" hx-boost="true">
+	<style>
+		.theme-controller:checked + .checkmark {
+			display: inline-block !important;
+		}
+		.dropdown-content li {
+			position: relative;
+		}
+		.theme-controller:checked {
+			background-color: hsl(var(--p)) !important;
+			color: hsl(var(--pc)) !important;
+		}
+	</style>
+	<header class="flex justify-between items-center w-full max-w-5xl my-4 mx-auto">
+		<a href="/" class="text-2xl uppercase">
 			<h1>{ config.AppName }</h1>
 		</a>
 		<div class="dropdown dropdown-end">
@@ -24,7 +36,7 @@ templ PageTitle() {
 				</svg>
 			</div>
 			<ul tabindex="0" class="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
-				for _, theme := range []string{"default", "retro", "aqua", "halloween", "forest", "lofi"} {
+				for _, theme := range []string{"dark", "light", "retro", "aqua", "halloween", "forest", "lofi"} {
 					<li>
 						<input
 							type="radio"
@@ -34,6 +46,11 @@ templ PageTitle() {
 							value={ theme }
 							onchange="localStorage.setItem('theme-controller', this.value)"
 						/>
+						<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+							</svg>
+						</span>
 					</li>
 				}
 			</ul>

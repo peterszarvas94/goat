@@ -2,11 +2,10 @@ package pages
 
 import (
 	. "bare/views/components"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 templ IndexPageTemplate() {
-	@components.Head(components.HeadProps{
+	@Head(HeadProps{
 		Title:       "bare",
 		Description: "The greatest webpage of all time",
 		Author:      "Peter Szarvas",
@@ -16,11 +15,11 @@ templ IndexPageTemplate() {
 	})
 	@Page() {
 		@PageTitle()
-		<div class="flex flex-col gap-4 items-center">
-			<button class="btn" hx-post="/count" hx-target="#counter">Count</button>
-			<div class="flex justify-center text-2xl">
+		<main class="flex flex-col justify-center items-center w-full max-w-xl my-0 mx-auto">
+			<button class="btn btn-primary w-fit" hx-post="/count" hx-target="#counter">Count</button>
+			<div class="flex justify-center text-2xl my-4">
 				<div id="counter" hx-get="/count" hx-trigger="load"></div>
 			</div>
-		</div>
+		</main>
 	}
 }

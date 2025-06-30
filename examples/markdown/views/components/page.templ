@@ -1,7 +1,10 @@
 package components 
 
 templ Page() {
-	<body hx-ext="head-support" data-theme="light">
+	<body
+		hx-ext="response-targets,daisyui-theme-controller"
+		style="opacity: 0;"
+	>
 		{ children... }
 	</body>
 }

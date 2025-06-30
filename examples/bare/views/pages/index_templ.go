@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	. "bare/views/components"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 func IndexPageTemplate() templ.Component {
@@ -34,7 +33,7 @@ func IndexPageTemplate() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.Head(components.HeadProps{
+		templ_7745c5c3_Err = Head(HeadProps{
 			Title:       "bare",
 			Description: "The greatest webpage of all time",
 			Author:      "Peter Szarvas",
@@ -61,7 +60,7 @@ func IndexPageTemplate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div class=\"flex flex-col gap-4 items-center\"><button class=\"btn\" hx-post=\"/count\" hx-target=\"#counter\">Count</button><div class=\"flex justify-center text-2xl\"><div id=\"counter\" hx-get=\"/count\" hx-trigger=\"load\"></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <main class=\"flex flex-col justify-center items-center w-full max-w-xl my-0 mx-auto\"><button class=\"btn w-fit\" hx-post=\"/count\" hx-target=\"#counter\">Count</button><div class=\"flex justify-center text-2xl my-4\"><div id=\"counter\" hx-get=\"/count\" hx-trigger=\"load\"></div></div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

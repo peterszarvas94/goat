@@ -1,17 +1,131 @@
-<a href="/" style="text-decoration: underline; padding: 1rem 0; font-size: 3rem;">markdown</a>
-<h1 class="title">test 123</h1>
-<p>Tags:</p>
-<ul></ul>
-<p>Category:</p>
-<a href="/category/test">test</a>
-<div>
-	<h1>This is hello.md</h1>
-	<p>Hello world</p>
-	<ul>
-		<li>this</li>
-		<li>is</li>
-		<li>a</li>
-		<li>list</li>
-	</ul>
-</div>
-<footer>this is footer hello</footer>
+<!doctype html>
+<head>
+	<!--meta-->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="The greatest webpage of all time">
+	<meta name="keywords" content="goat,go,templ,htmx">
+	<meta name="author" content="Peter Szarvas">
+	<title>markdown</title>
+	<!--js-->
+	<!-- definition in the importmap.json -->
+	<script type="importmap">
+		{
+			"imports": {
+				"htmx.org": "/assets/js/pkg/htmx.org@2.0.4.js",
+				"htmx-ext-head-support": "/assets/js/pkg/htmx-ext-head-support@2.0.4.js",
+				"tailwindcss": "/assets/js/pkg/tailwindcss@4.1.10.js",
+				"daisyui-theme-controller": "/assets/js/pkg/htmx-daysiui-theme-controller@0.0.1.js"
+			}
+		}
+	</script>
+	<script src="/assets/js/src/global.js" type="module"></script>
+	<!--css-->
+	<link rel="stylesheet" href="/assets/css/src/global.css">
+</head>
+<body hx-ext="response-targets,daisyui-theme-controller" style="opacity: 0;">
+	<style>
+		.theme-controller:checked + .checkmark {
+					display: inline-block !important;
+				}
+				.dropdown-content li {
+					position: relative;
+				}
+				.theme-controller:checked {
+					background-color: hsl(var(--p)) !important;
+					color: hsl(var(--pc)) !important;
+				}
+	</style>
+	<header class="flex justify-between items-center w-full max-w-5xl my-4 mx-auto">
+		<a href="/" class="text-2xl uppercase">
+			<h1>markdown</h1>
+		</a>
+		<div class="dropdown dropdown-end">
+			<div tabindex="0" role="button" class="btn m-1">
+				Theme
+				<svg width="12px" height="12px" class="inline-block h-2 w-2 fill-current opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+					<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+				</svg>
+			</div>
+			<ul tabindex="0" class="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Dark" value="dark" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Light" value="light" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Retro" value="retro" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Aqua" value="aqua" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Halloween" value="halloween" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Forest" value="forest" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+				<li>
+					<input type="radio" name="theme-dropdown" class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start" aria-label="Lofi" value="lofi" onchange="localStorage.setItem('theme-controller', this.value)">
+					<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+						</svg>
+					</span>
+				</li>
+			</ul>
+		</div>
+	</header>
+	<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
+		<h1 class="text-2xl my-4 text-center">test 123</h1>
+		<div class="flex gap-2">
+			<p>Tags:</p>
+			<ul class="flex gap-2"></ul>
+		</div>
+		<div class="flex gap-2">
+			<p>Category:</p>
+			<a href="/category/test" class="link">test</a>
+		</div>
+		<div class="prose">
+			<h1>This is hello.md</h1>
+			<p>Hello world</p>
+			<ul>
+				<li>this</li>
+				<li>is</li>
+				<li>a</li>
+				<li>list</li>
+			</ul>
+		</div>
+	</main>
+</body>

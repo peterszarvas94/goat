@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"fmt"
-	"github.com/peterszarvas94/goat/pkg/components"
 	"github.com/peterszarvas94/goat/pkg/content"
 	. "markdown/views/components"
 )
@@ -36,11 +35,13 @@ func TagPageTemplate(tag string, files content.FileMap) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.Head(components.HeadProps{
+		templ_7745c5c3_Err = Head(HeadProps{
 			Title:       "markdown",
 			Description: "The greatest webpage of all time",
 			Author:      "Peter Szarvas",
 			Keywords:    []string{"goat", "go", "templ", "htmx"},
+			Scripts:     []string{"global.js"},
+			Styles:      []string{"global.css"},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -61,14 +62,14 @@ func TagPageTemplate(tag string, files content.FileMap) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <h2>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <main class=\"flex flex-col justify-center w-full max-w-xl my-0 mx-auto\"><h2 class=\"text-xl w-full text-center my-4\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("tag: %s", tag))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `examples/markdown/views/pages/tag.templ`, Line: 19, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/tag.templ`, Line: 21, Col: 76}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -79,6 +80,10 @@ func TagPageTemplate(tag string, files content.FileMap) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			templ_7745c5c3_Err = ArticleList(files).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

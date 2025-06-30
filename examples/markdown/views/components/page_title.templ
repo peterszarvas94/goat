@@ -1,16 +1,59 @@
 package components
 
-import "markdown/config"
+import (
+	"strings"
+	"markdown/config"
+)
 
 templ PageTitle() {
-	<a href="/" hx-boost="true">
-		<h1>{ config.AppName }</h1>
-	</a>
-	<div style="display: flex; justify-content: center; padding-bottom: 4rem;">
-		<select class="goat-select goat-theme-selector" id="theme-selector">
-			<option value="light">Light</option>
-			<option value="dark">Dark</option>
-			<option value="system">System</option>
-		</select>
-	</div>
+	<style>
+		.theme-controller:checked + .checkmark {
+			display: inline-block !important;
+		}
+		.dropdown-content li {
+			position: relative;
+		}
+		.theme-controller:checked {
+			background-color: hsl(var(--p)) !important;
+			color: hsl(var(--pc)) !important;
+		}
+	</style>
+	<header class="flex justify-between items-center w-full max-w-5xl my-4 mx-auto">
+		<a href="/" class="text-2xl uppercase">
+			<h1>{ config.AppName }</h1>
+		</a>
+		<div class="dropdown dropdown-end">
+			<div tabindex="0" role="button" class="btn m-1">
+				Theme
+				<svg
+					width="12px"
+					height="12px"
+					class="inline-block h-2 w-2 fill-current opacity-60"
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 2048 2048"
+				>
+					<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+				</svg>
+			</div>
+			<ul tabindex="0" class="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
+				for _, theme := range []string{"dark", "light", "retro", "aqua", "halloween", "forest", "lofi"} {
+					<li>
+						<input
+							type="radio"
+							name="theme-dropdown"
+							class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+							aria-label={ strings.Title(theme) }
+							value={ theme }
+							onchange="localStorage.setItem('theme-controller', this.value)"
+						/>
+						<span class="checkmark hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"></path>
+							</svg>
+						</span>
+					</li>
+				}
+			</ul>
+		</div>
+	</header>
 }

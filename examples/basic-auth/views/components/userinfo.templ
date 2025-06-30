@@ -18,6 +18,6 @@ templ Userinfo(user UserinfoProps) {
 			logged in as:
 			{ fmt.Sprintf("%s (%s)", user.Name, user.Email) }
 		</div>
-		<button class="btn" hx-post="/logout">Logout</button>
+		<button class="btn btn-primary" hx-post="/logout">Logout</button>
 	</section>
 }

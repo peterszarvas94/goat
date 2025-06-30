@@ -6,10 +6,13 @@ import (
 )
 
 templ ArticleList(files content.FileMap) {
-	<ul>
+	<ul class="list">
 		for route, file := range maps.All(files) {
-			<li>
-				<a href={ templ.SafeURL(route) } style="text-decoration: underline;">
+			<li class="list-row">
+				<a
+					href={ templ.SafeURL(route) }
+					class="link"
+				>
 					{ content.GetTitle(file.Frontmatter, route) }
 				</a>
 			</li>
