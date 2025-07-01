@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaisyUI Highlight.js Theme</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        /* DaisyUI Highlight.js Theme - Uses correct semantic color names */
+        .hljs {
+            background: oklch(var(--color-base-100));
+            color: oklch(var(--color-base-content));
+            border-radius: var(--rounded-box);
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid oklch(var(--color-base-300));
+        }
+
+        /* Comments */
+        .hljs-comment,
+        .hljs-quote {
+            color: oklch(var(--color-neutral));
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        /* Keywords */
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-subst {
+            color: oklch(var(--color-primary));
+            font-weight: 600;
+        }
+
+        /* Numbers and literals */
+        .hljs-number,
+        .hljs-literal,
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-tag .hljs-attr {
+            color: oklch(var(--color-accent));
+        }
+
+        /* Strings */
+        .hljs-string,
+        .hljs-doctag {
+            color: oklch(var(--color-success));
+        }
+
+        /* Function names and titles */
+        .hljs-title,
+        .hljs-title.class_,
+        .hljs-title.class_.inherited__,
+        .hljs-title.function_,
+        .hljs-function .hljs-title {
+            color: oklch(var(--color-secondary));
+            font-weight: 600;
+        }
+
+        /* Built-ins and types */
+        .hljs-built_in,
+        .hljs-type,
+        .hljs-class .hljs-title {
+            color: oklch(var(--color-info));
+            font-weight: 500;
+        }
+
+        /* Attributes */
+        .hljs-attribute,
+        .hljs-attr {
+            color: oklch(var(--color-warning));
+        }
+
+        /* Symbols and operators */
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-link {
+            color: oklch(var(--color-accent));
+        }
+
+        /* Meta and preprocessor */
+        .hljs-meta,
+        .hljs-meta .hljs-keyword {
+            color: oklch(var(--color-warning));
+        }
+
+        /* Sections and names */
+        .hljs-section,
+        .hljs-name {
+            color: oklch(var(--color-primary));
+            font-weight: 600;
+        }
+
+        /* Additions and deletions */
+        .hljs-addition {
+            color: oklch(var(--color-success));
+            background-color: oklch(var(--color-success) / 0.1);
+        }
+
+        .hljs-deletion {
+            color: oklch(var(--color-error));
+            background-color: oklch(var(--color-error) / 0.1);
+        }
+
+        /* Tags and selectors */
+        .hljs-tag,
+        .hljs-selector-id,
+        .hljs-selector-class,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo {
+            color: oklch(var(--color-secondary));
+        }
+
+        /* Emphasis */
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-base-200 min-h-screen">
+    <div class="container mx-auto p-8 max-w-4xl">
+        <div class="bg-base-100 rounded-box p-8 shadow-xl">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-4xl font-bold text-primary">DaisyUI Highlight.js Theme</h1>
+                <select class="select select-bordered" onchange="changeTheme(this.value)">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="cupcake">Cupcake</option>
+                    <option value="bumblebee">Bumblebee</option>
+                    <option value="emerald">Emerald</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="synthwave">Synthwave</option>
+                    <option value="retro">Retro</option>
+                    <option value="cyberpunk">Cyberpunk</option>
+                    <option value="valentine">Valentine</option>
+                    <option value="halloween">Halloween</option>
+                    <option value="garden">Garden</option>
+                    <option value="forest">Forest</option>
+                    <option value="aqua">Aqua</option>
+                    <option value="lofi">Lofi</option>
+                    <option value="pastel">Pastel</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="wireframe">Wireframe</option>
+                    <option value="black">Black</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="dracula">Dracula</option>
+                </select>
+            </div>
+            
+            <div class="alert alert-info mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>This theme uses DaisyUI's semantic color variables and adapts to any DaisyUI theme automatically!</span>
+            </div>
+
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-semibold text-secondary mb-4">JavaScript Example</h2>
+                    <pre><code class="language-javascript">// Using DaisyUI semantic colors in JavaScript
+const themeColors = {
+    primary: 'oklch(var(--color-primary))',
+    secondary: 'oklch(var(--color-secondary))', 
+    accent: 'oklch(var(--color-accent))',
+    neutral: 'oklch(var(--color-neutral))',
+    base: 'oklch(var(--color-base-100))',
+    info: 'oklch(var(--color-info))',
+    success: 'oklch(var(--color-success))',
+    warning: 'oklch(var(--color-warning))',
+    error: 'oklch(var(--color-error))'
+};
+
+function getThemeColor(colorName) {
+    return getComputedStyle(document.documentElement)
+        .getPropertyValue(`--color-${colorName}`);
+}
+
+class Component {
+    constructor(element) {
+        this.element = element;
+        this.isActive = false;
+    }
+    
+    activate() {
+        this.isActive = true;
+        this.element.classList.add('btn-primary');
+        return this;
+    }
+}</code></pre>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-semibold text-secondary mb-4">CSS with DaisyUI Variables</h2>
+                    <pre><code class="language-css">/* Custom component using DaisyUI semantic colors */
+.custom-card {
+    background-color: oklch(var(--color-base-100));
+    color: oklch(var(--color-base-content));
+    border: 1px solid oklch(var(--color-base-300));
+    border-radius: var(--rounded-box);
+    padding: var(--spacing-4);
+}
+
+.custom-button {
+    background-color: oklch(var(--color-primary));
+    color: oklch(var(--color-primary-content));
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--rounded-btn);
+    transition: all 0.2s ease;
+}
+
+.custom-button:hover {
+    background-color: oklch(var(--color-primary) / 0.8);
+    transform: translateY(-2px);
+}
+
+.alert-custom {
+    background-color: oklch(var(--color-info) / 0.1);
+    color: oklch(var(--color-info-content));
+    border-left: 4px solid oklch(var(--color-info));
+}</code></pre>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-semibold text-secondary mb-4">HTML with DaisyUI Classes</h2>
+                    <pre><code class="language-html">&lt;div class="card bg-base-100 shadow-xl"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h2 class="card-title text-primary"&gt;Semantic Colors&lt;/h2&gt;
+        &lt;p class="text-base-content"&gt;
+            DaisyUI uses semantic color names that adapt to any theme.
+        &lt;/p&gt;
+        &lt;div class="card-actions justify-end"&gt;
+            &lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+            &lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+            &lt;button class="btn btn-accent"&gt;Accent&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="alert alert-info"&gt;
+    &lt;svg class="stroke-current shrink-0 w-6 h-6"&gt;...&lt;/svg&gt;
+    &lt;span&gt;Info alert using semantic colors&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-semibold text-secondary mb-4">JSON Configuration</h2>
+                    <pre><code class="language-json">{
+  "theme": "daisyui-semantic",
+  "colors": {
+    "primary": "var(--color-primary)",
+    "secondary": "var(--color-secondary)",
+    "accent": "var(--color-accent)",
+    "neutral": "var(--color-neutral)",
+    "base": "var(--color-base-100)",
+    "info": "var(--color-info)",
+    "success": "var(--color-success)",
+    "warning": "var(--color-warning)",
+    "error": "var(--color-error)"
+  },
+  "syntax": {
+    "keywords": "primary",
+    "strings": "success", 
+    "numbers": "accent",
+    "functions": "secondary",
+    "comments": "neutral"
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        hljs.highlightAll();
+        
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+        
+        // Set default theme
+        document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+</body>
+</html>

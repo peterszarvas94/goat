@@ -1,15 +1,13 @@
 # TODO
 
-## UI
-
-- [ ] ditch goat ui (honestly was a nice try)
-- [ ] daysi ui + tw typography (for makrdown) + some syntaxt highlighter
-    - [ ] rewrite all page head to manually include global
-
 ## GENERAL
 
+- [x] ditch goat ui (honestly was a nice try)
+- [x] daysi ui + tw typography (for makrdown) + some syntaxt highlighter
+- [ ] generate css
+- [x] manually include global
+- [ ] rich text editor
 - [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the `<head>` ? / how to actually use hx-boost
-
 - [x] combine lytepage repo with goat repo
     - [x] basic static html rendering
     - [x] dynamic frontmatter -> `map[string]any`
@@ -43,4 +41,5 @@
 ## MARKDOWN
 
 - [x] add links to example pages into homepage
-- [ ] styling
+- [x] styling
+- [ ] rich text editor

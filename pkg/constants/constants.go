@@ -19,9 +19,11 @@ var (
 var (
 	AssetsDir         = "assets"
 	CSSDir            = filepath.Join("assets", "css")
-	UserStylesDir     = filepath.Join("assets", "css", "src")
+	CssPkgDir         = filepath.Join("assets", "css", "pkg")
+	CssSrcDir         = filepath.Join("assets", "css", "src")
 	JSDir             = filepath.Join("assets", "js")
-	UserScriptsDir    = filepath.Join("assets", "js", "src")
+	JsPkgDir          = filepath.Join("assets", "js", "pkg")
+	JsSrcDir          = filepath.Join("assets", "js", "src")
 	ImportMapFile     = filepath.Join("assets", "js", "importmap.json")
 	TSConfigPahtsFile = filepath.Join("assets", "js", "tsconfig.paths.json")
 	ContentDir        = "content"

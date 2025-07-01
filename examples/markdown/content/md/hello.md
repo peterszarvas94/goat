@@ -7,7 +7,28 @@ category: "test"
 
 Hello world
 
-- this
-- is
-- a
-- list
+```go
+// comment
+package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    fmt.Println("Hello")
+}
+```
+
+```ts
+/**
+ * more
+ * comments
+ * @return null
+ */
+import { f } from "some";
+
+const who: string = "you";
+
+console.log(f(who));
+```
