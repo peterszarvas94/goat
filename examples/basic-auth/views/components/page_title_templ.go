@@ -51,7 +51,7 @@ func PageTitle() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, theme := range []string{"dark", "light", "retro", "aqua", "halloween", "forest", "lofi"} {
+		for _, theme := range []string{"dark", "light", "retro", "aqua", "halloween", "forest", "lofi", "cyberpunk"} {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<li><input type=\"radio\" name=\"theme-dropdown\" class=\"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start\" aria-label=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

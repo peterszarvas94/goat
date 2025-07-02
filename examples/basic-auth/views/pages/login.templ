@@ -2,11 +2,10 @@ package pages
 
 import (
 	. "basic-auth/views/components"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 templ LoginPageTemplate() {
-	@components.Head(components.HeadProps{
+	@Head(HeadProps{
 		Title:       "basic-auth - login",
 		Description: "Log in to basic-auth",
 		Author:      "Peter Szarvas",

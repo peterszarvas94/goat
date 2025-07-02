@@ -4,7 +4,7 @@
 
 - [x] ditch goat ui (honestly was a nice try)
 - [x] daysi ui + tw typography (for makrdown) + some syntaxt highlighter
-- [ ] generate css
+- [x] generate css
 - [x] manually include global
 - [ ] rich text editor
 - [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the `<head>` ? / how to actually use hx-boost

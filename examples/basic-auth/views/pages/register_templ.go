@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	. "basic-auth/views/components"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 func RegisterPageTemplate() templ.Component {
@@ -34,7 +33,7 @@ func RegisterPageTemplate() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.Head(components.HeadProps{
+		templ_7745c5c3_Err = Head(HeadProps{
 			Title:       "basic-auth - login",
 			Description: "Log in to basic-auth",
 			Author:      "Peter Szarvas",

@@ -71,9 +71,6 @@ func main() {
 	router.Get("/tag/{tag}", TagPageHandler)
 	router.Get("/category/{category}", CategoryPageHandler)
 
-	router.Get("/count", GetCountHandler)
-	router.Post("/count", PostCountHandler)
-
 	s := server.NewServer(router, url)
 
 	serverId := uuid.New("srv")

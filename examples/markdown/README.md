@@ -1,4 +1,4 @@
-# basic-auth
+# markdown
 
 ## Goat commands
 
@@ -9,6 +9,12 @@ goat --help
 ```
 
 ## Project commands
+
+Initialize node for daisyui (only needed first time):
+
+```bash
+npm i -C assets/daisyui
+```
 
 Start dev server:
 

@@ -3,11 +3,10 @@ package pages
 import (
 	. "basic-auth/views/components"
 	"basic-auth/db/models"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 templ PostPageTemplate(post *models.Post) {
-	@components.Head(components.HeadProps{
+	@Head(HeadProps{
 		Title:       "basic-auth - post",
 		Description: "Post page for basic-auth",
 		Author:      "Peter Szarvas",
