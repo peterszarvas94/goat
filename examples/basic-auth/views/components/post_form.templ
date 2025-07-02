@@ -11,7 +11,7 @@ templ Postform(props PostformProps) {
 		hx-target="#posts"
 		hx-target-error="#toast"
 		hx-swap="beforeend"
-		hx-on::after-request="if(event.detail.successful) this.reset()"
+		hx-ext="form-reset"
 		class="flex flex-col gap-4 w-full"
 	>
 		@TitleInput()

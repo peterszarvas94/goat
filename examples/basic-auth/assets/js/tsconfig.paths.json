@@ -13,6 +13,9 @@
 			"daisyui-theme-controller": [
 				"pkg/htmx-daysiui-theme-controller@0.0.1.js"
 			],
+			"htmx-ext-form-reset": [
+				"pkg/htmx-ext-form-reset.js"
+			],
 			"htmx-ext-head-support": [
 				"pkg/htmx-ext-head-support@2.0.4.js"
 			],
@@ -21,6 +24,9 @@
 			],
 			"htmx.org": [
 				"pkg/htmx.org@2.0.4.js"
+			],
+			"trix": [
+				"pkg/trix@2.1.7.js"
 			]
 		}
 	},

@@ -3,3 +3,5 @@ import "htmx.org";
 import "htmx-ext-head-support";
 import "htmx-ext-response-targets";
 import "daisyui-theme-controller";
+import "trix";
+import "htmx-ext-form-reset";

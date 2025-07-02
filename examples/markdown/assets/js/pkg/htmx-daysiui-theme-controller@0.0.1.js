@@ -25,12 +25,10 @@ function getSystemTheme() {
 
 const events = ["htmx:load", "htmx:afterSettle", "htmx:historyRestore"];
 
-console.log("I am loaded :)")
 // handle page load via navigating or boosted links
 htmx.defineExtension("daisyui-theme-controller", {
 	onEvent: function (name, event) {
 		if (events.includes(name) && event.target === document.body) {
-			console.log("here")
 			const savedTheme = localStorage.getItem("theme-controller");
 			const themeToApply = savedTheme || getSystemTheme();
 

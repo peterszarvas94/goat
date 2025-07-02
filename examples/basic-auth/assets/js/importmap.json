@@ -3,6 +3,8 @@
 		"htmx.org": "/assets/js/pkg/htmx.org@2.0.4.js",
 		"htmx-ext-head-support": "/assets/js/pkg/htmx-ext-head-support@2.0.4.js",
 		"htmx-ext-response-targets": "/assets/js/pkg/htmx-ext-response-targets@2.0.3.js",
-		"daisyui-theme-controller": "/assets/js/pkg/htmx-daysiui-theme-controller@0.0.1.js"
+		"daisyui-theme-controller": "/assets/js/pkg/htmx-daysiui-theme-controller@0.0.1.js",
+		"trix": "/assets/js/pkg/trix@2.1.7.js",
+		"htmx-ext-form-reset": "/assets/js/pkg/htmx-ext-form-reset.js"
 	}
 }
