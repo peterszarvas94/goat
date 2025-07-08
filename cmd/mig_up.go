@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/peterszarvas94/goat/pkg/constants"
 	"github.com/peterszarvas94/goat/pkg/utils"
 	"github.com/spf13/cobra"

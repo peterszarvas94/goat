@@ -6,10 +6,10 @@ import (
 )
 
 templ Post(post *models.Post) {
-	<li>
+	<li class="list-row">
 		<a
 			href={ templ.SafeURL(fmt.Sprintf("/post/%s", post.ID)) }
-			hx-boost="true"
+			class="link"
 		>
 			{ post.Title }
 		</a>

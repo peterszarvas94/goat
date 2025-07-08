@@ -10,8 +10,8 @@
 		],
 		"baseUrl": "./",
 		"paths": {
-			"goat-ui": [
-				"pkg/goat-ui@0.0.1.js"
+			"daisyui-theme-controller": [
+				"pkg/htmx-daysiui-theme-controller@0.0.1.js"
 			],
 			"htmx-ext-head-support": [
 				"pkg/htmx-ext-head-support@2.0.4.js"

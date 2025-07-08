@@ -45,6 +45,11 @@ func main() {
 	// - replacing goat version
 	// - removing "replace" directives
 	subfolders, err := utils.GetSubfolders(constants.ExamplesDir)
+	if err != nil {
+		fmt.Printf("Can not get subfolders: %v\n", err)
+		os.Exit(1)
+	}
+
 	for _, folder := range subfolders {
 		modFilePath := filepath.Join(folder, "go.mod")
 

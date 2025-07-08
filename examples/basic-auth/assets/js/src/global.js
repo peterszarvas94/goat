@@ -2,4 +2,5 @@
 import "htmx.org";
 import "htmx-ext-head-support";
 import "htmx-ext-response-targets";
-import "goat-ui";
+import "daisyui-theme-controller";
+import "htmx-ext-form-reset";

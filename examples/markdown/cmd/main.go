@@ -7,10 +7,9 @@ import (
 
 	"markdown/config"
 	. "markdown/controllers/middlewares"
+	"markdown/views/components"
 
 	. "markdown/controllers/pages"
-	. "markdown/controllers/procedures"
-	"markdown/views"
 
 	"github.com/peterszarvas94/goat/pkg/content"
 	"github.com/peterszarvas94/goat/pkg/env"
@@ -43,7 +42,7 @@ func main() {
 	}
 
 	// parse md files
-	content.RegisterTemplate(views.Md)
+	content.RegisterTemplate(components.Md)
 	_, err = content.Setup()
 	if err != nil {
 		slog.Error(fmt.Sprintf("Can not convert content: %v\n", err))
@@ -70,9 +69,6 @@ func main() {
 	router.Get("/{$}", IndexPageHandler)
 	router.Get("/tag/{tag}", TagPageHandler)
 	router.Get("/category/{category}", CategoryPageHandler)
-
-	router.Get("/count", GetCountHandler)
-	router.Post("/count", PostCountHandler)
 
 	s := server.NewServer(router, url)
 

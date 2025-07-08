@@ -1,0 +1,169 @@
+package components
+
+import (
+	"strings"
+	"github.com/peterszarvas94/goat/pkg/importmap"
+)
+
+type HeadProps struct {
+	Title       string
+	Description string
+	Author      string
+	Keywords    []string
+	Scripts     []string // e.g. index.js -> /js/src/index.js
+	Styles      []string // e.g. index.css -> /css/src/index.css
+}
+
+templ Head(props HeadProps) {
+	<!DOCTYPE html>
+	<head>
+		<!--meta-->
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content={ props.Description }/>
+		<meta name="keywords" content={ strings.Join(props.Keywords, ",") }/>
+		<meta name="author" content={ props.Author }/>
+		<title>{ props.Title }</title>
+		<!--js-->
+		<!-- definition in the importmap.json -->
+		@importmap.ScriptTag()
+		for _, script := range props.Scripts {
+			@UserScript(script)
+		}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" rel="stylesheet"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<style>
+        /* DaisyUI Highlight.js Theme - Uses correct semantic color names */
+		.prose {
+			pre{
+				color: unset;
+				background: unset;
+			}
+
+			code {
+				border: unset;
+				border-radius: var(--radius-box);
+			}
+		}
+
+        .hljs {
+            background: var(--color-base-200);
+            color: var(--color-base-content);
+            border-radius: var(--rounded-box);
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid var(--color-base-300);
+        }
+
+        /* Comments */
+        .hljs-comment,
+        .hljs-quote {
+            color: var(--color-base-content);
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        /* Keywords */
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-subst {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        /* Numbers and literals */
+        .hljs-number,
+        .hljs-literal,
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-tag .hljs-attr {
+            color: var(--color-accent);
+        }
+
+        /* Strings */
+        .hljs-string,
+        .hljs-doctag {
+            color: var(--color-info);
+        }
+
+        /* Function names and titles */
+        .hljs-title,
+        .hljs-title.class_,
+        .hljs-title.class_.inherited__,
+        .hljs-title.function_,
+        .hljs-function .hljs-title {
+            color: var(--color-error);
+            font-weight: 600;
+        }
+
+        /* Built-ins and types */
+        .hljs-built_in,
+        .hljs-type,
+        .hljs-class .hljs-title {
+            color: var(--color-info);
+            font-weight: 500;
+        }
+
+        /* Attributes */
+        .hljs-attribute,
+        .hljs-attr {
+            color: var(--color-warning);
+        }
+
+        /* Symbols and operators */
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-link {
+            color: var(--color-accent);
+        }
+
+        /* Meta and preprocessor */
+        .hljs-meta,
+        .hljs-meta .hljs-keyword {
+            color: var(--color-warning);
+        }
+
+        /* Sections and names */
+        .hljs-section,
+        .hljs-name {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Additions and deletions */
+        .hljs-addition {
+            color: var(--color-secondary);
+            /* background-color: var(--color-success) / 0.1; */
+        }
+
+        .hljs-deletion {
+            color: var(--color-error);
+            /* background-color: var(--color-error) / 0.1; */
+        }
+
+        /* Tags and selectors */
+        .hljs-tag,
+        .hljs-selector-id,
+        .hljs-selector-class,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo {
+            color: var(--color-secondary);
+        }
+
+        /* Emphasis */
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+    </style>
+		<!--css-->
+		for _, style := range props.Styles {
+			@UserStyle(style)
+		}
+		{ children... }
+	</head>
+}

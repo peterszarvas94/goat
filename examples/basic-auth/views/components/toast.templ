@@ -1,0 +1,52 @@
+package components
+
+import (
+	"fmt"
+	"slices"
+)
+
+func getAlertClass(alert string) string {
+	switch alert {
+	case "info":
+		return "alert-info"
+	case "error":
+		return "alert-error"
+	case "warning":
+		return "alert-warning"
+	case "success":
+		return "alert-success"
+	default:
+		return "alert-info"
+	}
+}
+
+type ToastMessage struct {
+	Message string
+	Level   string
+}
+
+templ Toast(messages []ToastMessage) {
+	if len(messages) > 0 {
+		<div class="toast">
+			for _, message :=  range slices.All(messages) {
+				<div class={ "alert", fmt.Sprintf("alert-%s", message.Level) }>
+					<span>{ message.Message }</span>
+				</div>
+				<script>
+					(function() {
+						const alert = document.currentScript.previousElementSibling;
+						setTimeout(function() {
+							if (alert && alert.classList.contains('alert')) {
+								alert.style.transition = 'opacity 0.5s ease-out';
+								alert.style.opacity = '0';
+								setTimeout(function() {
+									alert.remove();
+								}, 500);
+							}
+						}, 3000);
+					})();
+				</script>
+			}
+		</div>
+	}
+}

@@ -1,0 +1,13 @@
+package components
+
+import (
+	"fmt"
+)
+
+templ UserScript(path string) {
+	@Script(fmt.Sprintf("/assets/js/src/%s", path))
+}
+
+templ Script(path string) {
+	<script src={ path } type="module"></script>
+}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/a-h/templ"
@@ -130,7 +131,18 @@ func Render(w http.ResponseWriter, r *http.Request, component templ.Component, s
 // html folder
 func (r *Router) Setup() {
 	r.Favicon("favicon.ico")
-	r.StaticFolder(fmt.Sprintf("/%s/", constants.AssetsDir), fmt.Sprintf("./%s", constants.AssetsDir))
+
+	dirs := []string{
+		constants.JsPkgDir,
+		constants.JsSrcDir,
+		constants.CssPkgDir,
+		constants.CssSrcDir,
+	}
+
+	for dir := range slices.Values(dirs) {
+		r.StaticFolder(fmt.Sprintf("/%s/", dir), fmt.Sprintf("./%s", dir))
+	}
+
 	for route, file := range content.Files {
 		r.StaticFile(fmt.Sprintf("%s", route), fmt.Sprintf("./%s", file.HtmlPath))
 	}

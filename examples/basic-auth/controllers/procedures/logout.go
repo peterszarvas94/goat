@@ -1,9 +1,9 @@
 package procedures
 
 import (
+	"basic-auth/controllers/helpers"
 	"basic-auth/db/models"
 	"context"
-	"errors"
 	"log/slog"
 	"net/http"
 
@@ -15,13 +15,13 @@ import (
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
 	if reqID == "" || !ok {
-		request.ServerError(w, r, errors.New("Request ID is missing"))
+		helpers.ServerError(w, r, []string{"Request ID is missing"}, true)
 		return
 	}
 
 	cookie, err := r.Cookie("sessionToken")
 	if err != nil {
-		request.ServerError(w, r, err, "req_id", reqID)
+		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
 		return
 	}
 
@@ -29,14 +29,14 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	db, err := database.Get()
 	if err != nil {
-		request.ServerError(w, r, err, "req_id", reqID)
+		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
 		return
 	}
 
 	queries := models.New(db)
 	err = queries.DeleteSession(context.Background(), cookie.Value)
 	if err != nil {
-		request.ServerError(w, r, err, "req_id", reqID)
+		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
 		return
 	}
 

@@ -4,19 +4,22 @@ import (
 	"fmt"
 	. "markdown/views/components"
 	"github.com/peterszarvas94/goat/pkg/content"
-	"github.com/peterszarvas94/goat/pkg/components"
 )
 
 templ CategoryPageTemplate(category string, files content.FileMap) {
-	@components.Head(components.HeadProps{
+	@Head(HeadProps{
 		Title:       "markdown",
 		Description: "The greatest webpage of all time",
 		Author:      "Peter Szarvas",
 		Keywords:    []string{"goat", "go", "templ", "htmx"},
+		Scripts:     []string{"global.js"},
+		Styles:      []string{"global.css"},
 	})
 	@Page() {
 		@PageTitle()
-		<h2>{ fmt.Sprintf("category: %s", category) } </h2>
-		@ArticleList(files)
+		<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
+			<h2 class="text-xl w-full text-center my-4">{ fmt.Sprintf("category: %s", category) } </h2>
+			@ArticleList(files)
+		</main>
 	}
 }

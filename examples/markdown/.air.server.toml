@@ -1,7 +1,7 @@
 [build]
 bin = "tmp/bin/server"
 cmd = "go build -o tmp/bin/server ./cmd/main.go"
-include_ext = ["go"]
+include_ext = ["go", "md"]
 exclude_dir = ["db/sql", "db/migrations", "logs", "assets"]
 delay = 100
 send_interrupt = true

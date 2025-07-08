@@ -1,0 +1,52 @@
+package components
+
+import (
+	"fmt"
+	"slices"
+	"github.com/peterszarvas94/goat/pkg/content"
+)
+
+// this is the template of out md files
+templ Md(file content.File) {
+	@Head(HeadProps{
+		Title:       "markdown",
+		Description: "The greatest webpage of all time",
+		Author:      "Peter Szarvas",
+		Keywords:    []string{"goat", "go", "templ", "htmx"},
+		Scripts:     []string{"global.js"},
+		Styles:      []string{"global.css"},
+	})
+	@Page() {
+		@PageTitle()
+		<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
+			<h1 class="text-2xl my-4 text-center">
+				{ content.GetTitle(file.Frontmatter, "") }
+			</h1>
+			<div class="flex gap-2">
+				<p>Tags:</p>
+				<ul class="flex gap-2">
+					for tag := range slices.Values(content.GetTagsSafe(file)) {
+						<li>
+							<a
+								href={ templ.SafeURL(fmt.Sprintf("/tag/%s", tag)) }
+								class="link"
+							>{ tag }</a>
+						</li>
+					}
+				</ul>
+			</div>
+			<div class="flex gap-2">
+				<p>Category:</p>
+				<a
+					href={ templ.SafeURL(fmt.Sprintf("/category/%s", content.GetCategorySafe(file))) }
+					class="link"
+				>
+					{ content.GetCategorySafe(file) }
+				</a>
+			</div>
+			<div class="prose my-4">
+				@templ.Raw(file.ParsedContent)
+			</div>
+		</main>
+	}
+}
