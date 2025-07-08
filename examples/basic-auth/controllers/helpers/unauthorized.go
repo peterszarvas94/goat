@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"slices"
 
+	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 )
 
@@ -26,5 +27,6 @@ func Unauthorized(w http.ResponseWriter, r *http.Request, messages []string, hid
 		})
 	}
 
+	request.HxReswap(w, "innerHTML")
 	server.Render(w, r, components.Toast(toastMessages), http.StatusUnauthorized)
 }

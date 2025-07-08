@@ -10,7 +10,6 @@ import (
 	"markdown/views/components"
 
 	. "markdown/controllers/pages"
-	. "markdown/controllers/procedures"
 
 	"github.com/peterszarvas94/goat/pkg/content"
 	"github.com/peterszarvas94/goat/pkg/env"

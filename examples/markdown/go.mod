@@ -19,6 +19,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-// replace github.com/peterszarvas94/goat => ../../../goat
-
-// replace github.com/yosssi/gohtml => ../../../gohtml
+replace github.com/peterszarvas94/goat => ../../../goat

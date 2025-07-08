@@ -1,7 +1,5 @@
 import htmx from "htmx.org";
 
-htmx.logAll();
-
 /**
  * Apply theme to theme controllers
  * @param {string} theme - Theme name to apply

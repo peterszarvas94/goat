@@ -7,6 +7,14 @@ category: "test"
 
 Hello world
 
+## Second Header
+
+Some content
+
+### Third Header
+
+More content
+
 ```go
 // comment
 package main

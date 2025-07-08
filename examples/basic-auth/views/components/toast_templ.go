@@ -13,6 +13,21 @@ import (
 	"slices"
 )
 
+func getAlertClass(alert string) string {
+	switch alert {
+	case "info":
+		return "alert-info"
+	case "error":
+		return "alert-error"
+	case "warning":
+		return "alert-warning"
+	case "success":
+		return "alert-success"
+	default:
+		return "alert-info"
+	}
+}
+
 type ToastMessage struct {
 	Message string
 	Level   string
@@ -70,7 +85,7 @@ func Toast(messages []ToastMessage) templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(message.Message)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/toast.templ`, Line: 18, Col: 28}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/toast.templ`, Line: 33, Col: 28}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {

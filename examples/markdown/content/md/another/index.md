@@ -11,23 +11,16 @@ title: "Markdown test file"
 
 - [Overview](#overview)
     - [Philosophy](#philosophy)
-    - [Inline HTML](#html)
-    - [Automatic Escaping for Special Characters](#autoescape)
-- [Block Elements](#block)
-    - [Paragraphs and Line Breaks](#p)
-    - [Headers](#header)
-    - [Blockquotes](#blockquote)
-    - [Lists](#list)
-    - [Code Blocks](#precode)
-    - [Horizontal Rules](#hr)
-- [Span Elements](#span)
-    - [Links](#link)
-    - [Emphasis](#em)
+- [Block Elements](#block-elements)
+    - [Paragraphs and Line Breaks](#paragraphs-and-line-breaks)
+    - [Headers](#headers)
+    - [Blockquotes](#blockquotes)
+    - [Lists](#lists)
+    - [Code Blocks](#code-blocks)
+- [Span Elements](#span-elements)
+    - [Links](#links)
+    - [Emphasis](#emphasis)
     - [Code](#code)
-    - [Images](#img)
-- [Miscellaneous](#misc)
-    - [Backslash Escapes](#backslash)
-    - [Automatic Links](#autolink)
 
 **Note:** This document is itself written using Markdown; you
 can [see the source for it by adding '.text' to the URL](/projects/markdown/syntax.text).
@@ -211,7 +204,7 @@ lazy:
 
 - This is a list item with two paragraphs.
 
-                            This is the second paragraph in the list item. You're
+                              This is the second paragraph in the list item. You're
 
     only required to indent the first line. Lorem ipsum dolor
     sit amet, consectetuer adipiscing elit.
@@ -231,7 +224,7 @@ to be indented _twice_ -- 8 spaces or two tabs:
 
 - A list item with a code block:
 
-                            <code goes here>
+                              <code goes here>
 
 ### Code Blocks
 

@@ -18,7 +18,9 @@ templ PostPageTemplate(post *models.Post) {
 		@PageTitle()
 		<main class="flex flex-col justify-center w-full max-w-xl my-0 mx-auto">
 			<h2 class="self-center text-2xl my-4">{ post.Title }</h2>
-			<p>{ post.Content }</p>
+			<div class="prose">
+				@templ.Raw(post.Content)
+			</div>
 		</main>
 	}
 }

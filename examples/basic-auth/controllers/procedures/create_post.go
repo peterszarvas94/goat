@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/peterszarvas94/goat/pkg/database"
-	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/server"
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
@@ -45,7 +44,6 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(messages) > 0 {
-		request.HxReswap(w, "innerHTML")
 		helpers.BadRequest(w, r, messages, false, "req_id", reqID)
 		return
 	}

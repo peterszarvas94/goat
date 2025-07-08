@@ -5,6 +5,21 @@ import (
 	"slices"
 )
 
+func getAlertClass(alert string) string {
+	switch alert {
+	case "info":
+		return "alert-info"
+	case "error":
+		return "alert-error"
+	case "warning":
+		return "alert-warning"
+	case "success":
+		return "alert-success"
+	default:
+		return "alert-info"
+	}
+}
+
 type ToastMessage struct {
 	Message string
 	Level   string

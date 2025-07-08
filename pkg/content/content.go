@@ -143,13 +143,18 @@ func readFile(path string) (string, error) {
 func parseMd(markdownContent string) (string, error) {
 	var htmlContent string
 
-	var buf bytes.Buffer
-	err := md.Convert([]byte(markdownContent), &buf)
+	var html bytes.Buffer
+
+	ctx := parser.NewContext(parser.WithIDs(NewIDs()))
+
+	err := md.Convert([]byte(markdownContent), &html, parser.WithContext(ctx))
 	if err != nil {
 		return "", fmt.Errorf("failed to convert file: %v", err)
 	}
 
-	htmlContent = buf.String()
+	htmlContent = html.String()
+	fmt.Println(htmlContent)
+
 	return htmlContent, nil
 }
 
@@ -249,6 +254,7 @@ func init() {
 		),
 		goldmark.WithParserOptions(
 			parser.WithAttribute(),
+			parser.WithAutoHeadingID(),
 		),
 	)
 }
