@@ -2,56 +2,6 @@
 
 This document outlines security features that should be implemented in GOAT applications. Each section includes recommended packages and implementation code.
 
-## DONE: Input Validation
-
-### Add Validator Package
-
-```bash
-go get github.com/go-playground/validator/v10
-```
-
-```go
-// pkg/validation/validation.go - CREATE THIS FILE
-package validation
-
-import (
-    "github.com/go-playground/validator/v10"
-)
-
-var validate *validator.Validate
-
-func init() {
-    validate = validator.New()
-}
-
-type UserRegistration struct {
-    Username string `validate:"required,min=3,max=20,alphanum"`
-    Email    string `validate:"required,email"`
-    Password string `validate:"required,min=8"`
-}
-
-type LoginRequest struct {
-    Email    string `validate:"required,email"`
-    Password string `validate:"required"`
-}
-
-func ValidateStruct(s interface{}) error {
-    return validate.Struct(s)
-}
-
-func ValidateVar(field interface{}, tag string) error {
-    return validate.Var(field, tag)
-}
-
-// Custom validation middleware
-func ValidationMiddleware(next http.HandlerFunc) http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        r.Body = http.MaxBytesReader(w, r.Body, 1048576) // 1MB limit
-        next(w, r)
-    }
-}
-```
-
 ## TODO: Security Headers
 
 ### Add Secure Package
@@ -689,4 +639,3 @@ CSRF_TOKEN_LENGTH=32
 - `github.com/microcosm-cc/bluemonday` - HTML sanitization (optional)
 
 All packages are well-maintained, lightweight, and commonly used in Go applications.
-

@@ -16,3 +16,7 @@ type envT struct {
 }
 
 var Vars envT
+
+func IsDevelopment() bool {
+	return Vars.GoatEnv == "dev"
+}

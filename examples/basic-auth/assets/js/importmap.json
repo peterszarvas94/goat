@@ -4,6 +4,7 @@
 		"htmx-ext-head-support": "/assets/js/pkg/htmx-ext-head-support@2.0.4.js",
 		"htmx-ext-response-targets": "/assets/js/pkg/htmx-ext-response-targets@2.0.3.js",
 		"daisyui-theme-controller": "/assets/js/pkg/htmx-daysiui-theme-controller@0.0.1.js",
-		"htmx-ext-form-reset": "/assets/js/pkg/htmx-ext-form-reset.js"
+		"htmx-ext-form-reset": "/assets/js/pkg/htmx-ext-form-reset.js",
+		"htmx-ext-auto-remove": "/assets/js/pkg/htmx-ext-auto-remove@1.0.0.js"
 	}
 }

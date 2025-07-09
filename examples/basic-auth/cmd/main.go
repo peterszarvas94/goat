@@ -16,6 +16,7 @@ import (
 	"github.com/peterszarvas94/goat/pkg/env"
 	"github.com/peterszarvas94/goat/pkg/importmap"
 	"github.com/peterszarvas94/goat/pkg/logger"
+	"github.com/peterszarvas94/goat/pkg/middleware"
 	"github.com/peterszarvas94/goat/pkg/server"
 	"github.com/peterszarvas94/goat/pkg/uuid"
 )
@@ -66,7 +67,7 @@ func main() {
 
 	router.Setup()
 
-	router.Use(RemoveTrailingSlash, Cache, AddRequestID, AddAuthState)
+	router.Use(RemoveTrailingSlash, Cache, AddRequestID, AddAuthState, middleware.SecurityHeaders(config.IsDevelopment()))
 
 	router.Get("/", NotFoundPageHandler)
 

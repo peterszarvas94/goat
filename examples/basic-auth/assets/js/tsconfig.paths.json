@@ -13,6 +13,9 @@
 			"daisyui-theme-controller": [
 				"pkg/htmx-daysiui-theme-controller@0.0.1.js"
 			],
+			"htmx-ext-auto-remove": [
+				"pkg/htmx-ext-auto-remove@1.0.0.js"
+			],
 			"htmx-ext-form-reset": [
 				"pkg/htmx-ext-form-reset.js"
 			],

@@ -27,25 +27,11 @@ type ToastMessage struct {
 
 templ Toast(messages []ToastMessage) {
 	if len(messages) > 0 {
-		<div class="toast">
+		<div class="toast" hx-ext="auto-remove">
 			for _, message :=  range slices.All(messages) {
-				<div class={ "alert", fmt.Sprintf("alert-%s", message.Level) }>
+				<div class={ "alert", fmt.Sprintf("alert-%s", message.Level) } hx-auto-remove="3000">
 					<span>{ message.Message }</span>
 				</div>
-				<script>
-					(function() {
-						const alert = document.currentScript.previousElementSibling;
-						setTimeout(function() {
-							if (alert && alert.classList.contains('alert')) {
-								alert.style.transition = 'opacity 0.5s ease-out';
-								alert.style.opacity = '0';
-								setTimeout(function() {
-									alert.remove();
-								}, 500);
-							}
-						}, 3000);
-					})();
-				</script>
 			}
 		</div>
 	}

@@ -55,7 +55,7 @@ func Toast(messages []ToastMessage) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if len(messages) > 0 {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"toast\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"toast\" hx-ext=\"auto-remove\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -78,7 +78,7 @@ func Toast(messages []ToastMessage) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><span>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-auto-remove=\"3000\"><span>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -91,7 +91,7 @@ func Toast(messages []ToastMessage) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span></div><script>\n\t\t\t\t\t(function() {\n\t\t\t\t\t\tconst alert = document.currentScript.previousElementSibling;\n\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\tif (alert && alert.classList.contains('alert')) {\n\t\t\t\t\t\t\t\talert.style.transition = 'opacity 0.5s ease-out';\n\t\t\t\t\t\t\t\talert.style.opacity = '0';\n\t\t\t\t\t\t\t\tsetTimeout(function() {\n\t\t\t\t\t\t\t\t\talert.remove();\n\t\t\t\t\t\t\t\t}, 500);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}, 3000);\n\t\t\t\t\t})();\n\t\t\t\t</script>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
