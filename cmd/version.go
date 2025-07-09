@@ -13,7 +13,7 @@ var versionCmd = &cobra.Command{
 	Short:   "Print GOAT version",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(version.Version)
+		fmt.Println(version.Get())
 	},
 }
 

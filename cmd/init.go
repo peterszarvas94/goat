@@ -86,13 +86,13 @@ var initCmd = &cobra.Command{
 
 		// checkout version
 
-		_, err = utils.CmdWithOutput("git", "checkout", version.Version)
+		_, err = utils.CmdWithOutput("git", "checkout", version.Get())
 		if err != nil {
 			fmt.Printf("Can checkout version: %v", err)
 			os.Exit(1)
 		}
 
-		fmt.Printf("Checked out version: %s\n", version.Version)
+		fmt.Printf("Checked out version: %s\n", version.Get())
 
 		err = utils.CopyDir(filepath.Join(tmp, constants.ExamplesDir, example), targetDirFullPath)
 		if err != nil {
