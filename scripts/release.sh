@@ -55,15 +55,22 @@ for example_dir in examples/*/; do
         # Use local replace temporarily since the version doesn't exist yet
         go mod edit -replace="github.com/peterszarvas94/goat=../.."
         go mod edit -require="github.com/peterszarvas94/goat@$VERSION"
-        go mod tidy
         # Remove the replace directive
         go mod edit -dropreplace="github.com/peterszarvas94/goat"
         cd - > /dev/null
     fi
 done
 
+# Remove go.sum files to avoid checksum mismatches
+git rm examples/*/go.sum 2>/dev/null || true
+
+# Add go.sum to gitignore if not already there
+if ! grep -q "examples/\*/go.sum" .gitignore; then
+    echo "examples/*/go.sum" >> .gitignore
+fi
+
 # Stage and commit the updated go.mod files
-git add examples/*/go.mod examples/*/go.sum
+git add examples/*/go.mod .gitignore
 if ! git diff --cached --quiet; then
     git commit -m "chore: update goat dependency to $VERSION in examples"
     echo "Updated example dependencies"
