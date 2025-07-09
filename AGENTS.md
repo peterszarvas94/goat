@@ -6,7 +6,20 @@
 - `make build` - Build binary to tmp/main
 - `make dev` - Start development server with live reload
 - `go install ./...` - Install CLI tool
-- `make publish` - Publish/release
+- `make release` - Create release (interactive, prompts for version)
+- `make release-version VERSION=v1.2.3` - Create release with specific version
+
+## Release Process
+- **Release script**: `./scripts/release.sh v1.2.3` handles the full release process
+- **Automated CI**: GitHub Actions + GoReleaser builds and publishes releases
+- **Example dependencies**: Release script updates example go.mod files to reference new version
+- **Workspace setup**: CI generates `go.work` dynamically for testing with local dependencies
+- **Clean checksums**: go.sum files are gitignored to avoid checksum conflicts
+
+## Development Setup
+- **Workspace**: Run `go work init . examples/bare examples/basic-auth examples/markdown` for local development
+- **Examples**: Use local goat code during development via workspace
+- **Testing**: Full test suite runs in CI with workspace dependency resolution
 
 ## Code Style & Conventions
 - **Imports**: Standard library first, then external packages, then local packages with blank lines between groups
@@ -25,3 +38,10 @@
 - Built-in dev server with air for live reload
 - SQLite database with sqlc for type-safe queries
 - CLI built with cobra, uses make for build automation
+
+## File Structure Notes
+- **examples/**: Contains example applications that demonstrate framework usage
+- **examples/*/go.sum**: Gitignored, generated locally but not committed
+- **go.work**: Gitignored, generated in CI and locally for development
+- **scripts/release.sh**: Automated release script that handles version updates and tagging
+- **.github/workflows/release.yml**: CI pipeline for automated releases

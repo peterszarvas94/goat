@@ -4,4 +4,3 @@ dist/
 go.work
 go.work.sum
 examples/*/go.sum
-examples/*/go.sum
