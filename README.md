@@ -38,3 +38,23 @@ The all-in-one web framework for go (in progress!)
 ### 5. Check out site with live-reload
 
 http:/localhost:7331
+
+## Development
+
+```bash
+# Clone the repository
+git clone https://github.com/peterszarvas94/goat.git
+cd goat
+
+# Install dependencies
+go mod tidy
+
+# Build the CLI
+make build
+
+# Run tests
+make test
+
+# Create a release
+make release VERSION=v1.2.3
+```

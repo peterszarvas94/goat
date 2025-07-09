@@ -5,6 +5,14 @@ publish:
 	@read -p "Enter version (v1.2.3): " version; \
 	./scripts/release.sh $$version
 
+# Create release with version argument
+release:
+	@if [ -z "$(VERSION)" ]; then \
+		echo "Usage: make release VERSION=v1.2.3"; \
+		exit 1; \
+	fi
+	./scripts/release.sh $(VERSION)
+
 templ-update:
 	go run ./templ-update
 
