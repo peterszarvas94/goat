@@ -57,7 +57,7 @@ goreleaser release --snapshot --clean # Test release locally
 
 ## Example Development
 
-The examples in the `examples/` directory demonstrate how to use the GOAT framework. Each example is a complete application with its own `go.mod` file.
+The examples in the `examples/` directory demonstrate how to use the GOAT framework, and are esentially starter templates. Each example is a complete application with its own `go.mod` file.
 
 ### Setup & Usage
 
@@ -67,16 +67,21 @@ go work init . examples/bare examples/basic-auth examples/markdown
 
 # Work with any example
 cd examples/bare
-go mod tidy && make dev
+go mod tidy
+make dev
 ```
 
 ### Notes
 
 - Examples use workspace during development (local goat code)
 - Examples reference published versions for end users
-- Each example has its own `Makefile` with `make dev`, `make build`, etc.
+- Each example has its own `Makefile`
 
 ```bash
-go mod tidy                                        # Tidy root only
-for dir in examples/*/; do (cd "$dir" && go mod tidy); done  # Tidy all examples
+# Tidy root only
+go mod tidy
+
+# Tidy all examples
+for dir in examples/*/; do (cd "$dir" && go mod tidy); done
 ```
+

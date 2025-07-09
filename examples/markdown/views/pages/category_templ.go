@@ -69,7 +69,7 @@ func CategoryPageTemplate(category string, files content.FileMap) templ.Componen
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("category: %s", category))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/category.templ`, Line: 21, Col: 86}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `examples/markdown/views/pages/category.templ`, Line: 21, Col: 86}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
