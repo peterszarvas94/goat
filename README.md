@@ -17,137 +17,66 @@ The all-in-one web framework for go (in progress!)
 - templ: [https://github.com/a-h/templ](https://github.com/a-h/templ)
 - sqlc: [https://github.com/sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc)
 
-## CLI Usage
+## CLI
 
-### 1. Intsall
+### Quick Start
 
 ```bash
+# Install CLI
 go install github.com/peterszarvas94/goat@latest
-```
 
-### 2. Initialize new project
+# Create new project
+goat init myapp --template basic-auth
+cd myapp
 
-```bash
-goat init [app] [--template basic-auth]?
-```
-
-### 3. Go to the new project folder (if it is not the current folder)
-
-```bash
-cd [app]
-```
-
-### 4. Run dev server
-
-```bash
+# Start development server
 make dev
 ```
 
-### 5. Check out site with live-reload
-
-[http://localhost:7331](http://localhost:7331)
+Visit [http://localhost:7331](http://localhost:7331)
 
 ## CLI Development
 
-### Clone the repository
-
 ```bash
+# Clone and setup
 git clone https://github.com/peterszarvas94/goat.git
 cd goat
-```
-
-### Install dependencies for CLI
-
-```bash
 go mod tidy
 ```
 
-### Build the CLI
+### Common Commands
 
 ```bash
-go build -o tmp/goat ./main.go
-```
-
-### Install the CLI
-
-```bash
-go install ./...
-```
-
-### Run tests
-
-```bash
-go test ./...
-```
-
-### Update templ files
-
-```bash
-go run ./scripts/templ-update
-```
-
-### Create a release
-
-```bash
-./scripts/release.sh v1.2.3
-```
-
-### Test release locally (using goreleaser)
-
-```bash
-# Test release configuration
-goreleaser release --snapshot --clean
-
-# Build snapshot locally
-goreleaser build --snapshot --clean
+go build -o tmp/goat ./main.go        # Build CLI
+go install ./...                      # Install CLI globally
+go test ./...                         # Run tests
+go run ./scripts/templ-update         # Update templ files
+./scripts/release.sh v1.2.3           # Create release
+goreleaser release --snapshot --clean # Test release locally
 ```
 
 ## Example Development
 
 The examples in the `examples/` directory demonstrate how to use the GOAT framework. Each example is a complete application with its own `go.mod` file.
 
-### Setup workspace for development
+### Setup & Usage
 
 ```bash
-# Create workspace to use local goat code in examples
+# Setup workspace (links examples to local goat code)
 go work init . examples/bare examples/basic-auth examples/markdown
-```
 
-### Working with examples
-
-```bash
-# Navigate to any example
+# Work with any example
 cd examples/bare
-
-# Install dependencies and run
-go mod tidy
-make dev
-
-# Or run specific commands
-make build
-make test
+go mod tidy && make dev
 ```
 
-### Example structure
+### Notes
 
-Each example contains:
-
-- `go.mod` - Module definition (references published goat version)
-- `Makefile` - Development commands (`make dev`, `make build`, etc.)
-- Standard GOAT application structure (cmd/, views/, controllers/, etc.)
-
-### Development workflow
-
-1. **Local development**: Examples use workspace to reference local goat code
-2. **Release**: Examples are updated to reference the new published version
-3. **User experience**: Users get examples that work with the published version
-
-### Tidy all modules
+- Examples use workspace during development (local goat code)
+- Examples reference published versions for end users
+- Each example has its own `Makefile` with `make dev`, `make build`, etc.
 
 ```bash
-# Tidy root module only
-go mod tidy
-
-# Tidy all examples individually
-for dir in examples/*/; do (cd "$dir" && go mod tidy); done
+go mod tidy                                        # Tidy root only
+for dir in examples/*/; do (cd "$dir" && go mod tidy); done  # Tidy all examples
 ```
