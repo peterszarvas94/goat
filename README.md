@@ -21,25 +21,33 @@ The all-in-one web framework for go (in progress!)
 
 ### 1. Intsall
 
-`go install github.com/peterszarvas94/goat@latest`
+```bash
+go install github.com/peterszarvas94/goat@latest
+```
 
 ### 2. Initialize new project
 
-`goat init [app] [--template basic-auth]?`
+```bash
+goat init [app] [--template basic-auth]?
+```
 
 ### 3. Go to the new project folder (if it is not the current folder)
 
-`cd [app]`
+```bash
+cd [app]
+```
 
 ### 4. Run dev server
 
-`make dev`
+```bash
+make dev
+```
 
 ### 5. Check out site with live-reload
 
-http:/localhost:7331
+[http://localhost:7331](http://localhost:7331)
 
-## Development
+## Development of CLI
 
 ### Clone the repository
 
@@ -48,7 +56,7 @@ git clone https://github.com/peterszarvas94/goat.git
 cd goat
 ```
 
-### Install dependencies
+### Install dependencies for CLI
 
 ```bash
 go mod tidy
@@ -92,4 +100,64 @@ goreleaser release --snapshot --clean
 
 # Build snapshot locally  
 goreleaser build --snapshot --clean
+```
+
+## Example Development
+
+The examples in the `examples/` directory demonstrate how to use the GOAT framework. Each example is a complete application with its own `go.mod` file.
+
+### Setup workspace for development
+
+```bash
+# Create workspace to use local goat code in examples
+go work init . examples/bare examples/basic-auth examples/markdown
+```
+
+### Working with examples
+
+```bash
+# Navigate to any example
+cd examples/bare
+
+# Install dependencies and run
+go mod tidy
+make dev
+
+# Or run specific commands
+make build
+make test
+```
+
+### Example structure
+
+Each example contains:
+- `go.mod` - Module definition (references published goat version)
+- `Makefile` - Development commands (`make dev`, `make build`, etc.)
+- Standard GOAT application structure (cmd/, views/, controllers/, etc.)
+
+### Development workflow
+
+1. **Local development**: Examples use workspace to reference local goat code
+2. **Release**: Examples are updated to reference the new published version
+3. **User experience**: Users get examples that work with the published version
+
+### Tidy all modules
+
+```bash
+# Tidy root module only
+go mod tidy
+
+# Tidy all examples individually
+for dir in examples/*/; do (cd "$dir" && go mod tidy); done
+```
+## Development of examples
+
+```bash
+cd examples/basic-auth
+```
+
+### Install dependencies for an example
+
+```bash
+go mod tidy
 ```
