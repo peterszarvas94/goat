@@ -52,8 +52,12 @@ for example_dir in examples/*/; do
     if [ -f "$example_dir/go.mod" ]; then
         echo "  Updating $(basename "$example_dir")"
         cd "$example_dir"
+        # Use local replace temporarily since the version doesn't exist yet
+        go mod edit -replace="github.com/peterszarvas94/goat=../.."
         go mod edit -require="github.com/peterszarvas94/goat@$VERSION"
         go mod tidy
+        # Remove the replace directive
+        go mod edit -dropreplace="github.com/peterszarvas94/goat"
         cd - > /dev/null
     fi
 done
