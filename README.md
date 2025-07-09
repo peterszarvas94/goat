@@ -69,5 +69,9 @@ make test
 ### Create a release
 
 ```bash
-make release VERSION=v1.2.3
+# Interactive (prompts for version)
+make release
+
+# Or with version argument
+make release-version VERSION=v1.2.3
 ```

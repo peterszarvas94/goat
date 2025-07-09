@@ -1,14 +1,14 @@
-.PHONY: publish install templ-update build test release-test release-local
+.PHONY: release install templ-update build test release-test release-local
 
-# Create and push release tag
-publish:
+# Create and push release tag (interactive)
+release:
 	@read -p "Enter version (v1.2.3): " version; \
 	./scripts/release.sh $$version
 
 # Create release with version argument
-release:
+release-version:
 	@if [ -z "$(VERSION)" ]; then \
-		echo "Usage: make release VERSION=v1.2.3"; \
+		echo "Usage: make release-version VERSION=v1.2.3"; \
 		exit 1; \
 	fi
 	./scripts/release.sh $(VERSION)
