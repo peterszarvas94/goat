@@ -49,4 +49,16 @@ func main() {
 			os.Exit(1)
 		}
 	}
+
+	fmt.Println("✅ All templ files updated successfully!")
+
+	// Run templ generate at the root
+	fmt.Println("Running templ generate at root...")
+	err = utils.Cmd("templ", "generate")
+	if err != nil {
+		fmt.Printf("Error running templ generate: %s\n", err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Println("✅ Templ generation completed!")
 }
