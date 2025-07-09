@@ -34,7 +34,7 @@ func Postform(props PostformProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form hx-post=\"/post\" hx-target=\"#posts\" hx-target-error=\"#toaster\" hx-swap=\"beforeend\" hx-ext=\"form-reset\" class=\"flex flex-col gap-4 w-full\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form hx-post=\"/post\" hx-target=\"#posts\" hx-target-error=\"#toast\" hx-swap=\"beforeend\" hx-ext=\"form-reset\" class=\"flex flex-col gap-4 w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

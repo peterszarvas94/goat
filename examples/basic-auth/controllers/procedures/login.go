@@ -15,7 +15,13 @@ import (
 	"github.com/peterszarvas94/goat/pkg/hash"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/uuid"
+	"github.com/peterszarvas94/goat/pkg/validation"
 )
+
+type LoginRequest struct {
+	Email    string `validate:"required,email"`
+	Password string `validate:"required"`
+}
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
@@ -29,19 +35,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	messages := []string{}
-
 	email := r.FormValue("email")
-	if email == "" {
-		messages = append(messages, "Email can not be empty")
-	}
-
 	password := r.FormValue("password")
-	if password == "" {
-		messages = append(messages, "Password can not be empty")
+
+	loginReq := LoginRequest{
+		Email:    email,
+		Password: password,
 	}
 
-	if len(messages) > 0 {
+	if err := validation.ValidateStruct(loginReq); err != nil {
+		messages := validation.BuildValidationMessages(err)
 		helpers.BadRequest(w, r, messages, false, "req_id", reqID)
 		return
 	}

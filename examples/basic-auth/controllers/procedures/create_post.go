@@ -1,17 +1,24 @@
 package procedures
 
 import (
-	"basic-auth/controllers/helpers"
-	"basic-auth/db/models"
-	"basic-auth/views/components"
 	"context"
 	"log/slog"
 	"net/http"
 
+	"basic-auth/controllers/helpers"
+	"basic-auth/db/models"
+	"basic-auth/views/components"
+
 	"github.com/peterszarvas94/goat/pkg/database"
 	"github.com/peterszarvas94/goat/pkg/server"
 	"github.com/peterszarvas94/goat/pkg/uuid"
+	"github.com/peterszarvas94/goat/pkg/validation"
 )
+
+type CreatePostRequest struct {
+	Title   string `validate:"required,min=1,max=200"`
+	Content string `validate:"required,min=1,max=5000"`
+}
 
 func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
@@ -31,19 +38,16 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	messages := []string{}
-
 	title := r.FormValue("title")
-	if title == "" {
-		messages = append(messages, "Title can not be empty")
-	}
-
 	content := r.FormValue("content")
-	if content == "" {
-		messages = append(messages, "Content can not be empty")
+
+	postReq := CreatePostRequest{
+		Title:   title,
+		Content: content,
 	}
 
-	if len(messages) > 0 {
+	if err := validation.ValidateStruct(postReq); err != nil {
+		messages := validation.BuildValidationMessages(err)
 		helpers.BadRequest(w, r, messages, false, "req_id", reqID)
 		return
 	}

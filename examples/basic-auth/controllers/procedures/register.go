@@ -12,7 +12,14 @@ import (
 	"github.com/peterszarvas94/goat/pkg/hash"
 	"github.com/peterszarvas94/goat/pkg/request"
 	"github.com/peterszarvas94/goat/pkg/uuid"
+	"github.com/peterszarvas94/goat/pkg/validation"
 )
+
+type UserRegistration struct {
+	Username string `validate:"required,min=3,max=20,alphanum"`
+	Email    string `validate:"required,email"`
+	Password string `validate:"required,min=8"`
+}
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	reqID, ok := r.Context().Value("req_id").(string)
@@ -21,24 +28,18 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	messages := []string{}
-
 	name := r.FormValue("name")
-	if name == "" {
-		messages = append(messages, "Name can not be empty")
-	}
-
 	email := r.FormValue("email")
-	if email == "" {
-		messages = append(messages, "Email can not be empty")
-	}
-
 	password := r.FormValue("password")
-	if password == "" {
-		messages = append(messages, "Password can not be empty")
+
+	userReg := UserRegistration{
+		Username: name,
+		Email:    email,
+		Password: password,
 	}
 
-	if len(messages) > 0 {
+	if err := validation.ValidateStruct(userReg); err != nil {
+		messages := validation.BuildValidationMessages(err)
 		helpers.BadRequest(w, r, messages, false, "req_id", reqID)
 		return
 	}
@@ -57,23 +58,22 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	queries := models.New(db)
 
-	messages = []string{}
-
 	existing, err := queries.GetUserByEmail(context.Background(), email)
 	// user conflict
 	if err == nil {
+		conflictMessages := []string{}
 		if existing.Name == name {
-			messages = append(messages, "Name already in use")
+			conflictMessages = append(conflictMessages, "Name already in use")
 		}
 
 		if existing.Email == email {
-			messages = append(messages, "Email already in use")
+			conflictMessages = append(conflictMessages, "Email already in use")
 		}
-	}
 
-	if len(messages) > 0 {
-		helpers.BadRequest(w, r, messages, false, "req_id", reqID)
-		return
+		if len(conflictMessages) > 0 {
+			helpers.BadRequest(w, r, conflictMessages, false, "req_id", reqID)
+			return
+		}
 	}
 
 	_, err = queries.CreateUser(context.Background(), models.CreateUserParams{
