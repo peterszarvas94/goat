@@ -1,3 +1,5 @@
 */**/go.mod.bkp
 */**/node_modules
 dist/
+go.work
+go.work.sum
