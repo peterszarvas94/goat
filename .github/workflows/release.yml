@@ -31,3 +31,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOWORK: ${{ github.workspace }}/go.work
+          GOPROXY: direct
+          GOSUMDB: off
