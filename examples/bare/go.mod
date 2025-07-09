@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.906
-	github.com/peterszarvas94/goat v0.3.38
+	github.com/peterszarvas94/goat v0.3.42
 )
 
 require (
@@ -16,6 +16,5 @@ require (
 	github.com/yuin/goldmark-emoji v1.0.6 // indirect
 	go.abhg.dev/goldmark/frontmatter v0.2.0 // indirect
 	golang.org/x/net v0.40.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
