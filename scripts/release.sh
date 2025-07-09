@@ -46,6 +46,26 @@ if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "master" ]; then
     fi
 fi
 
+# Update goat dependency version in all examples
+echo "Updating goat dependency to $VERSION in examples..."
+for example_dir in examples/*/; do
+    if [ -f "$example_dir/go.mod" ]; then
+        echo "  Updating $(basename "$example_dir")"
+        cd "$example_dir"
+        go mod edit -require="github.com/peterszarvas94/goat@$VERSION"
+        go mod tidy
+        cd - > /dev/null
+    fi
+done
+
+# Stage the updated go.mod files
+git add examples/*/go.mod examples/*/go.sum
+
+# Commit the dependency updates
+git commit -m "chore: update goat dependency to $VERSION in examples" || {
+    echo "No changes to commit (dependencies already up to date)"
+}
+
 # Create and push tag
 echo "Creating tag $VERSION..."
 git tag -a "$VERSION" -m "Release $VERSION"
