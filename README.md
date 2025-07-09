@@ -17,7 +17,7 @@ The all-in-one web framework for go (in progress!)
 - templ: [https://github.com/a-h/templ](https://github.com/a-h/templ)
 - sqlc: [https://github.com/sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc)
 
-## CLI
+## CLI Usage
 
 ### 1. Intsall
 
@@ -47,7 +47,7 @@ make dev
 
 [http://localhost:7331](http://localhost:7331)
 
-## Development of CLI
+## CLI Development
 
 ### Clone the repository
 
@@ -98,7 +98,7 @@ go run ./scripts/templ-update
 # Test release configuration
 goreleaser release --snapshot --clean
 
-# Build snapshot locally  
+# Build snapshot locally
 goreleaser build --snapshot --clean
 ```
 
@@ -131,6 +131,7 @@ make test
 ### Example structure
 
 Each example contains:
+
 - `go.mod` - Module definition (references published goat version)
 - `Makefile` - Development commands (`make dev`, `make build`, etc.)
 - Standard GOAT application structure (cmd/, views/, controllers/, etc.)
@@ -149,15 +150,4 @@ go mod tidy
 
 # Tidy all examples individually
 for dir in examples/*/; do (cd "$dir" && go mod tidy); done
-```
-## Development of examples
-
-```bash
-cd examples/basic-auth
-```
-
-### Install dependencies for an example
-
-```bash
-go mod tidy
 ```
