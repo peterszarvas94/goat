@@ -46,14 +46,7 @@ if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "master" ]; then
     fi
 fi
 
-# Create and push tag first (so the version exists for examples)
-echo "Creating tag $VERSION..."
-git tag -a "$VERSION" -m "Release $VERSION"
-
-echo "Pushing tag to remote..."
-git push origin "$VERSION"
-
-# Now update examples to use the new version (after tag exists)
+# First update examples to use the new version (before creating tag)
 echo "Updating goat dependency to $VERSION in examples..."
 for example_dir in examples/*/; do
     if [ -f "$example_dir/go.mod" ]; then
@@ -69,11 +62,18 @@ done
 git add examples/*/go.mod examples/*/go.sum
 if ! git diff --cached --quiet; then
     git commit -m "chore: update goat dependency to $VERSION in examples"
-    git push origin main
-    echo "Updated example dependencies and pushed to main"
+    echo "Updated example dependencies"
 else
     echo "No dependency updates needed"
 fi
+
+# Now create and push tag (so it includes the updated dependencies)
+echo "Creating tag $VERSION..."
+git tag -a "$VERSION" -m "Release $VERSION"
+
+echo "Pushing tag and main branch to remote..."
+git push origin main
+git push origin "$VERSION"
 
 echo "✅ Release $VERSION created successfully!"
 echo "GitHub Actions will now build and publish the release."
