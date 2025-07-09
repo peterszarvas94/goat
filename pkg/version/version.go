@@ -2,7 +2,6 @@ package version
 
 import (
 	"runtime/debug"
-	"strings"
 )
 
 // Version is set by GoReleaser during build via ldflags
@@ -17,9 +16,7 @@ func Get() string {
 	// Try to get version from build info (works with go install github.com/user/repo@version)
 	if info, ok := debug.ReadBuildInfo(); ok {
 		if info.Main.Version != "(devel)" && info.Main.Version != "" {
-			version := info.Main.Version
-			// Remove 'v' prefix if present
-			return strings.TrimPrefix(version, "v")
+			return info.Main.Version
 		}
 	}
 
