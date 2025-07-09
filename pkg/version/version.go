@@ -1,3 +1,4 @@
 package version
 
-var Version = "v0.3.38"
+// Version is set by GoReleaser during build via ldflags
+var Version = "dev"
