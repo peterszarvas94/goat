@@ -6,8 +6,7 @@
 - `make build` - Build binary to tmp/main
 - `make dev` - Start development server with live reload
 - `go install ./...` - Install CLI tool
-- `make release` - Create release (interactive, prompts for version)
-- `make release-version VERSION=v1.2.3` - Create release with specific version
+- `make release VERSION=v1.2.3` - Create release with specific version
 
 ## Release Process
 - **Release script**: `./scripts/release.sh v1.2.3` handles the full release process
