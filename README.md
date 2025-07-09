@@ -41,20 +41,33 @@ http:/localhost:7331
 
 ## Development
 
+### Clone the repository
+
 ```bash
-# Clone the repository
 git clone https://github.com/peterszarvas94/goat.git
 cd goat
+```
 
-# Install dependencies
+### Install dependencies
+
+```bash
 go mod tidy
+```
 
-# Build the CLI
+### Build the CLI
+
+```bash
 make build
+```
 
-# Run tests
+### Run tests
+
+```bash
 make test
+```
 
-# Create a release
+### Create a release
+
+```bash
 make release VERSION=v1.2.3
 ```
