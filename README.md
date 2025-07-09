@@ -57,21 +57,39 @@ go mod tidy
 ### Build the CLI
 
 ```bash
-make build
+go build -o tmp/goat ./main.go
+```
+
+### Install the CLI
+
+```bash
+go install ./...
 ```
 
 ### Run tests
 
 ```bash
-make test
+go test ./...
+```
+
+### Update templ files
+
+```bash
+go run ./scripts/templ-update
 ```
 
 ### Create a release
 
 ```bash
-# Interactive (prompts for version)
-make release
+./scripts/release.sh v1.2.3
+```
 
-# Or with version argument
-make release-version VERSION=v1.2.3
+### Test release locally (using goreleaser)
+
+```bash
+# Test release configuration
+goreleaser release --snapshot --clean
+
+# Build snapshot locally  
+goreleaser build --snapshot --clean
 ```

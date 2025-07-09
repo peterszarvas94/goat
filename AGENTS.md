@@ -3,10 +3,12 @@
 ## Build/Test Commands
 - `go test ./...` - Run all tests
 - `go test ./pkg/content` - Run single package tests  
-- `make build` - Build binary to tmp/main
-- `make dev` - Start development server with live reload
+- `go build -o tmp/goat ./main.go` - Build binary to tmp/goat
 - `go install ./...` - Install CLI tool
-- `make release VERSION=v1.2.3` - Create release with specific version
+- `go run ./scripts/templ-update` - Update templ files
+- `./scripts/release.sh v1.2.3` - Create release with specific version
+- `goreleaser release --snapshot --clean` - Test release configuration locally
+- `goreleaser build --snapshot --clean` - Build snapshot locally
 
 ## Release Process
 - **Release script**: `./scripts/release.sh v1.2.3` handles the full release process
