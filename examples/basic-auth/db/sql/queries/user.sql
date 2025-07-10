@@ -8,6 +8,11 @@ SELECT *
 FROM user
 WHERE email = ?;
 
+-- name: GetUserByName :one
+SELECT *
+FROM user
+WHERE name = ?;
+
 -- name: ListUser :many
 SELECT *
 FROM user

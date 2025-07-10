@@ -6,7 +6,6 @@
 - [x] daysi ui + tw typography (for makrdown) + some syntaxt highlighter
 - [x] generate css
 - [x] manually include global
-- [ ] rich text editor
 - [ ] always use client side redirection, to avoid theme flicker -> do I need to do something with the `<head>` ? / how to actually use hx-boost
 - [x] combine lytepage repo with goat repo
     - [x] basic static html rendering

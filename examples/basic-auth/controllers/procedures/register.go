@@ -58,22 +58,21 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	queries := models.New(db)
 
+	conflictMessages := []string{}
+
 	existing, err := queries.GetUserByEmail(context.Background(), email)
-	// user conflict
-	if err == nil {
-		conflictMessages := []string{}
-		if existing.Name == name {
-			conflictMessages = append(conflictMessages, "Name already in use")
-		}
+	if err == nil || existing.Email == email {
+		conflictMessages = append(conflictMessages, "Email already in use")
+	}
 
-		if existing.Email == email {
-			conflictMessages = append(conflictMessages, "Email already in use")
-		}
+	existing, err = queries.GetUserByName(context.Background(), name)
+	if err == nil || existing.Email == email {
+		conflictMessages = append(conflictMessages, "Name already in use")
+	}
 
-		if len(conflictMessages) > 0 {
-			helpers.BadRequest(w, r, conflictMessages, false, "req_id", reqID)
-			return
-		}
+	if len(conflictMessages) > 0 {
+		helpers.Conflict(w, r, conflictMessages, false, "req_id", reqID)
+		return
 	}
 
 	_, err = queries.CreateUser(context.Background(), models.CreateUserParams{
