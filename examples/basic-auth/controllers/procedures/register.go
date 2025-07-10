@@ -2,6 +2,7 @@ package procedures
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -46,13 +47,13 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	hashed, err := hash.HashPassword(password)
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not hash password: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
 	db, err := database.Get()
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not get database: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
@@ -83,7 +84,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not create user: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 

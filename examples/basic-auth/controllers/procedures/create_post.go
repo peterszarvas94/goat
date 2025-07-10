@@ -2,6 +2,7 @@ package procedures
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -33,11 +34,6 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := r.ParseForm(); err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
-		return
-	}
-
 	title := r.FormValue("title")
 	content := r.FormValue("content")
 
@@ -54,7 +50,7 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 
 	db, err := database.Get()
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not get database: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
@@ -68,7 +64,7 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not creat post: %s": err.Error())}, true, "req_id", reqID)
 		return
 	}
 

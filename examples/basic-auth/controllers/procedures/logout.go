@@ -4,6 +4,7 @@ import (
 	"basic-auth/controllers/helpers"
 	"basic-auth/db/models"
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -29,7 +30,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	db, err := database.Get()
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not get database: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 

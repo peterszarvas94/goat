@@ -2,6 +2,7 @@ package procedures
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"time"
@@ -30,11 +31,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := r.ParseForm(); err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
-		return
-	}
-
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 
@@ -51,7 +47,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	db, err := database.Get()
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not get database: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
@@ -78,7 +74,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not create session", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
@@ -86,7 +82,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	_, err = csrf.AddNewCSRFToken(session.ID)
 	if err != nil {
-		helpers.ServerError(w, r, []string{err.Error()}, true, "req_id", reqID)
+		helpers.ServerError(w, r, []string{fmt.Sprintf("Can not add new csrf token: %s", err.Error())}, true, "req_id", reqID)
 		return
 	}
 
